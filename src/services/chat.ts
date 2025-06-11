@@ -18,81 +18,80 @@ export interface ChatResponse {
 const MULTILINGUAL_FAQ_RESPONSES: Record<string, Record<string, ChatResponse>> = {
   en: {
     price: {
-      message: 'Our tours start from 50€. The final price depends on the package you choose.',
-      suggestions: ['What’s included?', 'How do I book?', 'Do you offer group discounts?'],
-      language: 'en',
+      message: "Our kitesurfing lesson costs 130€ per person. This includes all equipment and a certified instructor.",
+      suggestions: ["What's included in the lesson?", "Do you offer group discounts?"],
+      language: "en",
     },
     included: {
-      message: 'Our packages include a guide, equipment, and insurance.',
-      suggestions: ['How much does it cost?', 'Can I book online?'],
-      language: 'en',
+      message: "The lesson includes all the equipment: kite, board, wetsuit, harness, and a certified instructor.",
+      suggestions: ["How much does it cost?", "What if I have my own equipment?"],
+      language: "en",
     },
     experience: {
-      message: 'No prior experience is necessary. Our tours are beginner-friendly!',
-      suggestions: ['What’s included?', 'How do I book?'],
-      language: 'en',
+      message: "No worries! Our lessons are perfect for beginners. Our instructors will guide you every step of the way.",
+      suggestions: ["How long is the lesson?", "Where are you located?"],
+      language: "en",
     },
     weather: {
-      message: 'Tours may be rescheduled in case of bad weather. Safety is our priority.',
-      suggestions: ['How do I reschedule?', 'Do you offer refunds?'],
-      language: 'en',
+      message: "We always monitor the weather. If the conditions are unsafe, we’ll reschedule your lesson at no extra cost.",
+      suggestions: ["What if it rains?", "Can I get a refund?"],
+      language: "en",
     },
     booking: {
-      message: 'You can book a tour directly through our website or contact us.',
-      suggestions: ['How much does it cost?', 'Is equipment included?'],
-      language: 'en',
+      message: "You can book a lesson directly through our website or contact us via WhatsApp for more options.",
+      suggestions: ["Can I pay online?", "Do you have availability this weekend?"],
+      language: "en",
     },
     group: {
-      message: 'Yes, we offer group and corporate bookings with special discounts!',
-      suggestions: ['How many people can join?', 'How do I get a quote?'],
-      language: 'en',
+      message: "Yes! We offer group lessons and corporate packages. Contact us to customize your experience.",
+      suggestions: ["Is there a discount for groups?", "Can we book a private instructor?"],
+      language: "en",
     },
   },
-  fr: {
+  ru: {
     price: {
-      message: 'Nos circuits commencent à partir de 50€. Le prix final dépend du forfait choisi.',
-      suggestions: ['Que comprend l’offre ?', 'Comment réserver ?', 'Proposez-vous des réductions de groupe ?'],
-      language: 'fr',
+      message: "Наш урок по кайтсерфингу стоит 130€ с человека. В стоимость входит всё оборудование и инструктор.",
+      suggestions: ["Что включено в урок?", "Есть ли скидки на группу?"],
+      language: "ru",
     },
     included: {
-      message: 'Nos forfaits incluent un guide, l’équipement et une assurance.',
-      suggestions: ['Quel est le prix ?', 'Puis-je réserver en ligne ?'],
-      language: 'fr',
+      message: "Урок включает всё оборудование: кайт, доску, гидрокостюм, трапецию и инструктора.",
+      suggestions: ["Сколько это стоит?", "А если у меня есть своё оборудование?"],
+      language: "ru",
     },
     experience: {
-      message: "Aucune expérience préalable n'est requise. Nos circuits conviennent aux débutants !",
-      suggestions: ['Que comprend l’offre ?', 'Comment réserver ?'],
-      language: 'fr',
+      message: "Не переживайте! Наши уроки идеально подходят для новичков. Инструктор поможет вам на каждом этапе.",
+      suggestions: ["Сколько длится урок?", "Где вы находитесь?"],
+      language: "ru",
     },
     weather: {
-      message: 'Les circuits peuvent être reprogrammés en cas de mauvais temps. Votre sécurité est notre priorité.',
-      suggestions: ['Comment reprogrammer ?', 'Proposez-vous des remboursements ?'],
-      language: 'fr',
+      message: "Мы следим за погодой. Если условия небезопасны, мы бесплатно перенесем ваш урок.",
+      suggestions: ["А если будет дождь?", "Можно вернуть деньги?"],
+      language: "ru",
     },
     booking: {
-      message: 'Vous pouvez réserver directement sur notre site web ou nous contacter.',
-      suggestions: ['Quel est le prix ?', 'Le matériel est-il inclus ?'],
-      language: 'fr',
+      message: "Вы можете забронировать урок через наш сайт или написать нам в WhatsApp.",
+      suggestions: ["Можно оплатить онлайн?", "Есть ли места на выходных?"],
+      language: "ru",
     },
     group: {
-      message: 'Oui, nous proposons des réservations de groupe et d’entreprise avec des réductions spéciales !',
-      suggestions: ['Combien de personnes peuvent participer ?', 'Comment obtenir un devis ?'],
-      language: 'fr',
+      message: "Да, мы предлагаем групповые и корпоративные уроки. Свяжитесь с нами для деталей.",
+      suggestions: ["Есть скидка на группу?", "Можно ли заказать частного инструктора?"],
+      language: "ru",
     },
   },
-  // Добавь другие языки при необходимости
 };
 
 const DEFAULT_RESPONSES: Record<string, ChatResponse> = {
   en: {
-    message: "I'm sorry, I didn't understand that. Can you please rephrase?",
-    suggestions: ['How much does it cost?', 'What’s included?', 'Can I book online?'],
-    language: 'en',
+    message: "I'm not sure I understand. Can you please rephrase your question?",
+    suggestions: ["How much is a lesson?", "What do I need to bring?", "How do I book?"],
+    language: "en",
   },
-  fr: {
-    message: "Désolé, je n'ai pas compris. Pouvez-vous reformuler votre question ?",
-    suggestions: ['Quel est le prix ?', 'Que comprend l’offre ?', 'Puis-je réserver en ligne ?'],
-    language: 'fr',
+  ru: {
+    message: "Я не совсем понял. Можете переформулировать вопрос?",
+    suggestions: ["Сколько стоит урок?", "Что нужно брать с собой?", "Как забронировать?"],
+    language: "ru",
   },
 };
 
@@ -104,13 +103,12 @@ export const chatService = {
 
     const lowerMessage = message.toLowerCase();
 
-    // Сохраняем сообщение пользователя
     if (sessionId) {
       await supabase.from('messages').insert({
         text: message,
         session_id: sessionId,
         sender: 'user',
-        language: language,
+        language,
       });
     }
 
@@ -126,7 +124,7 @@ export const chatService = {
     };
 
     for (const [k, keywords] of Object.entries(keywordMap)) {
-      if (keywords.some(word => lowerMessage.includes(word))) {
+      if (keywords.some((word) => lowerMessage.includes(word))) {
         key = k;
         break;
       }
@@ -137,7 +135,7 @@ export const chatService = {
     if (key && MULTILINGUAL_FAQ_RESPONSES[language][key]) {
       reply = MULTILINGUAL_FAQ_RESPONSES[language][key];
     } else {
-      reply = DEFAULT_RESPONSES[language] || DEFAULT_RESPONSES['en'];
+      reply = DEFAULT_RESPONSES[language];
     }
 
     if (sessionId) {
@@ -152,8 +150,11 @@ export const chatService = {
     return reply;
   },
 
-  matchesKeywords(text: string, keywords: string[]): boolean {
-    return keywords.some(keyword => text.includes(keyword.toLowerCase()));
+  getQuickReplies(language: string = 'en'): string[] {
+    if (DEFAULT_RESPONSES[language]) {
+      return DEFAULT_RESPONSES[language].suggestions ?? [];
+    }
+    return DEFAULT_RESPONSES['en'].suggestions ?? [];
   },
 };
 
