@@ -1,0 +1,1 @@
+function n(i){return/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(i)}function t(){return crypto.randomUUID()}const e=window.location.origin;export{e as F,t as g,n as i};
