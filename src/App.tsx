@@ -11,9 +11,6 @@ import { Header, Footer } from './components/layout';
 import ErrorBoundary from './components/ErrorBoundary';
 import SkipLink from './components/SkipLink';
 
-// Components (keep these as regular imports since they're used frequently)
-import ChatWidget from './components/ChatWidget';
-
 // Utils
 import { monitoring, accessibility } from './utils';
 
@@ -55,7 +52,7 @@ const LazyLoadErrorFallback = ({ error, retry }: { error: Error; retry: () => vo
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
         </svg>
       </div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-2">Failed to Load Page</h2>
+      <h2 className="text-xl font-medium leading-6 text-gray-900 mb-2">Failed to Load Page</h2>
       <p className="text-gray-600 mb-6">There was an error loading this page. Please try again.</p>
       <div className="space-y-3">
         <button
@@ -154,7 +151,6 @@ function App() {
               </LazyComponentWrapper>
             </main>
             <Footer />
-            <ChatWidget />
             <Toaster 
               position="top-right"
               toastOptions={{
