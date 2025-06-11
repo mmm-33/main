@@ -148,9 +148,8 @@ export const chatService = {
     sessionId?: string,
     language: string = 'en'
   ): Promise<ChatResponse> {
-    // Если язык не поддерживается — используем английский
     if (!MULTILINGUAL_FAQ_RESPONSES[language]) {
-      language = 'en';
+      language = 'en'; // Если язык не поддерживается — дефолт английский
     }
 
     // Сохраняем сообщение пользователя в Supabase
@@ -167,19 +166,13 @@ export const chatService = {
       }
     }
 
-    // Определяем язык, если не указан
-    const detectedLanguage = this.detectLanguage(message);
-
-    // Используем определенный язык, если он есть
-    const responseLang = MULTILINGUAL_FAQ_RESPONSES[detectedLanguage] ? detectedLanguage : language;
-
     // Подбор по ключевым словам
     const lowerMessage = message.toLowerCase();
 
     // Поиск совпадений
-    const responseKey = Object.keys(MULTILINGUAL_FAQ_RESPONSES[responseLang] || {});
+    const responseKey = Object.keys(MULTILINGUAL_FAQ_RESPONSES[language] || {});
     for (const key of responseKey) {
-      const keywords = MULTILINGUAL_FAQ_RESPONSES[responseLang][key].message
+      const keywords = MULTILINGUAL_FAQ_RESPONSES[language][key].message
         .split(' ')
         .filter((word) => word.startsWith('[') && word.endsWith(']') && word.length > 2)
         .map((word) => word.slice(1, -1));
@@ -189,12 +182,12 @@ export const chatService = {
       );
 
       if (hasMatch) {
-        return MULTILINGUAL_FAQ_RESPONSES[responseLang][key];
+        return MULTILINGUAL_FAQ_RESPONSES[language][key];
       }
     }
 
     // Если нет совпадения — вернуть стандартный ответ
-    return DEFAULT_RESPONSES[responseLang] || DEFAULT_RESPONSES.en;
+    return DEFAULT_RESPONSES[language] || DEFAULT_RESPONSES.en;
   },
 
   /**
@@ -228,10 +221,10 @@ export const chatService = {
   detectLanguage(message: string): string {
     const lowerMessage = message.toLowerCase();
     if (/[а-яА-ЯёЁ]/.test(message)) return 'ru';
-    if (/\b(ciao|grazie|come|sono|per)\b|[àèéìòù]/.test(lowerMessage)) return 'it';
+    if (/\b(ciao|grazie|come|per|sono|il)\b/.test(lowerMessage)) return 'it';
     if (/\b(ich|bin|und|für|das|ist)\b|[äöüß]/.test(lowerMessage)) return 'de';
-    if (/\b(je|suis|vous|pour|et|est)\b|[éèêëàâçùûüÿ]/.test(lowerMessage)) return 'fr';
-    if (/\b(hola|gracias|como|por|para|es)\b|[áéíóúñ¿¡]/.test(lowerMessage)) return 'es';
+    if (/\b(je|suis|vous|pour|et|est)\b|[éàâçèêëîïôùûü]/.test(lowerMessage)) return 'fr';
+    if (/\b(hola|gracias|como|por|para|es)\b|[ñáéíóú]/.test(lowerMessage)) return 'es';
     return 'en'; // дефолт английский
   },
 };
