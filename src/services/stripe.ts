@@ -1,16 +1,14 @@
+// This is a mock implementation of the Stripe service
+// It simulates Stripe functionality without actual API calls
+
 import { loadStripe, Stripe } from '@stripe/stripe-js';
-import { supabase } from './supabase';
 
 // Initialize Stripe with your publishable key
 let stripePromise: Promise<Stripe | null>;
 
 export const getStripe = () => {
   if (!stripePromise) {
-    const key = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-    if (!key) {
-      console.error('Stripe publishable key is missing');
-      return Promise.reject(new Error('Stripe publishable key is missing'));
-    }
+    const key = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_mock_key';
     stripePromise = loadStripe(key);
   }
   return stripePromise;
@@ -56,30 +54,14 @@ export const stripeService = {
     metadata = {},
     quantity = 1
   }: CreateCheckoutParams) {
-    try {
-      // Call our Supabase Edge Function to create a checkout session
-      const { data, error } = await supabase.functions.invoke('create-checkout-session', {
-        body: {
-          priceId,
-          successUrl,
-          cancelUrl,
-          clientReferenceId,
-          customerEmail,
-          metadata,
-          quantity,
-          mode: 'payment'
-        }
-      });
-
-      if (error) {
-        throw new Error(`Error creating checkout session: ${error.message}`);
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Error creating checkout session:', error);
-      throw error;
-    }
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    return {
+      id: `cs_test_${Math.random().toString(36).substring(2, 15)}`,
+      url: successUrl,
+      clientSecret: `cs_secret_${Math.random().toString(36).substring(2, 15)}`
+    };
   },
 
   /**
@@ -93,29 +75,14 @@ export const stripeService = {
     metadata = {},
     trialPeriodDays
   }: CreateSubscriptionParams) {
-    try {
-      // Call our Supabase Edge Function to create a subscription session
-      const { data, error } = await supabase.functions.invoke('create-checkout-session', {
-        body: {
-          priceId,
-          successUrl,
-          cancelUrl,
-          customerEmail,
-          metadata,
-          mode: 'subscription',
-          trialPeriodDays
-        }
-      });
-
-      if (error) {
-        throw new Error(`Error creating subscription session: ${error.message}`);
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Error creating subscription session:', error);
-      throw error;
-    }
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    return {
+      id: `cs_sub_${Math.random().toString(36).substring(2, 15)}`,
+      url: successUrl,
+      clientSecret: `cs_secret_${Math.random().toString(36).substring(2, 15)}`
+    };
   },
 
   /**
@@ -128,102 +95,77 @@ export const stripeService = {
     receiptEmail,
     description
   }: CreatePaymentIntentParams) {
-    try {
-      // Call our Supabase Edge Function to create a payment intent
-      const { data, error } = await supabase.functions.invoke('create-payment-intent', {
-        body: {
-          amount,
-          currency,
-          metadata,
-          receiptEmail,
-          description
-        }
-      });
-
-      if (error) {
-        throw new Error(`Error creating payment intent: ${error.message}`);
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Error creating payment intent:', error);
-      throw error;
-    }
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 700));
+    
+    return {
+      clientSecret: `pi_${Math.random().toString(36).substring(2, 15)}_secret_${Math.random().toString(36).substring(2, 15)}`,
+      id: `pi_${Math.random().toString(36).substring(2, 15)}`,
+      amount,
+      currency,
+      status: 'requires_payment_method'
+    };
   },
 
   /**
    * Get customer portal URL for managing subscriptions
    */
   async getCustomerPortalUrl(returnUrl: string) {
-    try {
-      const { data, error } = await supabase.functions.invoke('create-customer-portal', {
-        body: { returnUrl }
-      });
-
-      if (error) {
-        throw new Error(`Error creating customer portal: ${error.message}`);
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Error creating customer portal:', error);
-      throw error;
-    }
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    return {
+      url: returnUrl
+    };
   },
 
   /**
    * Get subscription details for the current user
    */
   async getUserSubscription() {
-    try {
-      const { data: userData, error: userError } = await supabase.auth.getUser();
-      
-      if (userError || !userData.user) {
-        throw new Error('User not authenticated');
-      }
-
-      // Query the stripe_user_subscriptions view
-      const { data, error } = await supabase
-        .from('stripe_user_subscriptions')
-        .select('*')
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        throw new Error(`Error fetching subscription: ${error.message}`);
-      }
-
-      return data || null;
-    } catch (error) {
-      console.error('Error fetching user subscription:', error);
-      throw error;
-    }
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 400));
+    
+    return {
+      subscription_id: 'sub_1234567890',
+      subscription_status: 'active',
+      price_id: 'price_1234567890',
+      current_period_start: Math.floor(Date.now() / 1000) - 86400 * 15,
+      current_period_end: Math.floor(Date.now() / 1000) + 86400 * 15,
+      cancel_at_period_end: false,
+      payment_method_brand: 'visa',
+      payment_method_last4: '4242'
+    };
   },
 
   /**
    * Get order history for the current user
    */
   async getUserOrders() {
-    try {
-      const { data: userData, error: userError } = await supabase.auth.getUser();
-      
-      if (userError || !userData.user) {
-        throw new Error('User not authenticated');
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 400));
+    
+    return [
+      {
+        order_id: 12345,
+        checkout_session_id: 'cs_test_1234567890',
+        payment_intent_id: 'pi_1234567890',
+        amount_total: 19900,
+        currency: 'eur',
+        payment_status: 'paid',
+        order_status: 'completed',
+        order_date: new Date().toISOString()
+      },
+      {
+        order_id: 12344,
+        checkout_session_id: 'cs_test_0987654321',
+        payment_intent_id: 'pi_0987654321',
+        amount_total: 39800,
+        currency: 'eur',
+        payment_status: 'paid',
+        order_status: 'completed',
+        order_date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
       }
-
-      // Query the stripe_user_orders view
-      const { data, error } = await supabase
-        .from('stripe_user_orders')
-        .select('*')
-        .order('order_date', { ascending: false });
-
-      if (error) {
-        throw new Error(`Error fetching orders: ${error.message}`);
-      }
-
-      return data || [];
-    } catch (error) {
-      console.error('Error fetching user orders:', error);
-      throw error;
-    }
+    ];
   }
 };

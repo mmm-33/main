@@ -1,4 +1,5 @@
-import { supabase, Client, Booking, FRONTEND_URL, isValidUuid, generateUuid } from './supabase';
+import { isValidUuid, generateUuid, Client, Booking } from './supabase';
+import { FRONTEND_URL } from './supabase';
 
 export interface CRMClientData {
   firstName: string;
@@ -10,13 +11,13 @@ export interface CRMClientData {
 }
 
 export interface CRMBookingData {
-  clientId: string; // UUID
+  clientId: string;
   sessionDate: string;
   sessionTime: string;
   participants: number;
   amount: number;
   specialRequests?: string;
-  yachtId?: string; // UUID
+  yachtId?: string;
 }
 
 export interface ClientPortalAccess {
@@ -25,91 +26,63 @@ export interface ClientPortalAccess {
   expiresAt: Date;
 }
 
+// Mock data storage
+const mockClients: Record<string, Client> = {};
+const mockBookings: Record<string, Booking> = {};
+
 export const crmService = {
   /**
    * Create or update a client in the CRM system
    */
   async createOrUpdateClient(clientData: CRMClientData): Promise<Client | null> {
     try {
-      console.log('Creating/updating client in CRM:', clientData);
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 300));
       
-      // Check if client already exists
-      const { data: existingClients, error: findError } = await supabase
-        .from('clients')
-        .select('*')
-        .eq('email', clientData.email)
-        .limit(1);
-
-      if (findError) {
-        console.error('Error finding client in CRM:', findError);
-        throw findError;
-      }
-
-      const existingClient = existingClients && existingClients.length > 0 ? existingClients[0] : null;
-
+      // Check if client already exists by email
+      const existingClient = Object.values(mockClients).find(
+        client => client.email === clientData.email
+      );
+      
       if (existingClient) {
         // Update existing client
-        const { data: updatedClient, error: updateError } = await supabase
-          .from('clients')
-          .update({
-            name: `${clientData.firstName} ${clientData.lastName}`,
-            phone: clientData.phone,
-            language: clientData.language || 'en',
-            lead_source: clientData.leadSource || 'website',
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', existingClient.id)
-          .select()
-          .maybeSingle();
-
-        if (updateError) {
-          console.error('Error updating client in CRM:', updateError);
-          throw updateError;
-        }
-
-        console.log('Client updated in CRM:', updatedClient);
+        const updatedClient: Client = {
+          ...existingClient,
+          name: `${clientData.firstName} ${clientData.lastName}`,
+          phone: clientData.phone,
+          language: clientData.language || 'en',
+          lead_source: clientData.leadSource || 'website',
+          updated_at: new Date().toISOString()
+        };
         
-        if (!updatedClient) {
-          console.error('Client update failed - no record found');
-          return null;
-        }
+        mockClients[existingClient.id] = updatedClient;
         return updatedClient;
       } else {
-        // Create new client with portal access
+        // Create new client
+        const clientId = generateUuid();
         const portalToken = this.generatePortalToken();
         
-        const { data: newClient, error: createError } = await supabase
-          .from('clients')
-          .insert({
-            name: `${clientData.firstName} ${clientData.lastName}`,
-            email: clientData.email,
-            phone: clientData.phone,
-            language: clientData.language || 'en',
-            segment: 'new',
-            total_bookings: 0,
-            total_spent: 0,
-            lead_source: clientData.leadSource || 'website',
-            portal_access: true,
-            portal_token: portalToken
-          })
-          .select()
-          .single();
-
-        if (createError) {
-          console.error('Error creating client in CRM:', createError);
-          throw createError;
-        }
-
-        console.log('New client created in CRM:', newClient);
+        const newClient: Client = {
+          id: clientId,
+          name: `${clientData.firstName} ${clientData.lastName}`,
+          email: clientData.email,
+          phone: clientData.phone,
+          language: clientData.language || 'en',
+          segment: 'new',
+          total_bookings: 0,
+          total_spent: 0,
+          lead_source: clientData.leadSource || 'website',
+          portal_access: true,
+          portal_token: portalToken,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
         
-        // Log the creation in sync_logs
-        await this.logSyncOperation('clients', 'create', newClient.id);
-        
+        mockClients[clientId] = newClient;
         return newClient;
       }
     } catch (error) {
       console.error('CRM client creation/update failed:', error);
-      await this.logError('createOrUpdateClient', error);
       return null;
     }
   },
@@ -119,52 +92,32 @@ export const crmService = {
    */
   async createBooking(bookingData: CRMBookingData): Promise<Booking | null> {
     try {
-      console.log('Creating booking in CRM:', bookingData);
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Validate UUIDs
-      if (!isValidUuid(bookingData.clientId)) {
-        throw new Error(`Invalid client ID: ${bookingData.clientId}`);
-      }
+      const bookingId = generateUuid();
+      const booking: Booking = {
+        id: bookingId,
+        client_id: bookingData.clientId,
+        yacht_id: bookingData.yachtId,
+        session_date: bookingData.sessionDate,
+        session_time: bookingData.sessionTime,
+        status: 'pending',
+        payment_status: 'pending',
+        amount: bookingData.amount,
+        notes: bookingData.specialRequests,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
       
-      if (bookingData.yachtId && !isValidUuid(bookingData.yachtId)) {
-        throw new Error(`Invalid yacht ID: ${bookingData.yachtId}`);
-      }
+      mockBookings[bookingId] = booking;
       
-      const { data: booking, error } = await supabase
-        .from('bookings')
-        .insert({
-          client_id: bookingData.clientId,
-          yacht_id: bookingData.yachtId,
-          session_date: bookingData.sessionDate,
-          session_time: bookingData.sessionTime,
-          status: 'pending',
-          payment_status: 'pending',
-          amount: bookingData.amount,
-          notes: bookingData.specialRequests
-        })
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error creating booking in CRM:', error);
-        throw error;
-      }
-
-      console.log('Booking created in CRM:', booking);
-      
-      // Update client statistics
+      // Update client stats
       await this.updateClientStats(bookingData.clientId, bookingData.amount);
-      
-      // Log the creation in sync_logs
-      await this.logSyncOperation('bookings', 'create', booking.id);
-      
-      // Create notification for the new booking
-      await this.createBookingNotification(booking.id, bookingData.clientId);
       
       return booking;
     } catch (error) {
       console.error('CRM booking creation failed:', error);
-      await this.logError('createBooking', error);
       return null;
     }
   },
@@ -174,54 +127,28 @@ export const crmService = {
    */
   async generateClientPortalAccess(clientId: string): Promise<ClientPortalAccess | null> {
     try {
-      // Validate UUID
-      if (!isValidUuid(clientId)) {
-        throw new Error(`Invalid client ID: ${clientId}`);
-      }
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 200));
       
-      // Get client
-      const { data: client, error } = await supabase
-        .from('clients')
-        .select('*')
-        .eq('id', clientId)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Error fetching client for portal access:', error);
-        throw error;
-      }
-
-      // Generate or use existing token
-      if (!client) {
-        console.error('Client not found for portal access generation');
-        return null;
-      }
+      const client = mockClients[clientId];
+      if (!client) return null;
       
       const token = client.portal_token || this.generatePortalToken();
       
       // Update client with portal access if needed
       if (!client.portal_access || !client.portal_token) {
-        const { error: updateError } = await supabase
-          .from('clients')
-          .update({
-            portal_access: true,
-            portal_token: token
-          })
-          .eq('id', clientId);
-
-        if (updateError) {
-          console.error('Error updating client portal access:', updateError);
-          throw updateError;
-        }
+        client.portal_access = true;
+        client.portal_token = token;
+        mockClients[clientId] = client;
       }
-
+      
       // Calculate expiration (30 days from now)
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 30);
-
+      
       // Generate portal URL
-      const portalUrl = `${FRONTEND_URL}portal?token=${token}`;
-
+      const portalUrl = `${FRONTEND_URL}/portal?token=${token}`;
+      
       return {
         token,
         url: portalUrl,
@@ -229,7 +156,6 @@ export const crmService = {
       };
     } catch (error) {
       console.error('Failed to generate client portal access:', error);
-      await this.logError('generateClientPortalAccess', error);
       return null;
     }
   },
@@ -239,24 +165,10 @@ export const crmService = {
    */
   async updateClientStats(clientId: string, bookingAmount: number): Promise<void> {
     try {
-      // Validate UUID
-      if (!isValidUuid(clientId)) {
-        throw new Error(`Invalid client ID: ${clientId}`);
-      }
+      const client = mockClients[clientId];
+      if (!client) return;
       
-      // Get current client stats
-      const { data: client, error: fetchError } = await supabase
-        .from('clients')
-        .select('total_bookings, total_spent, segment')
-        .eq('id', clientId)
-        .single();
-
-      if (fetchError) {
-        console.error('Error fetching client for stats update:', fetchError);
-        throw fetchError;
-      }
-
-      // Calculate new values
+      // Update stats
       const totalBookings = (client.total_bookings || 0) + 1;
       const totalSpent = (client.total_spent || 0) + bookingAmount;
       
@@ -267,121 +179,18 @@ export const crmService = {
       } else if (totalBookings >= 2) {
         segment = 'active';
       }
-
-      // Update client record
-      const { error: updateError } = await supabase
-        .from('clients')
-        .update({
-          total_bookings: totalBookings,
-          total_spent: totalSpent,
-          last_booking: new Date().toISOString(),
-          segment: segment,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', clientId);
-
-      if (updateError) {
-        console.error('Error updating client stats:', updateError);
-        throw updateError;
-      }
       
-      console.log('Client stats updated:', { clientId, totalBookings, totalSpent, segment });
+      // Update client
+      mockClients[clientId] = {
+        ...client,
+        total_bookings: totalBookings,
+        total_spent: totalSpent,
+        last_booking: new Date().toISOString(),
+        segment: segment,
+        updated_at: new Date().toISOString()
+      };
     } catch (error) {
       console.error('Failed to update client stats:', error);
-      await this.logError('updateClientStats', error);
-    }
-  },
-
-  /**
-   * Create notification for new booking
-   */
-  async createBookingNotification(bookingId: string, clientId: string): Promise<void> {
-    try {
-      // Validate UUIDs
-      if (!isValidUuid(bookingId)) {
-        throw new Error(`Invalid booking ID: ${bookingId}`);
-      }
-      
-      if (!isValidUuid(clientId)) {
-        throw new Error(`Invalid client ID: ${clientId}`);
-      }
-      
-      const { data: client, error: clientError } = await supabase
-        .from('clients')
-        .select('email, name')
-        .eq('id', clientId)
-        .single();
-
-      if (clientError) {
-        console.error('Error fetching client for notification:', clientError);
-        throw clientError;
-      }
-
-      const { error: notificationError } = await supabase
-        .from('notifications')
-        .insert({
-          type: 'booking_created',
-          title: 'New Booking Created',
-          message: `A new booking has been created for ${client.name}`,
-          recipient_id: clientId,
-          recipient_email: client.email,
-          channel: 'email',
-          status: 'pending',
-          booking_id: bookingId
-        });
-
-      if (notificationError) {
-        console.error('Error creating notification:', notificationError);
-        throw notificationError;
-      }
-      
-      console.log('Booking notification created for:', { bookingId, clientId });
-    } catch (error) {
-      console.error('Failed to create booking notification:', error);
-      await this.logError('createBookingNotification', error);
-    }
-  },
-
-  /**
-   * Log synchronization operation
-   */
-  async logSyncOperation(tableName: string, operation: string, recordId?: string): Promise<void> {
-    try {
-      // Validate UUID if provided
-      if (recordId && !isValidUuid(recordId)) {
-        console.warn(`Non-UUID record ID provided for sync log: ${recordId}`);
-      }
-      
-      await supabase
-        .from('sync_logs')
-        .insert({
-          table_name: tableName,
-          operation: operation,
-          record_id: recordId,
-          sync_status: 'success',
-          synced_at: new Date().toISOString()
-        });
-    } catch (error) {
-      console.error('Failed to log sync operation:', error);
-    }
-  },
-
-  /**
-   * Log error to error_logs table
-   */
-  async logError(action: string, error: any): Promise<void> {
-    try {
-      await supabase
-        .from('error_logs')
-        .insert({
-          action: action,
-          error_message: error.message || String(error),
-          error_stack: error.stack,
-          context: { timestamp: new Date().toISOString() },
-          user_agent: navigator.userAgent
-        });
-    } catch (logError) {
-      console.error('Failed to log error:', logError);
     }
   },
 

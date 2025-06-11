@@ -1,4 +1,4 @@
-import { supabase, Client, Booking, isValidUuid } from './supabase';
+import { generateUuid, isValidUuid, Client, Booking } from './supabase';
 
 export interface ClientPortalData {
   client: Client;
@@ -8,298 +8,212 @@ export interface ClientPortalData {
   totalSpent: number;
 }
 
+// Mock client data
+const mockClients: Record<string, Client> = {
+  'test-token': {
+    id: generateUuid(),
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phone: '+1234567890',
+    language: 'en',
+    segment: 'active',
+    total_bookings: 3,
+    total_spent: 597,
+    portal_access: true,
+    portal_token: 'test-token',
+    created_at: '2023-01-15T10:30:00Z',
+    updated_at: '2023-06-20T14:45:00Z'
+  }
+};
+
+// Mock booking data
+const mockBookings: Booking[] = [
+  {
+    id: generateUuid(),
+    client_id: mockClients['test-token'].id,
+    session_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    session_time: '10:30',
+    status: 'confirmed',
+    payment_status: 'paid',
+    amount: 199,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: generateUuid(),
+    client_id: mockClients['test-token'].id,
+    session_date: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    session_time: '14:00',
+    status: 'completed',
+    payment_status: 'paid',
+    amount: 199,
+    created_at: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: generateUuid(),
+    client_id: mockClients['test-token'].id,
+    session_date: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    session_time: '09:00',
+    status: 'completed',
+    payment_status: 'paid',
+    amount: 199,
+    created_at: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString()
+  }
+];
+
+// Mock notifications
+const mockNotifications = [
+  {
+    id: generateUuid(),
+    type: 'booking_created',
+    title: 'Booking Confirmed',
+    message: 'Your booking for next week has been confirmed.',
+    recipient_id: mockClients['test-token'].id,
+    status: 'unread',
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: generateUuid(),
+    type: 'payment_received',
+    title: 'Payment Received',
+    message: 'We have received your payment of €199.',
+    recipient_id: mockClients['test-token'].id,
+    status: 'read',
+    created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    read_at: new Date(Date.now() - 29 * 24 * 60 * 60 * 1000).toISOString()
+  }
+];
+
 export const clientPortalService = {
   /**
    * Authenticate client using portal token
    */
   async authenticateWithToken(token: string): Promise<Client | null> {
-    try {
-      if (!token) {
-        console.error('No token provided for authentication');
-        return null;
-      }
-
-      const { data, error } = await supabase
-        .from('clients')
-        .select('*')
-        .eq('portal_token', token)
-        .eq('portal_access', true)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Error authenticating client with token:', error);
-        return null;
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Client portal authentication failed:', error);
-      return null;
-    }
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    return mockClients[token] || null;
   },
 
   /**
    * Get client portal data
    */
   async getClientPortalData(clientId: string): Promise<ClientPortalData | null> {
-    try {
-      // Validate UUID
-      if (!isValidUuid(clientId)) {
-        throw new Error(`Invalid client ID: ${clientId}`);
-      }
-      
-      // Get client data
-      const { data: client, error: clientError } = await supabase
-        .from('clients')
-        .select('*')
-        .eq('id', clientId)
-        .single();
-
-      if (clientError) {
-        console.error('Error fetching client data for portal:', clientError);
-        return null;
-      }
-
-      // Get client bookings
-      const { data: bookings, error: bookingsError } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          yacht:yachts(id, name)
-        `)
-        .eq('client_id', clientId)
-        .order('session_date', { ascending: false });
-
-      if (bookingsError) {
-        console.error('Error fetching client bookings for portal:', bookingsError);
-        return null;
-      }
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      // Split bookings into upcoming and past
-      const upcomingBookings = bookings.filter(booking => {
-        const bookingDate = new Date(booking.session_date);
-        bookingDate.setHours(0, 0, 0, 0);
-        return bookingDate >= today;
-      });
-
-      const pastBookings = bookings.filter(booking => {
-        const bookingDate = new Date(booking.session_date);
-        bookingDate.setHours(0, 0, 0, 0);
-        return bookingDate < today;
-      });
-
-      // Calculate total spent
-      const totalSpent = bookings.reduce((sum, booking) => {
-        return booking.payment_status === 'paid' ? sum + booking.amount : sum;
-      }, 0);
-
-      return {
-        client,
-        bookings: bookings || [],
-        upcomingBookings: upcomingBookings || [],
-        pastBookings: pastBookings || [],
-        totalSpent
-      };
-    } catch (error) {
-      console.error('Failed to get client portal data:', error);
-      return null;
-    }
-  },
-
-  /**
-   * Update client profile
-   */
-  async updateClientProfile(clientId: string, data: Partial<Client>): Promise<Client | null> {
-    try {
-      // Validate UUID
-      if (!isValidUuid(clientId)) {
-        throw new Error(`Invalid client ID: ${clientId}`);
-      }
-      
-      // Ensure we're not updating sensitive fields
-      const safeData: Partial<Client> = {
-        name: data.name,
-        phone: data.phone,
-        language: data.language,
-        location: data.location
-      };
-
-      const { data: updatedClient, error } = await supabase
-        .from('clients')
-        .update({
-          ...safeData,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', clientId)
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error updating client profile:', error);
-        return null;
-      }
-
-      return updatedClient;
-    } catch (error) {
-      console.error('Failed to update client profile:', error);
-      return null;
-    }
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 700));
+    
+    // Find client
+    const client = Object.values(mockClients).find(c => c.id === clientId);
+    if (!client) return null;
+    
+    // Filter bookings for this client
+    const clientBookings = mockBookings.filter(b => b.client_id === clientId);
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Split bookings into upcoming and past
+    const upcomingBookings = clientBookings.filter(booking => {
+      const bookingDate = new Date(booking.session_date);
+      bookingDate.setHours(0, 0, 0, 0);
+      return bookingDate >= today;
+    });
+    
+    const pastBookings = clientBookings.filter(booking => {
+      const bookingDate = new Date(booking.session_date);
+      bookingDate.setHours(0, 0, 0, 0);
+      return bookingDate < today;
+    });
+    
+    // Calculate total spent
+    const totalSpent = clientBookings.reduce((sum, booking) => {
+      return booking.payment_status === 'paid' ? sum + booking.amount : sum;
+    }, 0);
+    
+    return {
+      client,
+      bookings: clientBookings,
+      upcomingBookings,
+      pastBookings,
+      totalSpent
+    };
   },
 
   /**
    * Get client notifications
    */
   async getClientNotifications(clientId: string): Promise<any[]> {
-    try {
-      // Validate UUID
-      if (!isValidUuid(clientId)) {
-        throw new Error(`Invalid client ID: ${clientId}`);
-      }
-      
-      const { data, error } = await supabase
-        .from('notifications')
-        .select('*')
-        .eq('recipient_id', clientId)
-        .order('created_at', { ascending: false })
-        .limit(10);
-
-      if (error) {
-        console.error('Error fetching client notifications:', error);
-        return [];
-      }
-
-      return data || [];
-    } catch (error) {
-      console.error('Failed to get client notifications:', error);
-      return [];
-    }
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    return mockNotifications.filter(n => n.recipient_id === clientId);
   },
 
   /**
    * Mark notification as read
    */
   async markNotificationAsRead(notificationId: string): Promise<boolean> {
-    try {
-      // Validate UUID
-      if (!isValidUuid(notificationId)) {
-        throw new Error(`Invalid notification ID: ${notificationId}`);
-      }
-      
-      const { error } = await supabase
-        .from('notifications')
-        .update({
-          status: 'read',
-          read_at: new Date().toISOString()
-        })
-        .eq('id', notificationId);
-
-      if (error) {
-        console.error('Error marking notification as read:', error);
-        return false;
-      }
-
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 200));
+    
+    const notification = mockNotifications.find(n => n.id === notificationId);
+    if (notification) {
+      notification.status = 'read';
+      notification.read_at = new Date().toISOString();
       return true;
-    } catch (error) {
-      console.error('Failed to mark notification as read:', error);
-      return false;
     }
+    return false;
   },
 
   /**
    * Request booking cancellation
    */
   async requestBookingCancellation(bookingId: string, reason: string): Promise<boolean> {
-    try {
-      // Validate UUID
-      if (!isValidUuid(bookingId)) {
-        throw new Error(`Invalid booking ID: ${bookingId}`);
-      }
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const booking = mockBookings.find(b => b.id === bookingId);
+    if (booking) {
+      booking.status = 'cancelled';
+      booking.notes = `Cancellation reason: ${reason}`;
+      booking.updated_at = new Date().toISOString();
       
-      // First update the booking status
-      const { error: bookingError } = await supabase
-        .from('bookings')
-        .update({
-          status: 'cancelled',
-          notes: `Cancellation reason: ${reason}`,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', bookingId);
-
-      if (bookingError) {
-        console.error('Error cancelling booking:', bookingError);
-        return false;
-      }
-
-      // Get booking details for notification
-      const { data: booking, error: fetchError } = await supabase
-        .from('bookings')
-        .select('client_id, session_date, session_time')
-        .eq('id', bookingId)
-        .single();
-
-      if (fetchError) {
-        console.error('Error fetching booking details for cancellation:', fetchError);
-        return true; // Still return true as the booking was cancelled
-      }
-
-      // Create notification for staff
-      const { error: notificationError } = await supabase
-        .from('notifications')
-        .insert({
-          type: 'booking_cancelled',
-          title: 'Booking Cancelled',
-          message: `Booking for ${new Date(booking.session_date).toLocaleDateString()} at ${booking.session_time} has been cancelled. Reason: ${reason}`,
-          recipient_id: null, // Staff notification
-          channel: 'internal',
-          status: 'pending',
-          booking_id: bookingId
-        });
-
-      if (notificationError) {
-        console.error('Error creating cancellation notification:', notificationError);
-      }
-
+      // Add cancellation notification
+      mockNotifications.push({
+        id: generateUuid(),
+        type: 'booking_cancelled',
+        title: 'Booking Cancelled',
+        message: `Your booking for ${booking.session_date} at ${booking.session_time} has been cancelled.`,
+        recipient_id: booking.client_id!,
+        status: 'unread',
+        created_at: new Date().toISOString()
+      });
+      
       return true;
-    } catch (error) {
-      console.error('Failed to request booking cancellation:', error);
-      return false;
     }
+    return false;
   },
 
   /**
    * Regenerate client portal token
    */
   async regeneratePortalToken(clientId: string): Promise<string | null> {
-    try {
-      // Validate UUID
-      if (!isValidUuid(clientId)) {
-        throw new Error(`Invalid client ID: ${clientId}`);
-      }
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    const client = Object.values(mockClients).find(c => c.id === clientId);
+    if (client) {
+      const newToken = generateUuid();
+      client.portal_token = newToken;
+      client.updated_at = new Date().toISOString();
       
-      // Generate new token (UUID v4)
-      const newToken = crypto.randomUUID();
+      // Update the mock clients record
+      mockClients[newToken] = client;
       
-      // Update client with new token
-      const { error } = await supabase
-        .from('clients')
-        .update({
-          portal_token: newToken,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', clientId);
-
-      if (error) {
-        console.error('Error regenerating portal token:', error);
-        return null;
-      }
-
       return newToken;
-    } catch (error) {
-      console.error('Failed to regenerate portal token:', error);
-      return null;
     }
+    return null;
   }
 };

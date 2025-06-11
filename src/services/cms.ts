@@ -1,4 +1,5 @@
-import { supabase } from './supabase';
+// Mock CMS service for static content
+// This replaces the previous Supabase-based CMS
 
 export interface CMSContent {
   id: string;
@@ -12,24 +13,47 @@ export interface CMSContent {
   updated_at: string;
 }
 
+// Static content map for common pages
+const staticContent: Record<string, Record<string, CMSContent>> = {
+  'en': {
+    'privacy-policy-title': {
+      id: '1',
+      slug: 'privacy-policy-title',
+      title: 'Privacy Policy',
+      content: 'Privacy Policy',
+      language: 'en',
+      published: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    'terms-of-service-title': {
+      id: '2',
+      slug: 'terms-of-service-title',
+      title: 'Terms of Service',
+      content: 'Terms of Service',
+      language: 'en',
+      published: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    'cancellation-policy-title': {
+      id: '3',
+      slug: 'cancellation-policy-title',
+      title: 'Cancellation Policy',
+      content: 'Cancellation Policy',
+      language: 'en',
+      published: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }
+  }
+};
+
 export const cmsService = {
   // Get content by slug and language
   async getContent(slug: string, language: string = 'en'): Promise<CMSContent | null> {
     try {
-      const { data, error } = await supabase
-        .from('cms_content')
-        .select('*')
-        .eq('slug', slug)
-        .eq('language', language)
-        .eq('published', true)
-        .single();
-
-      if (error) {
-        console.error('Error fetching content:', error);
-        return null;
-      }
-
-      return data;
+      return staticContent[language]?.[slug] || null;
     } catch (error) {
       console.error('Error in getContent:', error);
       return null;
@@ -39,19 +63,9 @@ export const cmsService = {
   // Get multiple content items by slugs and language
   async getMultipleContent(slugs: string[], language: string = 'en'): Promise<CMSContent[]> {
     try {
-      const { data, error } = await supabase
-        .from('cms_content')
-        .select('*')
-        .in('slug', slugs)
-        .eq('language', language)
-        .eq('published', true);
-
-      if (error) {
-        console.error('Error fetching multiple content:', error);
-        return [];
-      }
-
-      return data || [];
+      return slugs
+        .map(slug => staticContent[language]?.[slug])
+        .filter(content => content !== undefined) as CMSContent[];
     } catch (error) {
       console.error('Error in getMultipleContent:', error);
       return [];
@@ -61,45 +75,10 @@ export const cmsService = {
   // Get all content for a specific language
   async getAllContent(language: string = 'en'): Promise<CMSContent[]> {
     try {
-      const { data, error } = await supabase
-        .from('cms_content')
-        .select('*')
-        .eq('language', language)
-        .eq('published', true)
-        .order('slug');
-
-      if (error) {
-        console.error('Error fetching all content:', error);
-        return [];
-      }
-
-      return data || [];
+      return Object.values(staticContent[language] || {});
     } catch (error) {
       console.error('Error in getAllContent:', error);
       return [];
-    }
-  },
-
-  // Create or update content
-  async upsertContent(content: Omit<CMSContent, 'id' | 'created_at' | 'updated_at'>): Promise<CMSContent | null> {
-    try {
-      const { data, error } = await supabase
-        .from('cms_content')
-        .upsert(content, {
-          onConflict: 'slug,language'
-        })
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error upserting content:', error);
-        return null;
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Error in upsertContent:', error);
-      return null;
     }
   },
 
