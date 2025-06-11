@@ -23,7 +23,8 @@
       typePlaceholder: 'Type your message...',
       send: 'Send',
       quickQuestions: 'Quick questions:',
-      errorMessage: 'Sorry, I\'m having trouble responding right now. Please try again later or contact us directly.'
+      errorMessage: 'Sorry, I\'m having trouble responding right now. Please try again later or contact us directly.',
+      connectionError: 'Unable to connect to chat service. Working in offline mode.'
     },
     ru: {
       chatTitle: 'Поддержка Garda Racing',
@@ -31,7 +32,8 @@
       typePlaceholder: 'Введите ваше сообщение...',
       send: 'Отправить',
       quickQuestions: 'Быстрые вопросы:',
-      errorMessage: 'Извините, у меня возникли проблемы с ответом. Пожалуйста, попробуйте позже или свяжитесь с нами напрямую.'
+      errorMessage: 'Извините, у меня возникли проблемы с ответом. Пожалуйста, попробуйте позже или свяжитесь с нами напрямую.',
+      connectionError: 'Не удается подключиться к службе чата. Работаем в автономном режиме.'
     },
     it: {
       chatTitle: 'Supporto Garda Racing',
@@ -39,7 +41,8 @@
       typePlaceholder: 'Scrivi il tuo messaggio...',
       send: 'Invia',
       quickQuestions: 'Domande rapide:',
-      errorMessage: 'Mi dispiace, sto avendo problemi a rispondere in questo momento. Riprova più tardi o contattaci direttamente.'
+      errorMessage: 'Mi dispiace, sto avendo problemi a rispondere in questo momento. Riprova più tardi o contattaci direttamente.',
+      connectionError: 'Impossibile connettersi al servizio chat. Funziona in modalità offline.'
     },
     de: {
       chatTitle: 'Garda Racing Support',
@@ -47,7 +50,8 @@
       typePlaceholder: 'Geben Sie Ihre Nachricht ein...',
       send: 'Senden',
       quickQuestions: 'Schnelle Fragen:',
-      errorMessage: 'Entschuldigung, ich habe Probleme beim Antworten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie uns direkt.'
+      errorMessage: 'Entschuldigung, ich habe Probleme beim Antworten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie uns direkt.',
+      connectionError: 'Verbindung zum Chat-Service nicht möglich. Arbeitet im Offline-Modus.'
     },
     fr: {
       chatTitle: 'Support Garda Racing',
@@ -55,7 +59,8 @@
       typePlaceholder: 'Tapez votre message...',
       send: 'Envoyer',
       quickQuestions: 'Questions rapides:',
-      errorMessage: 'Désolé, j\'ai du mal à répondre en ce moment. Veuillez réessayer plus tard ou nous contacter directement.'
+      errorMessage: 'Désolé, j\'ai du mal à répondre en ce moment. Veuillez réessayer plus tard ou nous contacter directement.',
+      connectionError: 'Impossible de se connecter au service de chat. Fonctionne en mode hors ligne.'
     },
     es: {
       chatTitle: 'Soporte Garda Racing',
@@ -63,7 +68,8 @@
       typePlaceholder: 'Escribe tu mensaje...',
       send: 'Enviar',
       quickQuestions: 'Preguntas rápidas:',
-      errorMessage: 'Lo siento, estoy teniendo problemas para responder en este momento. Inténtalo de nuevo más tarde o contáctanos directamente.'
+      errorMessage: 'Lo siento, estoy teniendo problemas para responder en este momento. Inténtalo de nuevo más tarde o contáctanos directamente.',
+      connectionError: 'No se puede conectar al servicio de chat. Funcionando en modo sin conexión.'
     }
   };
 
@@ -77,14 +83,14 @@
     es: ['¿Qué está incluido?', '¿Necesito experiencia?', '¿Cómo reservar?']
   };
 
-  // Create Supabase client
+  // Create Supabase client with better error handling
   function createSupabaseClient(supabaseUrl, supabaseAnonKey) {
     if (!supabaseUrl || !supabaseAnonKey) {
-      console.error('Supabase URL and Anon Key are required');
+      console.warn('Supabase URL and Anon Key are required for full functionality');
       return null;
     }
 
-    // Simple fetch wrapper for Supabase
+    // Simple fetch wrapper for Supabase with CORS handling
     return {
       from: (table) => ({
         insert: async (data) => {
@@ -94,18 +100,23 @@
               headers: {
                 'Content-Type': 'application/json',
                 'apikey': supabaseAnonKey,
-                'Authorization': `Bearer ${supabaseAnonKey}`
+                'Authorization': `Bearer ${supabaseAnonKey}`,
+                'Prefer': 'return=minimal'
               },
               body: JSON.stringify(data)
             });
             
             if (!response.ok) {
-              throw new Error(`Error inserting data: ${response.statusText}`);
+              // Handle specific CORS errors
+              if (response.status === 0 || response.type === 'opaque') {
+                throw new Error('CORS_ERROR');
+              }
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
             
             return { data: await response.json(), error: null };
           } catch (error) {
-            console.error('Supabase error:', error);
+            console.warn('Supabase insert error:', error.message);
             return { data: null, error };
           }
         },
@@ -121,12 +132,16 @@
             });
             
             if (!response.ok) {
-              throw new Error(`Error selecting data: ${response.statusText}`);
+              // Handle specific CORS errors
+              if (response.status === 0 || response.type === 'opaque') {
+                throw new Error('CORS_ERROR');
+              }
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
             
             return { data: await response.json(), error: null };
           } catch (error) {
-            console.error('Supabase error:', error);
+            console.warn('Supabase select error:', error.message);
             return { data: null, error };
           }
         }
@@ -134,12 +149,14 @@
     };
   }
 
-  // Chat service
+  // Chat service with offline fallback
   const chatService = {
     supabase: null,
+    isOnline: true,
     
     initialize(supabaseUrl, supabaseAnonKey) {
       this.supabase = createSupabaseClient(supabaseUrl, supabaseAnonKey);
+      this.isOnline = !!this.supabase;
     },
     
     generateSessionId() {
@@ -147,83 +164,139 @@
     },
     
     async sendMessage(message, sessionId, language = 'en') {
-      if (!this.supabase) {
-        console.error('Supabase client not initialized');
+      // Try to save to Supabase if available
+      if (this.supabase && this.isOnline) {
+        try {
+          const result = await this.supabase.from('messages').insert({
+            text: message,
+            session_id: sessionId,
+            sender: 'user',
+            language
+          });
+          
+          // If CORS error, switch to offline mode
+          if (result.error && result.error.message === 'CORS_ERROR') {
+            this.isOnline = false;
+            console.warn('Switching to offline mode due to CORS restrictions');
+          }
+        } catch (error) {
+          console.warn('Failed to save message to database:', error.message);
+          // Continue with offline response
+        }
+      }
+      
+      // Generate response (works offline)
+      return this.generateResponse(message, language);
+    },
+    
+    generateResponse(message, language = 'en') {
+      const lowerMessage = message.toLowerCase();
+      
+      // Check for price-related questions
+      if (lowerMessage.includes('price') || lowerMessage.includes('cost') || 
+          lowerMessage.includes('стоимость') || lowerMessage.includes('цена') ||
+          lowerMessage.includes('prezzo') || lowerMessage.includes('costo') ||
+          lowerMessage.includes('preis') || lowerMessage.includes('kosten') ||
+          lowerMessage.includes('prix') || lowerMessage.includes('coût') ||
+          lowerMessage.includes('precio') || lowerMessage.includes('costo')) {
         return {
-          message: TRANSLATIONS[language]?.errorMessage || TRANSLATIONS.en.errorMessage,
+          message: 'The Garda Racing experience costs €199 per person, all inclusive. This includes professional instruction, safety equipment, and refreshments.',
+          suggestions: DEFAULT_QUICK_REPLIES[language] || DEFAULT_QUICK_REPLIES.en,
           language
         };
       }
       
-      try {
-        // Save user message to Supabase
-        await this.supabase.from('messages').insert({
-          text: message,
-          session_id: sessionId,
-          sender: 'user',
-          language
-        });
-        
-        // Simple keyword matching for demo purposes
-        const lowerMessage = message.toLowerCase();
-        
-        // Check for price-related questions
-        if (lowerMessage.includes('price') || lowerMessage.includes('cost') || 
-            lowerMessage.includes('стоимость') || lowerMessage.includes('цена') ||
-            lowerMessage.includes('prezzo') || lowerMessage.includes('costo') ||
-            lowerMessage.includes('preis') || lowerMessage.includes('kosten') ||
-            lowerMessage.includes('prix') || lowerMessage.includes('coût') ||
-            lowerMessage.includes('precio') || lowerMessage.includes('costo')) {
-          return {
-            message: 'The Garda Racing experience costs €199 per person, all inclusive.',
-            suggestions: DEFAULT_QUICK_REPLIES[language] || DEFAULT_QUICK_REPLIES.en,
-            language
-          };
-        }
-        
-        // Check for experience-related questions
-        if (lowerMessage.includes('experience') || lowerMessage.includes('need to know') || 
-            lowerMessage.includes('опыт') || lowerMessage.includes('нужно знать') ||
-            lowerMessage.includes('esperienza') || lowerMessage.includes('bisogno di sapere') ||
-            lowerMessage.includes('erfahrung') || lowerMessage.includes('wissen müssen') ||
-            lowerMessage.includes('expérience') || lowerMessage.includes('besoin de savoir') ||
-            lowerMessage.includes('experiencia') || lowerMessage.includes('necesito saber')) {
-          return {
-            message: 'No sailing experience is required! Our professional skippers will teach you everything you need to know. We welcome complete beginners and experienced sailors alike.',
-            suggestions: ['What should I bring?', 'How many people per boat?', 'What if the weather is bad?'],
-            language
-          };
-        }
-        
-        // Check for booking-related questions
-        if (lowerMessage.includes('book') || lowerMessage.includes('reservation') || 
-            lowerMessage.includes('бронирование') || lowerMessage.includes('резервация') ||
-            lowerMessage.includes('prenotazione') || lowerMessage.includes('prenotare') ||
-            lowerMessage.includes('buchung') || lowerMessage.includes('reservierung') ||
-            lowerMessage.includes('réservation') || lowerMessage.includes('réserver') ||
-            lowerMessage.includes('reserva') || lowerMessage.includes('reservar')) {
-          return {
-            message: 'You can book your experience directly on our website. Just click the "Book Your Adventure" button on the homepage or go to the Booking page. You can also call us at +39 345 678 9012 for immediate assistance.',
-            suggestions: ['What dates are available?', 'Group booking?', 'Cancellation policy?'],
-            language
-          };
-        }
-        
-        // Default response
+      // Check for experience-related questions
+      if (lowerMessage.includes('experience') || lowerMessage.includes('need to know') || 
+          lowerMessage.includes('опыт') || lowerMessage.includes('нужно знать') ||
+          lowerMessage.includes('esperienza') || lowerMessage.includes('bisogno di sapere') ||
+          lowerMessage.includes('erfahrung') || lowerMessage.includes('wissen müssen') ||
+          lowerMessage.includes('expérience') || lowerMessage.includes('besoin de savoir') ||
+          lowerMessage.includes('experiencia') || lowerMessage.includes('necesito saber')) {
         return {
-          message: 'Thank you for your message! 😊 For specific questions, call us at +39 345 678 9012 or email info@gardaracing.com',
-          suggestions: DEFAULT_QUICK_REPLIES[language] || DEFAULT_QUICK_REPLIES.en,
-          language
-        };
-      } catch (error) {
-        console.error('Error sending message:', error);
-        return {
-          message: TRANSLATIONS[language]?.errorMessage || TRANSLATIONS.en.errorMessage,
+          message: 'No sailing experience is required! Our professional skippers will teach you everything you need to know. We welcome complete beginners and experienced sailors alike.',
+          suggestions: ['What should I bring?', 'How many people per boat?', 'What if the weather is bad?'],
           language
         };
       }
+      
+      // Check for booking-related questions
+      if (lowerMessage.includes('book') || lowerMessage.includes('reservation') || 
+          lowerMessage.includes('бронирование') || lowerMessage.includes('резервация') ||
+          lowerMessage.includes('prenotazione') || lowerMessage.includes('prenotare') ||
+          lowerMessage.includes('buchung') || lowerMessage.includes('reservierung') ||
+          lowerMessage.includes('réservation') || lowerMessage.includes('réserver') ||
+          lowerMessage.includes('reserva') || lowerMessage.includes('reservar')) {
+        return {
+          message: 'You can book your experience directly on our website. Just click the "Book Your Adventure" button on the homepage or go to the Booking page. You can also call us at +39 345 678 9012 for immediate assistance.',
+          suggestions: ['What dates are available?', 'Group booking?', 'Cancellation policy?'],
+          language
+        };
+      }
+      
+      // Check for what's included questions
+      if (lowerMessage.includes('included') || lowerMessage.includes('include') ||
+          lowerMessage.includes('включено') || lowerMessage.includes('включает') ||
+          lowerMessage.includes('incluso') || lowerMessage.includes('include') ||
+          lowerMessage.includes('inbegriffen') || lowerMessage.includes('enthalten') ||
+          lowerMessage.includes('inclus') || lowerMessage.includes('comprend') ||
+          lowerMessage.includes('incluido') || lowerMessage.includes('incluye')) {
+        return {
+          message: 'Your Garda Racing experience includes: professional sailing instruction, all safety equipment (life jackets, harnesses), yacht rental, welcome drink, and light refreshments. We also provide photos of your adventure!',
+          suggestions: ['What should I bring?', 'How long is the experience?', 'Weather policy?'],
+          language
+        };
+      }
+      
+      // Check for weather-related questions
+      if (lowerMessage.includes('weather') || lowerMessage.includes('rain') || lowerMessage.includes('wind') ||
+          lowerMessage.includes('погода') || lowerMessage.includes('дождь') ||
+          lowerMessage.includes('tempo') || lowerMessage.includes('pioggia') ||
+          lowerMessage.includes('wetter') || lowerMessage.includes('regen') ||
+          lowerMessage.includes('temps') || lowerMessage.includes('pluie') ||
+          lowerMessage.includes('tiempo') || lowerMessage.includes('lluvia')) {
+        return {
+          message: 'We monitor weather conditions closely for your safety. If conditions are unsafe, we\'ll reschedule your experience at no extra cost. Light rain doesn\'t stop us - sailing in different conditions is part of the adventure!',
+          suggestions: ['What should I bring?', 'Cancellation policy?', 'How to book?'],
+          language
+        };
+      }
+      
+      // Default response
+      return {
+        message: 'Thank you for your message! 😊 I\'m here to help with any questions about our yacht racing experiences. For immediate assistance, call us at +39 345 678 9012 or email info@gardaracing.com',
+        suggestions: DEFAULT_QUICK_REPLIES[language] || DEFAULT_QUICK_REPLIES.en,
+        language
+      };
     }
   };
+
+  // Load CSS styles
+  function loadStyles() {
+    // Check if styles are already loaded
+    if (document.querySelector('#garda-chat-widget-styles')) {
+      return;
+    }
+    
+    // Try to load external CSS file first
+    const link = document.createElement('link');
+    link.id = 'garda-chat-widget-styles';
+    link.rel = 'stylesheet';
+    link.href = '/garda-chat-widget.css';
+    
+    // Fallback to inline styles if external file fails
+    link.onerror = () => {
+      link.remove();
+      const style = document.createElement('style');
+      style.id = 'garda-chat-widget-styles';
+      style.textContent = `
+        .garda-chat-widget-container{position:fixed;z-index:10000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;--primary-color:#dc2626}.garda-chat-widget-container.bottom-right{bottom:20px;right:20px}.garda-chat-widget-button{width:60px;height:60px;background:var(--primary-color);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.15);transition:all 0.3s ease;position:relative}.garda-chat-widget-button:hover{transform:scale(1.1)}.garda-chat-widget-button-icon{width:24px;height:24px;color:white}.garda-chat-widget-button-status{position:absolute;top:4px;right:4px;width:12px;height:12px;background:#10b981;border:2px solid white;border-radius:50%}.garda-chat-widget-panel{position:absolute;bottom:80px;right:0;width:350px;height:500px;background:white;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);display:flex;flex-direction:column;overflow:hidden}.garda-chat-widget-header{background:var(--primary-color);color:white;padding:16px;display:flex;align-items:center;justify-content:space-between}.garda-chat-widget-header-title{display:flex;align-items:center;gap:12px}.garda-chat-widget-header-avatar{width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center}.garda-chat-widget-header-info h3{margin:0;font-size:16px;font-weight:600}.garda-chat-widget-header-info p{margin:0;font-size:12px;opacity:0.9}.garda-chat-widget-header-close{background:none;border:none;color:white;cursor:pointer;padding:4px;border-radius:4px}.garda-chat-widget-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}.garda-chat-widget-message{display:flex;gap:8px;align-items:flex-start}.garda-chat-widget-message.user{flex-direction:row-reverse}.garda-chat-widget-message-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}.garda-chat-widget-message.user .garda-chat-widget-message-avatar{background:var(--primary-color);color:white}.garda-chat-widget-message.bot .garda-chat-widget-message-avatar{background:#f3f4f6;color:#6b7280}.garda-chat-widget-message-content{max-width:70%}.garda-chat-widget-message.user .garda-chat-widget-message-content{text-align:right}.garda-chat-widget-message-text{background:#f3f4f6;padding:8px 12px;border-radius:12px;margin:0 0 4px 0;font-size:14px;line-height:1.4}.garda-chat-widget-message.user .garda-chat-widget-message-text{background:var(--primary-color);color:white}.garda-chat-widget-message-time{font-size:11px;color:#9ca3af;margin:0}.garda-chat-widget-typing{display:flex;gap:4px;padding:8px 12px;background:#f3f4f6;border-radius:12px}.garda-chat-widget-typing-dot{width:6px;height:6px;background:#9ca3af;border-radius:50%;animation:typing 1.4s infinite ease-in-out}.garda-chat-widget-suggestions{padding:0 16px 16px;border-bottom:1px solid #e5e7eb}.garda-chat-widget-suggestions-title{font-size:12px;color:#6b7280;margin:0 0 8px 0;font-weight:500}.garda-chat-widget-suggestions-list{display:flex;flex-wrap:wrap;gap:6px}.garda-chat-widget-suggestion{background:#f9fafb;border:1px solid #e5e7eb;border-radius:16px;padding:6px 12px;font-size:12px;cursor:pointer;transition:all 0.2s ease}.garda-chat-widget-suggestion:hover{background:var(--primary-color);color:white;border-color:var(--primary-color)}.garda-chat-widget-input{padding:16px;border-top:1px solid #e5e7eb}.garda-chat-widget-input-form{display:flex;gap:8px;align-items:center}.garda-chat-widget-input-field{flex:1;border:1px solid #e5e7eb;border-radius:20px;padding:8px 16px;font-size:14px;outline:none}.garda-chat-widget-input-field:focus{border-color:var(--primary-color)}.garda-chat-widget-input-submit{width:36px;height:36px;background:var(--primary-color);border:none;border-radius:50%;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center}.garda-chat-widget-input-submit:disabled{background:#d1d5db;cursor:not-allowed}@keyframes typing{0%,80%,100%{transform:scale(0.8);opacity:0.5}40%{transform:scale(1);opacity:1}}
+      `;
+      document.head.appendChild(style);
+    };
+    
+    document.head.appendChild(link);
+  }
 
   // Main widget class
   class GardaChatWidget {
@@ -235,6 +308,9 @@
       this.container = null;
       this.messagesContainer = null;
       this.inputField = null;
+      
+      // Load styles
+      loadStyles();
       
       // Initialize chat service
       chatService.initialize(this.config.supabaseUrl, this.config.supabaseAnonKey);
@@ -291,7 +367,7 @@
           </div>
           <div class="garda-chat-widget-header-info">
             <h3>${TRANSLATIONS[this.config.language]?.chatTitle || TRANSLATIONS.en.chatTitle}</h3>
-            <p>${TRANSLATIONS[this.config.language]?.online || TRANSLATIONS.en.online}</p>
+            <p>${chatService.isOnline ? (TRANSLATIONS[this.config.language]?.online || TRANSLATIONS.en.online) : 'Offline'}</p>
           </div>
         </div>
         <button class="garda-chat-widget-header-close" aria-label="Close chat">
