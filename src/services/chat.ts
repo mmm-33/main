@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { useTranslation } from 'react-i18next';
 
 export interface ChatMessage {
   id: string;
@@ -15,146 +16,167 @@ export interface ChatResponse {
   language: string;
 }
 
+// Мультиязычные FAQ ответы
 const MULTILINGUAL_FAQ_RESPONSES: Record<string, Record<string, ChatResponse>> = {
+  // Английский
   en: {
     price: {
-      message: "Our kitesurfing lesson costs 130€ per person. This includes all equipment and a certified instructor.",
-      suggestions: ["What's included in the lesson?", "Do you offer group discounts?"],
-      language: "en",
-    },
-    included: {
-      message: "The lesson includes all the equipment: kite, board, wetsuit, harness, and a certified instructor.",
-      suggestions: ["How much does it cost?", "What if I have my own equipment?"],
-      language: "en",
-    },
-    experience: {
-      message: "No worries! Our lessons are perfect for beginners. Our instructors will guide you every step of the way.",
-      suggestions: ["How long is the lesson?", "Where are you located?"],
-      language: "en",
-    },
-    weather: {
-      message: "We always monitor the weather. If the conditions are unsafe, we’ll reschedule your lesson at no extra cost.",
-      suggestions: ["What if it rains?", "Can I get a refund?"],
-      language: "en",
-    },
-    booking: {
-      message: "You can book a lesson directly through our website or contact us via WhatsApp for more options.",
-      suggestions: ["Can I pay online?", "Do you have availability this weekend?"],
-      language: "en",
+      message: 'The Garda Racing experience costs €199 per person.',
+      suggestions: ['What\'s included?', 'Do I need experience?', 'How to book?'],
+      language: 'en',
     },
     group: {
-      message: "Yes! We offer group lessons and corporate packages. Contact us to customize your experience.",
-      suggestions: ["Is there a discount for groups?", "Can we book a private instructor?"],
-      language: "en",
+      message: 'Perfect for groups! 👥 We offer discounts for 6+ people and special corporate packages.',
+      suggestions: ['Corporate events?', 'Team building?', 'Private charters?'],
+      language: 'en',
     },
   },
+  // Русский
   ru: {
     price: {
-      message: "Наш урок по кайтсерфингу стоит 130€ с человека. В стоимость входит всё оборудование и инструктор.",
-      suggestions: ["Что включено в урок?", "Есть ли скидки на группу?"],
-      language: "ru",
-    },
-    included: {
-      message: "Урок включает всё оборудование: кайт, доску, гидрокостюм, трапецию и инструктора.",
-      suggestions: ["Сколько это стоит?", "А если у меня есть своё оборудование?"],
-      language: "ru",
-    },
-    experience: {
-      message: "Не переживайте! Наши уроки идеально подходят для новичков. Инструктор поможет вам на каждом этапе.",
-      suggestions: ["Сколько длится урок?", "Где вы находитесь?"],
-      language: "ru",
-    },
-    weather: {
-      message: "Мы следим за погодой. Если условия небезопасны, мы бесплатно перенесем ваш урок.",
-      suggestions: ["А если будет дождь?", "Можно вернуть деньги?"],
-      language: "ru",
-    },
-    booking: {
-      message: "Вы можете забронировать урок через наш сайт или написать нам в WhatsApp.",
-      suggestions: ["Можно оплатить онлайн?", "Есть ли места на выходных?"],
-      language: "ru",
+      message: 'Стоимость участия — €199 на человека.',
+      suggestions: ['Что включено?', 'Нужен ли опыт?', 'Как забронировать?'],
+      language: 'ru',
     },
     group: {
-      message: "Да, мы предлагаем групповые и корпоративные уроки. Свяжитесь с нами для деталей.",
-      suggestions: ["Есть скидка на группу?", "Можно ли заказать частного инструктора?"],
-      language: "ru",
+      message: 'Отлично для групп! 👥 Мы предлагаем скидки для 6+ человек и специальные корпоративные пакеты.',
+      suggestions: ['Корпоративные события?', 'Тимбилдинг?', 'Частные чартеры?'],
+      language: 'ru',
+    },
+  },
+  // Испанский
+  es: {
+    price: {
+      message: 'La experiencia Garda Racing cuesta €199 por persona.',
+      suggestions: ['¿Qué está incluido?', '¿Necesito experiencia?', '¿Cómo reservar?'],
+      language: 'es',
+    },
+    group: {
+      message: '¡Excelente para grupos! 👥 Ofrecemos descuentos para 6+ personas y paquetes corporativos especiales.',
+      suggestions: ['¿Eventos corporativos?', '¿Team building?', '¿Charters privados?'],
+      language: 'es',
+    },
+  },
+  // Французский
+  fr: {
+    price: {
+      message: 'L’expérience Garda Racing coûte 199€ par personne.',
+      suggestions: ['Qu\'est-ce qui est inclus ?', 'Avez-vous besoin d\'expérience ?', 'Comment réserver ?'],
+      language: 'fr',
+    },
+    group: {
+      message: 'Idéal pour les groupes ! Nous proposons des réductions pour 6+ personnes.',
+      suggestions: ['Événements professionnels ?', 'Activités team building ?', 'Charte privé ?'],
+      language: 'fr',
+    },
+  },
+  // Итальянский
+  it: {
+    price: {
+      message: 'L’esperienza Garda Racing costa 199€ a persona.',
+      suggestions: ['Cosa è incluso?', 'Serve esperienza?', 'Come prenotare?'],
+      language: 'it',
+    },
+    group: {
+      message: 'Perfetto per gruppi! Offriamo sconti per 6+ persone e pacchetti aziendali speciali.',
+      suggestions: ['Eventi aziendali?', 'Team building?', 'Charter privati?'],
+      language: 'it',
     },
   },
 };
 
+// Дефолтные ответы для каждого языка
 const DEFAULT_RESPONSES: Record<string, ChatResponse> = {
   en: {
-    message: "I'm not sure I understand. Can you please rephrase your question?",
-    suggestions: ["How much is a lesson?", "What do I need to bring?", "How do I book?"],
-    language: "en",
+    message: 'Thank you for your message! 😊 For specific questions, call us at +39 345 678 9012 or email info@gardaracing.com',
+    suggestions: ['What\'s included?', 'Do I need experience?', 'How do I book?'],
+    language: 'en',
   },
   ru: {
-    message: "Я не совсем понял. Можете переформулировать вопрос?",
-    suggestions: ["Сколько стоит урок?", "Что нужно брать с собой?", "Как забронировать?"],
-    language: "ru",
+    message: 'Спасибо за ваше сообщение! Для уточнений звоните +39 345 678 9012 или пишите info@gardaracing.com',
+    suggestions: ['Что включено?', 'Нужен ли опыт?', 'Как забронировать?'],
+    language: 'ru',
+  },
+  es: {
+    message: '¡Gracias por tu mensaje! Para preguntas específicas, llámanos al +39 345 678 9012 o envía un correo a info@gardaracing.com',
+    suggestions: ['¿Qué está incluido?', '¿Necesito experiencia?', '¿Cómo reservar?'],
+    language: 'es',
+  },
+  fr: {
+    message: 'Merci pour votre message ! Pour toute question, appelez-nous au +39 345 678 9012 ou envoyez un e-mail à info@gardaracing.com',
+    suggestions: ['Que comprend le prix ?', 'Est-ce que je dois avoir de l’expérience ?', 'Comment réserver ?'],
+    language: 'fr',
+  },
+  it: {
+    message: 'Grazie per il tuo messaggio! Per domande specifiche chiama il +39 345 678 9012 o scrivi a info@gardaracing.com',
+    suggestions: ['Cosa include?', 'Devo avere esperienza?', 'Come prenoto?'],
+    language: 'it',
   },
 };
 
 export const chatService = {
-  async sendMessage(message: string, sessionId?: string, language: string = 'en'): Promise<ChatResponse> {
+  async sendMessage(
+    message: string,
+    sessionId?: string,
+    language: string = 'en'
+  ): Promise<ChatResponse> {
     if (!MULTILINGUAL_FAQ_RESPONSES[language]) {
-      language = 'en';
+      language = 'en'; // Если язык не поддерживается — дефолт английский
     }
 
-    const lowerMessage = message.toLowerCase();
-
+    // Сохраняем сообщение пользователя в Supabase
     if (sessionId) {
-      await supabase.from('messages').insert({
+      const { error } = await supabase.from('messages').insert({
         text: message,
         session_id: sessionId,
         sender: 'user',
         language,
       });
-    }
 
-    let key: string | null = null;
-
-    const keywordMap: Record<string, string[]> = {
-      price: ['price', 'cost', 'euro', '€', 'money', 'how much'],
-      included: ['included', 'what is included', 'package', 'offer', 'equipment'],
-      experience: ['experience', 'no experience', 'beginner', 'skill', 'first time'],
-      weather: ['weather', 'rain', 'wind', 'cancel', 'reschedule', 'conditions'],
-      booking: ['book', 'booking', 'reserve', 'how to book', 'reservation'],
-      group: ['group', 'corporate', 'team', 'friends', 'event', 'discount'],
-    };
-
-    for (const [k, keywords] of Object.entries(keywordMap)) {
-      if (keywords.some((word) => lowerMessage.includes(word))) {
-        key = k;
-        break;
+      if (error) {
+        console.error('Error saving user message:', error);
       }
     }
 
-    let reply: ChatResponse;
+    // Подбор по ключевым словам
+    const lowerMessage = message.toLowerCase();
 
-    if (key && MULTILINGUAL_FAQ_RESPONSES[language][key]) {
-      reply = MULTILINGUAL_FAQ_RESPONSES[language][key];
-    } else {
-      reply = DEFAULT_RESPONSES[language];
+    // Поиск совпадений
+    const responseKey = Object.keys(MULTILINGUAL_FAQ_RESPONSES[language] || {});
+    for (const key of responseKey) {
+      const keywords = MULTILINGUAL_FAQ_RESPONSES[language][key].message
+        .split(' ')
+        .filter((word) => word.startsWith('[') && word.endsWith(']') && word.length > 2);
+
+      const hasMatch = keywords.some((keyword) =>
+        lowerMessage.includes(keyword.slice(1, -1).toLowerCase())
+      );
+
+      if (hasMatch) {
+        return MULTILINGUAL_FAQ_RESPONSES[language][key];
+      }
     }
 
-    if (sessionId) {
-      await supabase.from('messages').insert({
-        text: reply.message,
-        session_id: sessionId,
-        sender: 'bot',
-        language: reply.language,
-      });
-    }
-
-    return reply;
+    // Если нет совпадения — вернуть стандартный ответ
+    return DEFAULT_RESPONSES[language] || DEFAULT_RESPONSES.en;
   },
 
+  // Проверка наличия ключевых слов
+  matchesKeywords(message: string, keywords: string[]): boolean {
+    return keywords.some((keyword) => message.toLowerCase().includes(keyword.toLowerCase()));
+  },
+
+  // Генерация уникального ID для сессии
+  generateSessionId(): string {
+    return `chat_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+  },
+
+  // Получить быстрые ответы по языку
   getQuickReplies(language: string = 'en'): string[] {
-    if (DEFAULT_RESPONSES[language]) {
-      return DEFAULT_RESPONSES[language].suggestions ?? [];
-    }
-    return DEFAULT_RESPONSES['en'].suggestions ?? [];
+    return (
+      DEFAULT_RESPONSES[language]?.suggestions ||
+      DEFAULT_RESPONSES.en.suggestions ||
+      []
+    );
   },
 };
-
