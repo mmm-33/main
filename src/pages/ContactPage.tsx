@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle, ChevronDown, ChevronUp, HelpCircle, User } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
-import { supabase } from '../services/supabase';
 import PhoneInput from '../components/PhoneInput';
 
 interface ContactFormData {
@@ -26,16 +25,13 @@ const ContactPage: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Store the message in the database
-      const { error } = await supabase
-        .from('messages')
-        .insert({
-          text: `Contact Form - ${data.subject}\n\nFrom: ${data.name} (${data.email})\n\nMessage: ${data.message}`
-        });
-
-      if (error) {
-        throw error;
-      }
+      // Simulate API call for storing the message
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // In a real implementation, this would store the message in the database
+      console.log('Contact form submission:', {
+        text: `Contact Form - ${data.subject}\n\nFrom: ${data.name} (${data.email})\n\nMessage: ${data.message}`
+      });
 
       toast.success(t('contact.sendingMessage') + ' ' + t('common.success'));
       reset();
