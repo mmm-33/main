@@ -20,56 +20,68 @@
     en: {
       chatTitle: 'Garda Racing Support',
       online: 'Online',
+      offline: 'Offline',
       typePlaceholder: 'Type your message...',
       send: 'Send',
       quickQuestions: 'Quick questions:',
       errorMessage: 'Sorry, I\'m having trouble responding right now. Please try again later or contact us directly.',
-      connectionError: 'Unable to connect to chat service. Working in offline mode.'
+      connectionError: 'Unable to connect to chat service. Working in offline mode.',
+      corsError: 'Connection restricted. Working in offline mode with basic responses.'
     },
     ru: {
       chatTitle: 'Поддержка Garda Racing',
       online: 'В сети',
+      offline: 'Автономно',
       typePlaceholder: 'Введите ваше сообщение...',
       send: 'Отправить',
       quickQuestions: 'Быстрые вопросы:',
       errorMessage: 'Извините, у меня возникли проблемы с ответом. Пожалуйста, попробуйте позже или свяжитесь с нами напрямую.',
-      connectionError: 'Не удается подключиться к службе чата. Работаем в автономном режиме.'
+      connectionError: 'Не удается подключиться к службе чата. Работаем в автономном режиме.',
+      corsError: 'Соединение ограничено. Работаем в автономном режиме с базовыми ответами.'
     },
     it: {
       chatTitle: 'Supporto Garda Racing',
       online: 'Online',
+      offline: 'Offline',
       typePlaceholder: 'Scrivi il tuo messaggio...',
       send: 'Invia',
       quickQuestions: 'Domande rapide:',
       errorMessage: 'Mi dispiace, sto avendo problemi a rispondere in questo momento. Riprova più tardi o contattaci direttamente.',
-      connectionError: 'Impossibile connettersi al servizio chat. Funziona in modalità offline.'
+      connectionError: 'Impossibile connettersi al servizio chat. Funziona in modalità offline.',
+      corsError: 'Connessione limitata. Funziona in modalità offline con risposte di base.'
     },
     de: {
       chatTitle: 'Garda Racing Support',
       online: 'Online',
+      offline: 'Offline',
       typePlaceholder: 'Geben Sie Ihre Nachricht ein...',
       send: 'Senden',
       quickQuestions: 'Schnelle Fragen:',
       errorMessage: 'Entschuldigung, ich habe Probleme beim Antworten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie uns direkt.',
-      connectionError: 'Verbindung zum Chat-Service nicht möglich. Arbeitet im Offline-Modus.'
+      connectionError: 'Verbindung zum Chat-Service nicht möglich. Arbeitet im Offline-Modus.',
+      corsError: 'Verbindung eingeschränkt. Arbeitet im Offline-Modus mit grundlegenden Antworten.'
     },
     fr: {
       chatTitle: 'Support Garda Racing',
       online: 'En ligne',
+      offline: 'Hors ligne',
       typePlaceholder: 'Tapez votre message...',
       send: 'Envoyer',
       quickQuestions: 'Questions rapides:',
       errorMessage: 'Désolé, j\'ai du mal à répondre en ce moment. Veuillez réessayer plus tard ou nous contacter directement.',
-      connectionError: 'Impossible de se connecter au service de chat. Fonctionne en mode hors ligne.'
+      connectionError: 'Impossible de se connecter au service de chat. Fonctionne en mode hors ligne.',
+      corsError: 'Connexion restreinte. Fonctionne en mode hors ligne avec des réponses de base.'
     },
     es: {
       chatTitle: 'Soporte Garda Racing',
       online: 'En línea',
+      offline: 'Sin conexión',
       typePlaceholder: 'Escribe tu mensaje...',
       send: 'Enviar',
       quickQuestions: 'Preguntas rápidas:',
       errorMessage: 'Lo siento, estoy teniendo problemas para responder en este momento. Inténtalo de nuevo más tarde o contáctanos directamente.',
-      connectionError: 'No se puede conectar al servicio de chat. Funcionando en modo sin conexión.'
+      connectionError: 'No se puede conectar al servicio de chat. Funcionando en modo sin conexión.',
+      corsError: 'Conexión restringida. Funcionando en modo sin conexión con respuestas básicas.'
     }
   };
 
@@ -90,11 +102,14 @@
       return null;
     }
 
-    // Simple fetch wrapper for Supabase with CORS handling
+    // Simple fetch wrapper for Supabase with enhanced CORS handling
     return {
       from: (table) => ({
         insert: async (data) => {
           try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
             const response = await fetch(`${supabaseUrl}/rest/v1/${table}`, {
               method: 'POST',
               headers: {
@@ -103,60 +118,119 @@
                 'Authorization': `Bearer ${supabaseAnonKey}`,
                 'Prefer': 'return=minimal'
               },
-              body: JSON.stringify(data)
+              body: JSON.stringify(data),
+              signal: controller.signal
             });
             
+            clearTimeout(timeoutId);
+            
             if (!response.ok) {
-              // Handle specific CORS errors
-              if (response.status === 0 || response.type === 'opaque') {
+              // Handle specific error types
+              if (response.status === 0) {
                 throw new Error('CORS_ERROR');
               }
-              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+              if (response.status >= 400 && response.status < 500) {
+                throw new Error(`CLIENT_ERROR_${response.status}`);
+              }
+              if (response.status >= 500) {
+                throw new Error(`SERVER_ERROR_${response.status}`);
+              }
+              throw new Error(`HTTP_${response.status}`);
             }
             
-            return { data: await response.json(), error: null };
+            const result = await response.json();
+            return { data: result, error: null };
           } catch (error) {
+            // Enhanced error categorization
+            if (error.name === 'AbortError') {
+              console.warn('Supabase request timeout');
+              return { data: null, error: { type: 'TIMEOUT', message: 'Request timeout' } };
+            }
+            
+            // Check for common CORS/network errors
+            if (error.message === 'Failed to fetch' || 
+                error.message === 'CORS_ERROR' || 
+                error.message.includes('CORS') || 
+                error.message.includes('NetworkError') ||
+                error.message.includes('network') ||
+                error.name === 'TypeError' && error.message.includes('fetch')) {
+              console.warn('CORS/Network error detected, switching to offline mode');
+              return { data: null, error: { type: 'CORS', message: 'CORS restriction or network error' } };
+            }
+            
             console.warn('Supabase insert error:', error.message);
-            return { data: null, error };
+            return { data: null, error: { type: 'UNKNOWN', message: error.message } };
           }
         },
         select: async (columns = '*') => {
           try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
             const response = await fetch(`${supabaseUrl}/rest/v1/${table}?select=${columns}`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
                 'apikey': supabaseAnonKey,
                 'Authorization': `Bearer ${supabaseAnonKey}`
-              }
+              },
+              signal: controller.signal
             });
             
+            clearTimeout(timeoutId);
+            
             if (!response.ok) {
-              // Handle specific CORS errors
-              if (response.status === 0 || response.type === 'opaque') {
+              // Handle specific error types
+              if (response.status === 0) {
                 throw new Error('CORS_ERROR');
               }
-              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+              if (response.status >= 400 && response.status < 500) {
+                throw new Error(`CLIENT_ERROR_${response.status}`);
+              }
+              if (response.status >= 500) {
+                throw new Error(`SERVER_ERROR_${response.status}`);
+              }
+              throw new Error(`HTTP_${response.status}`);
             }
             
-            return { data: await response.json(), error: null };
+            const result = await response.json();
+            return { data: result, error: null };
           } catch (error) {
+            // Enhanced error categorization
+            if (error.name === 'AbortError') {
+              console.warn('Supabase request timeout');
+              return { data: null, error: { type: 'TIMEOUT', message: 'Request timeout' } };
+            }
+            
+            // Check for common CORS/network errors
+            if (error.message === 'Failed to fetch' || 
+                error.message === 'CORS_ERROR' || 
+                error.message.includes('CORS') || 
+                error.message.includes('NetworkError') ||
+                error.message.includes('network') ||
+                error.name === 'TypeError' && error.message.includes('fetch')) {
+              console.warn('CORS/Network error detected, switching to offline mode');
+              return { data: null, error: { type: 'CORS', message: 'CORS restriction or network error' } };
+            }
+            
             console.warn('Supabase select error:', error.message);
-            return { data: null, error };
+            return { data: null, error: { type: 'UNKNOWN', message: error.message } };
           }
         }
       })
     };
   }
 
-  // Chat service with offline fallback
+  // Chat service with enhanced offline fallback
   const chatService = {
     supabase: null,
     isOnline: true,
+    connectionStatus: 'unknown', // 'online', 'offline', 'cors_restricted'
     
     initialize(supabaseUrl, supabaseAnonKey) {
       this.supabase = createSupabaseClient(supabaseUrl, supabaseAnonKey);
       this.isOnline = !!this.supabase;
+      this.connectionStatus = this.isOnline ? 'online' : 'offline';
     },
     
     generateSessionId() {
@@ -164,8 +238,8 @@
     },
     
     async sendMessage(message, sessionId, language = 'en') {
-      // Try to save to Supabase if available
-      if (this.supabase && this.isOnline) {
+      // Try to save to Supabase if available and online
+      if (this.supabase && this.connectionStatus === 'online') {
         try {
           const result = await this.supabase.from('messages').insert({
             text: message,
@@ -174,19 +248,48 @@
             language
           });
           
-          // If CORS error, switch to offline mode
-          if (result.error && result.error.message === 'CORS_ERROR') {
-            this.isOnline = false;
-            console.warn('Switching to offline mode due to CORS restrictions');
+          // Handle different error types
+          if (result.error) {
+            if (result.error.type === 'CORS') {
+              this.connectionStatus = 'cors_restricted';
+              console.warn('CORS restriction detected, switching to offline mode');
+            } else if (result.error.type === 'NETWORK' || result.error.type === 'TIMEOUT') {
+              this.connectionStatus = 'offline';
+              console.warn('Network issues detected, switching to offline mode');
+            } else {
+              console.warn('Database error:', result.error.message);
+            }
           }
         } catch (error) {
           console.warn('Failed to save message to database:', error.message);
-          // Continue with offline response
+          // Check if it's a CORS/network error
+          if (error.message === 'Failed to fetch' || 
+              error.message.includes('CORS') || 
+              error.message.includes('NetworkError') ||
+              error.name === 'TypeError' && error.message.includes('fetch')) {
+            this.connectionStatus = 'cors_restricted';
+          } else {
+            this.connectionStatus = 'offline';
+          }
         }
       }
       
       // Generate response (works offline)
       return this.generateResponse(message, language);
+    },
+    
+    getConnectionStatusText(language) {
+      const translations = TRANSLATIONS[language] || TRANSLATIONS.en;
+      
+      switch (this.connectionStatus) {
+        case 'online':
+          return translations.online;
+        case 'cors_restricted':
+          return translations.offline + ' (CORS)';
+        case 'offline':
+        default:
+          return translations.offline;
+      }
     },
     
     generateResponse(message, language = 'en') {
@@ -290,7 +393,7 @@
       const style = document.createElement('style');
       style.id = 'garda-chat-widget-styles';
       style.textContent = `
-        .garda-chat-widget-container{position:fixed;z-index:10000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;--primary-color:#dc2626}.garda-chat-widget-container.bottom-right{bottom:20px;right:20px}.garda-chat-widget-button{width:60px;height:60px;background:var(--primary-color);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.15);transition:all 0.3s ease;position:relative}.garda-chat-widget-button:hover{transform:scale(1.1)}.garda-chat-widget-button-icon{width:24px;height:24px;color:white}.garda-chat-widget-button-status{position:absolute;top:4px;right:4px;width:12px;height:12px;background:#10b981;border:2px solid white;border-radius:50%}.garda-chat-widget-panel{position:absolute;bottom:80px;right:0;width:350px;height:500px;background:white;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);display:flex;flex-direction:column;overflow:hidden}.garda-chat-widget-header{background:var(--primary-color);color:white;padding:16px;display:flex;align-items:center;justify-content:space-between}.garda-chat-widget-header-title{display:flex;align-items:center;gap:12px}.garda-chat-widget-header-avatar{width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center}.garda-chat-widget-header-info h3{margin:0;font-size:16px;font-weight:600}.garda-chat-widget-header-info p{margin:0;font-size:12px;opacity:0.9}.garda-chat-widget-header-close{background:none;border:none;color:white;cursor:pointer;padding:4px;border-radius:4px}.garda-chat-widget-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}.garda-chat-widget-message{display:flex;gap:8px;align-items:flex-start}.garda-chat-widget-message.user{flex-direction:row-reverse}.garda-chat-widget-message-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}.garda-chat-widget-message.user .garda-chat-widget-message-avatar{background:var(--primary-color);color:white}.garda-chat-widget-message.bot .garda-chat-widget-message-avatar{background:#f3f4f6;color:#6b7280}.garda-chat-widget-message-content{max-width:70%}.garda-chat-widget-message.user .garda-chat-widget-message-content{text-align:right}.garda-chat-widget-message-text{background:#f3f4f6;padding:8px 12px;border-radius:12px;margin:0 0 4px 0;font-size:14px;line-height:1.4}.garda-chat-widget-message.user .garda-chat-widget-message-text{background:var(--primary-color);color:white}.garda-chat-widget-message-time{font-size:11px;color:#9ca3af;margin:0}.garda-chat-widget-typing{display:flex;gap:4px;padding:8px 12px;background:#f3f4f6;border-radius:12px}.garda-chat-widget-typing-dot{width:6px;height:6px;background:#9ca3af;border-radius:50%;animation:typing 1.4s infinite ease-in-out}.garda-chat-widget-suggestions{padding:0 16px 16px;border-bottom:1px solid #e5e7eb}.garda-chat-widget-suggestions-title{font-size:12px;color:#6b7280;margin:0 0 8px 0;font-weight:500}.garda-chat-widget-suggestions-list{display:flex;flex-wrap:wrap;gap:6px}.garda-chat-widget-suggestion{background:#f9fafb;border:1px solid #e5e7eb;border-radius:16px;padding:6px 12px;font-size:12px;cursor:pointer;transition:all 0.2s ease}.garda-chat-widget-suggestion:hover{background:var(--primary-color);color:white;border-color:var(--primary-color)}.garda-chat-widget-input{padding:16px;border-top:1px solid #e5e7eb}.garda-chat-widget-input-form{display:flex;gap:8px;align-items:center}.garda-chat-widget-input-field{flex:1;border:1px solid #e5e7eb;border-radius:20px;padding:8px 16px;font-size:14px;outline:none}.garda-chat-widget-input-field:focus{border-color:var(--primary-color)}.garda-chat-widget-input-submit{width:36px;height:36px;background:var(--primary-color);border:none;border-radius:50%;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center}.garda-chat-widget-input-submit:disabled{background:#d1d5db;cursor:not-allowed}@keyframes typing{0%,80%,100%{transform:scale(0.8);opacity:0.5}40%{transform:scale(1);opacity:1}}
+        .garda-chat-widget-container{position:fixed;z-index:10000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;--primary-color:#dc2626}.garda-chat-widget-container.bottom-right{bottom:20px;right:20px}.garda-chat-widget-button{width:60px;height:60px;background:var(--primary-color);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.15);transition:all 0.3s ease;position:relative}.garda-chat-widget-button:hover{transform:scale(1.1)}.garda-chat-widget-button-icon{width:24px;height:24px;color:white}.garda-chat-widget-button-status{position:absolute;top:4px;right:4px;width:12px;height:12px;background:#10b981;border:2px solid white;border-radius:50%}.garda-chat-widget-button-status.offline{background:#ef4444}.garda-chat-widget-button-status.cors-restricted{background:#f59e0b}.garda-chat-widget-panel{position:absolute;bottom:80px;right:0;width:350px;height:500px;background:white;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);display:flex;flex-direction:column;overflow:hidden}.garda-chat-widget-header{background:var(--primary-color);color:white;padding:16px;display:flex;align-items:center;justify-content:space-between}.garda-chat-widget-header-title{display:flex;align-items:center;gap:12px}.garda-chat-widget-header-avatar{width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center}.garda-chat-widget-header-info h3{margin:0;font-size:16px;font-weight:600}.garda-chat-widget-header-info p{margin:0;font-size:12px;opacity:0.9}.garda-chat-widget-header-close{background:none;border:none;color:white;cursor:pointer;padding:4px;border-radius:4px}.garda-chat-widget-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}.garda-chat-widget-message{display:flex;gap:8px;align-items:flex-start}.garda-chat-widget-message.user{flex-direction:row-reverse}.garda-chat-widget-message-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}.garda-chat-widget-message.user .garda-chat-widget-message-avatar{background:var(--primary-color);color:white}.garda-chat-widget-message.bot .garda-chat-widget-message-avatar{background:#f3f4f6;color:#6b7280}.garda-chat-widget-message-content{max-width:70%}.garda-chat-widget-message.user .garda-chat-widget-message-content{text-align:right}.garda-chat-widget-message-text{background:#f3f4f6;padding:8px 12px;border-radius:12px;margin:0 0 4px 0;font-size:14px;line-height:1.4}.garda-chat-widget-message.user .garda-chat-widget-message-text{background:var(--primary-color);color:white}.garda-chat-widget-message-time{font-size:11px;color:#9ca3af;margin:0}.garda-chat-widget-typing{display:flex;gap:4px;padding:8px 12px;background:#f3f4f6;border-radius:12px}.garda-chat-widget-typing-dot{width:6px;height:6px;background:#9ca3af;border-radius:50%;animation:typing 1.4s infinite ease-in-out}.garda-chat-widget-suggestions{padding:0 16px 16px;border-bottom:1px solid #e5e7eb}.garda-chat-widget-suggestions-title{font-size:12px;color:#6b7280;margin:0 0 8px 0;font-weight:500}.garda-chat-widget-suggestions-list{display:flex;flex-wrap:wrap;gap:6px}.garda-chat-widget-suggestion{background:#f9fafb;border:1px solid #e5e7eb;border-radius:16px;padding:6px 12px;font-size:12px;cursor:pointer;transition:all 0.2s ease}.garda-chat-widget-suggestion:hover{background:var(--primary-color);color:white;border-color:var(--primary-color)}.garda-chat-widget-input{padding:16px;border-top:1px solid #e5e7eb}.garda-chat-widget-input-form{display:flex;gap:8px;align-items:center}.garda-chat-widget-input-field{flex:1;border:1px solid #e5e7eb;border-radius:20px;padding:8px 16px;font-size:14px;outline:none}.garda-chat-widget-input-field:focus{border-color:var(--primary-color)}.garda-chat-widget-input-submit{width:36px;height:36px;background:var(--primary-color);border:none;border-radius:50%;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center}.garda-chat-widget-input-submit:disabled{background:#d1d5db;cursor:not-allowed}@keyframes typing{0%,80%,100%{transform:scale(0.8);opacity:0.5}40%{transform:scale(1);opacity:1}}
       `;
       document.head.appendChild(style);
     };
@@ -308,6 +411,8 @@
       this.container = null;
       this.messagesContainer = null;
       this.inputField = null;
+      this.statusIndicator = null;
+      this.statusText = null;
       
       // Load styles
       loadStyles();
@@ -345,8 +450,37 @@
         <div class="garda-chat-widget-button-status"></div>
       `;
       
+      this.statusIndicator = button.querySelector('.garda-chat-widget-button-status');
+      this.updateConnectionStatus();
+      
       button.addEventListener('click', () => this.toggleChat());
       this.container.appendChild(button);
+    }
+    
+    updateConnectionStatus() {
+      if (!this.statusIndicator) return;
+      
+      // Remove existing status classes
+      this.statusIndicator.classList.remove('offline', 'cors-restricted');
+      
+      // Add appropriate status class
+      switch (chatService.connectionStatus) {
+        case 'offline':
+          this.statusIndicator.classList.add('offline');
+          break;
+        case 'cors_restricted':
+          this.statusIndicator.classList.add('cors-restricted');
+          break;
+        case 'online':
+        default:
+          // Default green color, no additional class needed
+          break;
+      }
+      
+      // Update status text if panel is open
+      if (this.statusText) {
+        this.statusText.textContent = chatService.getConnectionStatusText(this.config.language);
+      }
     }
     
     createChatPanel() {
@@ -367,7 +501,7 @@
           </div>
           <div class="garda-chat-widget-header-info">
             <h3>${TRANSLATIONS[this.config.language]?.chatTitle || TRANSLATIONS.en.chatTitle}</h3>
-            <p>${chatService.isOnline ? (TRANSLATIONS[this.config.language]?.online || TRANSLATIONS.en.online) : 'Offline'}</p>
+            <p class="status-text">${chatService.getConnectionStatusText(this.config.language)}</p>
           </div>
         </div>
         <button class="garda-chat-widget-header-close" aria-label="Close chat">
@@ -377,6 +511,8 @@
           </svg>
         </button>
       `;
+      
+      this.statusText = header.querySelector('.status-text');
       
       // Messages container
       const messagesContainer = document.createElement('div');
@@ -462,6 +598,9 @@
           panel.style.display = 'flex';
         }
         
+        // Update connection status when opening
+        this.updateConnectionStatus();
+        
         // Focus input field
         setTimeout(() => {
           this.inputField?.focus();
@@ -535,6 +674,9 @@
         // Get bot response
         const response = await chatService.sendMessage(messageText, this.sessionId, this.config.language);
         
+        // Update connection status after attempting to send
+        this.updateConnectionStatus();
+        
         // Hide typing indicator
         this.hideTypingIndicator();
         
@@ -557,6 +699,10 @@
         }
       } catch (error) {
         console.error('Error getting response:', error);
+        
+        // Update connection status
+        chatService.connectionStatus = 'offline';
+        this.updateConnectionStatus();
         
         // Hide typing indicator
         this.hideTypingIndicator();
