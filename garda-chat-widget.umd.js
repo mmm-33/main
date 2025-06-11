@@ -95,11 +95,44 @@
     es: ['¿Qué está incluido?', '¿Necesito experiencia?', '¿Cómo reservar?']
   };
 
+  // Helper function to detect CORS issues
+  function detectCorsIssue(supabaseUrl) {
+    if (!supabaseUrl) return false;
+    
+    const currentOrigin = window.location.origin;
+    const supabaseOrigin = new URL(supabaseUrl).origin;
+    
+    // Check if we're on localhost trying to access external Supabase
+    const isLocalhost = currentOrigin.includes('localhost') || 
+                       currentOrigin.includes('127.0.0.1') || 
+                       currentOrigin.includes('.local-credentialless.webcontainer-api.io');
+    
+    const isExternalSupabase = supabaseOrigin !== currentOrigin && 
+                              supabaseOrigin.includes('supabase.co');
+    
+    return isLocalhost && isExternalSupabase;
+  }
+
   // Create Supabase client with better error handling
   function createSupabaseClient(supabaseUrl, supabaseAnonKey) {
     if (!supabaseUrl || !supabaseAnonKey) {
       console.warn('Supabase URL and Anon Key are required for full functionality');
       return null;
+    }
+
+    // Proactively detect CORS issues and return dummy client
+    if (detectCorsIssue(supabaseUrl)) {
+      console.warn('CORS restriction detected, switching to offline mode');
+      return {
+        from: (table) => ({
+          insert: async (data) => {
+            return { data: null, error: { type: 'CORS', message: 'CORS restriction detected' } };
+          },
+          select: async (columns = '*') => {
+            return { data: null, error: { type: 'CORS', message: 'CORS restriction detected' } };
+          }
+        })
+      };
     }
 
     // Simple fetch wrapper for Supabase with enhanced CORS handling
@@ -230,7 +263,13 @@
     initialize(supabaseUrl, supabaseAnonKey) {
       this.supabase = createSupabaseClient(supabaseUrl, supabaseAnonKey);
       this.isOnline = !!this.supabase;
-      this.connectionStatus = this.isOnline ? 'online' : 'offline';
+      
+      // Set initial connection status based on CORS detection
+      if (detectCorsIssue(supabaseUrl)) {
+        this.connectionStatus = 'cors_restricted';
+      } else {
+        this.connectionStatus = this.isOnline ? 'online' : 'offline';
+      }
     },
     
     generateSessionId() {
