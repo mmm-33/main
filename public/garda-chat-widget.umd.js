@@ -146,13 +146,16 @@
               console.warn('Supabase request timeout');
               return { data: null, error: { type: 'TIMEOUT', message: 'Request timeout' } };
             }
-            if (error.message === 'CORS_ERROR' || error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
-              console.warn('CORS error detected, switching to offline mode');
-              return { data: null, error: { type: 'CORS', message: 'CORS restriction' } };
-            }
-            if (error.message.includes('NetworkError') || error.message.includes('network')) {
-              console.warn('Network error detected');
-              return { data: null, error: { type: 'NETWORK', message: 'Network error' } };
+            
+            // Check for common CORS/network errors
+            if (error.message === 'Failed to fetch' || 
+                error.message === 'CORS_ERROR' || 
+                error.message.includes('CORS') || 
+                error.message.includes('NetworkError') ||
+                error.message.includes('network') ||
+                error.name === 'TypeError' && error.message.includes('fetch')) {
+              console.warn('CORS/Network error detected, switching to offline mode');
+              return { data: null, error: { type: 'CORS', message: 'CORS restriction or network error' } };
             }
             
             console.warn('Supabase insert error:', error.message);
@@ -198,13 +201,16 @@
               console.warn('Supabase request timeout');
               return { data: null, error: { type: 'TIMEOUT', message: 'Request timeout' } };
             }
-            if (error.message === 'CORS_ERROR' || error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
-              console.warn('CORS error detected, switching to offline mode');
-              return { data: null, error: { type: 'CORS', message: 'CORS restriction' } };
-            }
-            if (error.message.includes('NetworkError') || error.message.includes('network')) {
-              console.warn('Network error detected');
-              return { data: null, error: { type: 'NETWORK', message: 'Network error' } };
+            
+            // Check for common CORS/network errors
+            if (error.message === 'Failed to fetch' || 
+                error.message === 'CORS_ERROR' || 
+                error.message.includes('CORS') || 
+                error.message.includes('NetworkError') ||
+                error.message.includes('network') ||
+                error.name === 'TypeError' && error.message.includes('fetch')) {
+              console.warn('CORS/Network error detected, switching to offline mode');
+              return { data: null, error: { type: 'CORS', message: 'CORS restriction or network error' } };
             }
             
             console.warn('Supabase select error:', error.message);
@@ -256,7 +262,15 @@
           }
         } catch (error) {
           console.warn('Failed to save message to database:', error.message);
-          this.connectionStatus = 'offline';
+          // Check if it's a CORS/network error
+          if (error.message === 'Failed to fetch' || 
+              error.message.includes('CORS') || 
+              error.message.includes('NetworkError') ||
+              error.name === 'TypeError' && error.message.includes('fetch')) {
+            this.connectionStatus = 'cors_restricted';
+          } else {
+            this.connectionStatus = 'offline';
+          }
         }
       }
       
