@@ -1,5 +1,4 @@
-import { supabase, Client, Booking, FRONTEND_URL } from './supabase';
-import { v4 as uuidv4 } from 'uuid';
+import { supabase, Client, Booking, FRONTEND_URL, isValidUuid, generateUuid } from './supabase';
 
 export interface CRMClientData {
   firstName: string;
@@ -11,13 +10,13 @@ export interface CRMClientData {
 }
 
 export interface CRMBookingData {
-  clientId: string;
+  clientId: string; // UUID
   sessionDate: string;
   sessionTime: string;
   participants: number;
   amount: number;
   specialRequests?: string;
-  yachtId?: string;
+  yachtId?: string; // UUID
 }
 
 export interface ClientPortalAccess {
@@ -122,6 +121,15 @@ export const crmService = {
     try {
       console.log('Creating booking in CRM:', bookingData);
       
+      // Validate UUIDs
+      if (!isValidUuid(bookingData.clientId)) {
+        throw new Error(`Invalid client ID: ${bookingData.clientId}`);
+      }
+      
+      if (bookingData.yachtId && !isValidUuid(bookingData.yachtId)) {
+        throw new Error(`Invalid yacht ID: ${bookingData.yachtId}`);
+      }
+      
       const { data: booking, error } = await supabase
         .from('bookings')
         .insert({
@@ -166,6 +174,11 @@ export const crmService = {
    */
   async generateClientPortalAccess(clientId: string): Promise<ClientPortalAccess | null> {
     try {
+      // Validate UUID
+      if (!isValidUuid(clientId)) {
+        throw new Error(`Invalid client ID: ${clientId}`);
+      }
+      
       // Get client
       const { data: client, error } = await supabase
         .from('clients')
@@ -226,6 +239,11 @@ export const crmService = {
    */
   async updateClientStats(clientId: string, bookingAmount: number): Promise<void> {
     try {
+      // Validate UUID
+      if (!isValidUuid(clientId)) {
+        throw new Error(`Invalid client ID: ${clientId}`);
+      }
+      
       // Get current client stats
       const { data: client, error: fetchError } = await supabase
         .from('clients')
@@ -279,6 +297,15 @@ export const crmService = {
    */
   async createBookingNotification(bookingId: string, clientId: string): Promise<void> {
     try {
+      // Validate UUIDs
+      if (!isValidUuid(bookingId)) {
+        throw new Error(`Invalid booking ID: ${bookingId}`);
+      }
+      
+      if (!isValidUuid(clientId)) {
+        throw new Error(`Invalid client ID: ${clientId}`);
+      }
+      
       const { data: client, error: clientError } = await supabase
         .from('clients')
         .select('email, name')
@@ -320,6 +347,11 @@ export const crmService = {
    */
   async logSyncOperation(tableName: string, operation: string, recordId?: string): Promise<void> {
     try {
+      // Validate UUID if provided
+      if (recordId && !isValidUuid(recordId)) {
+        console.warn(`Non-UUID record ID provided for sync log: ${recordId}`);
+      }
+      
       await supabase
         .from('sync_logs')
         .insert({
@@ -357,7 +389,7 @@ export const crmService = {
    * Generate a unique token for client portal access
    */
   generatePortalToken(): string {
-    return uuidv4();
+    return generateUuid();
   },
 
   /**
@@ -398,6 +430,12 @@ export const crmService = {
     
     if (!data.clientId) {
       errors.push('Client ID is required');
+    } else if (!isValidUuid(data.clientId)) {
+      errors.push('Client ID must be a valid UUID');
+    }
+    
+    if (data.yachtId && !isValidUuid(data.yachtId)) {
+      errors.push('Yacht ID must be a valid UUID');
     }
     
     if (!data.sessionDate) {

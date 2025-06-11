@@ -1,4 +1,4 @@
-import { supabase, type Booking, type Client, type BookingWithClient } from './supabase';
+import { supabase, type Booking, type Client, type BookingWithClient, isValidUuid } from './supabase';
 import { crmService, type CRMClientData, type CRMBookingData } from './crm';
 import toast from 'react-hot-toast';
 import { stripeService } from './stripe';
@@ -154,6 +154,11 @@ export const bookingService = {
 
   async updateYachtStatus(yachtId: string, status: string, nextBooking?: string): Promise<void> {
     try {
+      // Validate UUID
+      if (!isValidUuid(yachtId)) {
+        throw new Error(`Invalid yacht ID: ${yachtId}`);
+      }
+      
       const updateData: any = { status };
       if (nextBooking) {
         updateData.next_booking = nextBooking;
@@ -174,6 +179,11 @@ export const bookingService = {
 
   async getBookingWithDetails(id: string): Promise<BookingWithClient | null> {
     try {
+      // Validate UUID
+      if (!isValidUuid(id)) {
+        throw new Error(`Invalid booking ID: ${id}`);
+      }
+      
       const { data: bookings, error } = await supabase
         .from('bookings')
         .select(`
@@ -197,6 +207,11 @@ export const bookingService = {
 
   async updateBookingStatus(id: string, status: Booking['status']): Promise<boolean> {
     try {
+      // Validate UUID
+      if (!isValidUuid(id)) {
+        throw new Error(`Invalid booking ID: ${id}`);
+      }
+      
       const { error } = await supabase
         .from('bookings')
         .update({ status, updated_at: new Date().toISOString() })
@@ -216,6 +231,11 @@ export const bookingService = {
 
   async updatePaymentStatus(id: string, status: 'pending' | 'paid' | 'failed'): Promise<boolean> {
     try {
+      // Validate UUID
+      if (!isValidUuid(id)) {
+        throw new Error(`Invalid booking ID: ${id}`);
+      }
+      
       const { error } = await supabase
         .from('bookings')
         .update({ payment_status: status, updated_at: new Date().toISOString() })

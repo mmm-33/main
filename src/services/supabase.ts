@@ -15,7 +15,7 @@ export const FRONTEND_URL = 'https://inquisitive-selkie-2bc7bf.netlify.app/';
 
 // Database types
 export interface Client {
-  id: string;
+  id: string; // UUID
   name: string;
   email: string;
   phone?: string;
@@ -33,9 +33,9 @@ export interface Client {
 }
 
 export interface Booking {
-  id: string;
-  client_id?: string;
-  yacht_id?: string;
+  id: string; // UUID
+  client_id?: string; // UUID
+  yacht_id?: string; // UUID
   session_date: string;
   session_time: string;
   status?: 'pending' | 'confirmed' | 'cancelled';
@@ -49,15 +49,15 @@ export interface Booking {
 export interface BookingWithClient extends Booking {
   client?: Client;
   yacht?: {
-    id: string;
+    id: string; // UUID
     name: string;
   };
 }
 
 export interface Payment {
-  id: string;
-  booking_id?: string;
-  client_id?: string;
+  id: string; // UUID
+  booking_id?: string; // UUID
+  client_id?: string; // UUID
   amount: number;
   status?: 'pending' | 'completed' | 'failed';
   method?: 'stripe' | 'paypal';
@@ -67,7 +67,7 @@ export interface Payment {
 }
 
 export interface Message {
-  id: number;
+  id: string; // UUID
   text: string;
   session_id?: string;
   sender?: 'user' | 'bot';
@@ -76,7 +76,7 @@ export interface Message {
 }
 
 export interface CMSContent {
-  id: string;
+  id: string; // UUID
   slug: string;
   title: string;
   content: string;
@@ -88,7 +88,7 @@ export interface CMSContent {
 }
 
 export interface Yacht {
-  id: string;
+  id: string; // UUID
   name: string;
   status?: 'active' | 'available' | 'booked' | 'maintenance';
   skipper?: string;
@@ -102,7 +102,7 @@ export interface Yacht {
 }
 
 export interface ErrorLog {
-  id: string;
+  id: string; // UUID
   action: string;
   error_message: string;
   error_stack?: string;
@@ -112,7 +112,7 @@ export interface ErrorLog {
 }
 
 export interface SyncLog {
-  id: string;
+  id: string; // UUID
   table_name: string;
   operation: string;
   record_id?: string;
@@ -128,14 +128,8 @@ export interface SyncLog {
   updated_at: string;
 }
 
-interface Message {
-  id: number;
-  text: string;
-  inserted_at: string;
-}
-
-interface ContentPage {
-  id: string;
+export interface ContentPage {
+  id: string; // UUID
   slug: string;
   title: string;
   content: string;
@@ -144,4 +138,15 @@ interface ContentPage {
   published: boolean;
   created_at: string;
   updated_at: string;
+}
+
+// Helper function to validate UUID
+export function isValidUuid(uuid: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(uuid);
+}
+
+// Helper function to generate UUID v4
+export function generateUuid(): string {
+  return crypto.randomUUID();
 }

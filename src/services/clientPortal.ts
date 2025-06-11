@@ -1,4 +1,4 @@
-import { supabase, Client, Booking } from './supabase';
+import { supabase, Client, Booking, isValidUuid } from './supabase';
 
 export interface ClientPortalData {
   client: Client;
@@ -43,6 +43,11 @@ export const clientPortalService = {
    */
   async getClientPortalData(clientId: string): Promise<ClientPortalData | null> {
     try {
+      // Validate UUID
+      if (!isValidUuid(clientId)) {
+        throw new Error(`Invalid client ID: ${clientId}`);
+      }
+      
       // Get client data
       const { data: client, error: clientError } = await supabase
         .from('clients')
@@ -109,6 +114,11 @@ export const clientPortalService = {
    */
   async updateClientProfile(clientId: string, data: Partial<Client>): Promise<Client | null> {
     try {
+      // Validate UUID
+      if (!isValidUuid(clientId)) {
+        throw new Error(`Invalid client ID: ${clientId}`);
+      }
+      
       // Ensure we're not updating sensitive fields
       const safeData: Partial<Client> = {
         name: data.name,
@@ -144,6 +154,11 @@ export const clientPortalService = {
    */
   async getClientNotifications(clientId: string): Promise<any[]> {
     try {
+      // Validate UUID
+      if (!isValidUuid(clientId)) {
+        throw new Error(`Invalid client ID: ${clientId}`);
+      }
+      
       const { data, error } = await supabase
         .from('notifications')
         .select('*')
@@ -168,6 +183,11 @@ export const clientPortalService = {
    */
   async markNotificationAsRead(notificationId: string): Promise<boolean> {
     try {
+      // Validate UUID
+      if (!isValidUuid(notificationId)) {
+        throw new Error(`Invalid notification ID: ${notificationId}`);
+      }
+      
       const { error } = await supabase
         .from('notifications')
         .update({
@@ -193,6 +213,11 @@ export const clientPortalService = {
    */
   async requestBookingCancellation(bookingId: string, reason: string): Promise<boolean> {
     try {
+      // Validate UUID
+      if (!isValidUuid(bookingId)) {
+        throw new Error(`Invalid booking ID: ${bookingId}`);
+      }
+      
       // First update the booking status
       const { error: bookingError } = await supabase
         .from('bookings')
@@ -249,8 +274,13 @@ export const clientPortalService = {
    */
   async regeneratePortalToken(clientId: string): Promise<string | null> {
     try {
-      // Generate new token
-      const newToken = `pt_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;
+      // Validate UUID
+      if (!isValidUuid(clientId)) {
+        throw new Error(`Invalid client ID: ${clientId}`);
+      }
+      
+      // Generate new token (UUID v4)
+      const newToken = crypto.randomUUID();
       
       // Update client with new token
       const { error } = await supabase
