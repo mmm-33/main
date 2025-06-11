@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, User, Bot } from 'lucide-react';
-import { chatService, type ChatMessage, type ChatResponse } from '../services/chat';
+import {
+  chatService,
+  type ChatMessage,
+  type ChatResponse,
+} from '../services/chat';
 import { useTranslation } from 'react-i18next';
 
 const ChatWidget: React.FC = () => {
@@ -13,24 +17,24 @@ const ChatWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const currentLanguage = i18n.language;
 
+  // Приветственное сообщение
   useEffect(() => {
-    // Initialize with welcome message in current language
     const welcomeMessage: ChatMessage = {
-      id: '1',
+      id: chatService.generateSessionId(), // UUID вместо Date.now()
       text: t('chat.welcome'),
       sender: 'bot',
       timestamp: new Date(),
-      language: currentLanguage
+      language: currentLanguage,
     };
     setMessages([welcomeMessage]);
   }, [t, currentLanguage]);
 
-  // Scroll to bottom of messages when new message is added
+  // Скролл к последнему сообщению
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Get quick replies based on current language
+  // Быстрые ответы
   const quickReplies = chatService.getQuickReplies(currentLanguage);
 
   const handleSendMessage = async (messageText?: string) => {
@@ -38,47 +42,46 @@ const ChatWidget: React.FC = () => {
     if (!textToSend.trim()) return;
 
     const userMessage: ChatMessage = {
-      id: Date.now().toString(),
+      id: chatService.generateSessionId(),
       text: textToSend,
       sender: 'user',
       timestamp: new Date(),
-      language: currentLanguage
+      language: currentLanguage,
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInputText('');
     setIsLoading(true);
 
     try {
-      // Detect language or use current UI language
       const detectedLanguage = chatService.detectLanguage(textToSend);
       const responseLanguage = detectedLanguage || currentLanguage;
-      
+
       const response: ChatResponse = await chatService.sendMessage(
-        textToSend, 
+        textToSend,
         sessionId,
         responseLanguage
       );
-      
+
       const botMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
+        id: chatService.generateSessionId(),
         text: response.message,
         sender: 'bot',
         timestamp: new Date(),
-        language: response.language
+        language: response.language,
       };
 
-      setMessages(prev => [...prev, botMessage]);
+      setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        text: t('common.error') + ': ' + t('chat.errorMessage', 'Sorry, I\'m having trouble responding right now. Please try again later.'),
+        id: chatService.generateSessionId(),
+        text: `${t('common.error')}: ${t('chat.errorMessage', 'Sorry, I\'m having trouble responding right now. Please try again later.')}`,
         sender: 'bot',
         timestamp: new Date(),
-        language: currentLanguage
+        language: currentLanguage,
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -90,7 +93,7 @@ const ChatWidget: React.FC = () => {
 
   return (
     <>
-      {/* Chat Button */}
+      {/* Кнопка открытия чата */}
       <button
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 z-50 bg-primary-600 text-white p-4 rounded-full shadow-lg hover:bg-primary-700 transition-all duration-300 hover:scale-110 ${
@@ -102,10 +105,10 @@ const ChatWidget: React.FC = () => {
         <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
       </button>
 
-      {/* Chat Window */}
+      {/* Окно чата */}
       {isOpen && (
         <div className="fixed bottom-6 right-6 z-50 w-80 h-96 bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col animate-slide-up">
-          {/* Header */}
+          {/* Заголовок */}
           <div className="bg-primary-600 text-white p-4 rounded-t-lg flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
@@ -119,8 +122,8 @@ const ChatWidget: React.FC = () => {
                 </div>
               </div>
             </div>
-            
-            {/* Close Button */}
+
+            {/* Кнопка закрытия */}
             <button
               onClick={() => setIsOpen(false)}
               className="text-white/80 hover:text-white transition-colors duration-300"
@@ -130,42 +133,45 @@ const ChatWidget: React.FC = () => {
             </button>
           </div>
 
-          {/* Messages */}
+          {/* Сообщения */}
           <div className="flex-1 p-4 overflow-y-auto space-y-3">
             {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div className={`flex items-start space-x-2 max-w-xs ${
-                  message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''
-                }`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                    message.sender === 'user' ? 'bg-primary-600' : 'bg-gray-200'
-                  }`}>
+              <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`flex items-start space-x-2 max-w-xs ${
+                    message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''
+                  }`}
+                >
+                  <div
+                    className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                      message.sender === 'user' ? 'bg-primary-600' : 'bg-gray-200'
+                    }`}
+                  >
                     {message.sender === 'user' ? (
                       <User className="h-3 w-3 text-white" />
                     ) : (
                       <Bot className="h-3 w-3 text-gray-600" />
                     )}
                   </div>
-                  <div className={`p-3 rounded-lg ${
-                    message.sender === 'user'
-                      ? 'bg-primary-600 text-white'
-                      : 'bg-gray-100 text-gray-800'
-                  }`}>
+                  <div
+                    className={`p-3 rounded-lg ${
+                      message.sender === 'user'
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-gray-100 text-gray-800'
+                    }`}
+                  >
                     <p className="text-sm whitespace-pre-wrap">{message.text}</p>
                     <p className="text-xs opacity-70 mt-1">
-                      {message.timestamp.toLocaleTimeString(i18n.language, { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
+                      {message.timestamp.toLocaleTimeString(i18n.language, {
+                        hour: '2-digit',
+                        minute: '2-digit',
                       })}
                     </p>
                   </div>
                 </div>
               </div>
             ))}
-            
+
             {isLoading && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-2 max-w-xs">
@@ -175,18 +181,24 @@ const ChatWidget: React.FC = () => {
                   <div className="bg-gray-100 p-3 rounded-lg">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: '0.1s' }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: '0.2s' }}
+                      ></div>
                     </div>
                   </div>
                 </div>
               </div>
             )}
-            
+
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Replies */}
+          {/* Быстрые вопросы */}
           {messages.length === 1 && (
             <div className="px-4 pb-2">
               <p className="text-xs text-gray-500 mb-2">{t('chat.quickQuestions')}</p>
@@ -204,7 +216,7 @@ const ChatWidget: React.FC = () => {
             </div>
           )}
 
-          {/* Input */}
+          {/* Поле ввода */}
           <div className="p-4 border-t border-gray-200">
             <div className="flex space-x-2">
               <input
@@ -212,7 +224,7 @@ const ChatWidget: React.FC = () => {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
-                placeholder={t('chat.typePlaceholder')}
+                placeholder={t('chat.typePlaceholder', 'Type a message...')}
                 disabled={isLoading}
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm disabled:opacity-50"
                 aria-label={t('chat.typePlaceholder')}
