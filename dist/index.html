@@ -29,10 +29,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-CDJvYQCk.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DMa7dmYw.css">
+    
+    <!-- Конфигурация виджета чата -->
+    <script>
+        window.gardaChatWidgetConfig = {
+            position: 'bottom-right', // 'bottom-left' или 'bottom-right'
+            theme: 'light', // 'light' или 'dark'
+            primaryColor: '#dc2626', // Основной цвет в соответствии с темой сайта
+            language: 'ru', // 'en', 'ru', 'it', 'de', 'fr', 'es'
+            supabaseUrl: 'https://czxfcjmbhqieljqlyoqq.supabase.co', // Supabase URL
+            supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6eGZjam1iaHFpZWxqcWx5b3FxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0ODEzNzAsImV4cCI6MjA2NTA1NzM3MH0.9ExttPAreL2yklm5rbEJAlQ-MVMzW8GCz0u4ffPdn8Y' // Supabase Anon Key
+        };
+    </script>
+    <script type="module" crossorigin src="/assets/index-BosoN4sL.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-H0rn0weN.css">
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Виджет чата -->
+    <script src="/garda-chat-widget.umd.js"></script>
+    <link rel="stylesheet" href="/garda-chat-widget.css">
   </body>
 </html>

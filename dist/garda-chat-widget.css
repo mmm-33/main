@@ -1,0 +1,555 @@
+/* Garda Chat Widget Styles */
+.garda-chat-widget-container {
+  position: fixed;
+  z-index: 9999;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.garda-chat-widget-container.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.garda-chat-widget-container.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.garda-chat-widget-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.garda-chat-widget-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.garda-chat-widget-button-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.garda-chat-widget-button-status {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.garda-chat-widget-panel {
+  position: absolute;
+  bottom: 80px;
+  width: 360px;
+  height: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.garda-chat-widget-container.bottom-right .garda-chat-widget-panel {
+  right: 0;
+}
+
+.garda-chat-widget-container.bottom-left .garda-chat-widget-panel {
+  left: 0;
+}
+
+.garda-chat-widget-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.garda-chat-widget-header-title {
+  display: flex;
+  align-items: center;
+}
+
+.garda-chat-widget-header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.garda-chat-widget-header-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.garda-chat-widget-header-info p {
+  font-size: 12px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.garda-chat-widget-header-info p::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.garda-chat-widget-header-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.garda-chat-widget-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.garda-chat-widget-message {
+  margin-bottom: 16px;
+  max-width: 80%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.garda-chat-widget-message.user {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+
+.garda-chat-widget-message-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px;
+  flex-shrink: 0;
+}
+
+.garda-chat-widget-message-content {
+  padding: 12px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.garda-chat-widget-message.user .garda-chat-widget-message-content {
+  border-top-right-radius: 4px;
+}
+
+.garda-chat-widget-message.bot .garda-chat-widget-message-content {
+  border-top-left-radius: 4px;
+}
+
+.garda-chat-widget-message-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.garda-chat-widget-message-time {
+  font-size: 10px;
+  margin-top: 4px;
+  text-align: right;
+}
+
+.garda-chat-widget-suggestions {
+  padding: 0 16px 8px;
+}
+
+.garda-chat-widget-suggestions-title {
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.garda-chat-widget-suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.garda-chat-widget-suggestion {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.garda-chat-widget-input {
+  padding: 16px;
+  border-top-width: 1px;
+}
+
+.garda-chat-widget-input-form {
+  display: flex;
+  align-items: center;
+}
+
+.garda-chat-widget-input-field {
+  flex: 1;
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-width: 1px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.garda-chat-widget-input-submit {
+  margin-left: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.garda-chat-widget-input-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.garda-chat-widget-typing {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80px;
+  margin-bottom: 16px;
+}
+
+.garda-chat-widget-typing-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: typing-animation 1.4s infinite ease-in-out both;
+}
+
+.garda-chat-widget-typing-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.garda-chat-widget-typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.garda-chat-widget-typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing-animation {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Light Theme */
+.garda-chat-widget-theme-light .garda-chat-widget-button {
+  background-color: var(--primary-color, #dc2626);
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-button-icon {
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-button-status {
+  background-color: #4ade80;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-panel {
+  background-color: #ffffff;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-header {
+  background-color: var(--primary-color, #dc2626);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-header-avatar {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-header-info p::before {
+  background-color: #4ade80;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-header-close {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-header-close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-message.user .garda-chat-widget-message-avatar {
+  background-color: var(--primary-color, #dc2626);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-message.bot .garda-chat-widget-message-avatar {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-message.user .garda-chat-widget-message-content {
+  background-color: var(--primary-color, #dc2626);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-message.bot .garda-chat-widget-message-content {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-message.user .garda-chat-widget-message-time {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-message.bot .garda-chat-widget-message-time {
+  color: #6b7280;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-suggestions-title {
+  color: #6b7280;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-suggestion {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-suggestion:hover {
+  background-color: #e5e7eb;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-input {
+  border-top-color: #e5e7eb;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-input-field {
+  background-color: #ffffff;
+  border-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-input-field:focus {
+  border-color: var(--primary-color, #dc2626);
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-input-field::placeholder {
+  color: #9ca3af;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-input-submit {
+  background-color: var(--primary-color, #dc2626);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-input-submit:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-typing {
+  background-color: #f3f4f6;
+}
+
+.garda-chat-widget-theme-light .garda-chat-widget-typing-dot {
+  background-color: #6b7280;
+}
+
+/* Dark Theme */
+.garda-chat-widget-theme-dark .garda-chat-widget-button {
+  background-color: var(--primary-color, #dc2626);
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-button-icon {
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-button-status {
+  background-color: #4ade80;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-panel {
+  background-color: #1f2937;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-header {
+  background-color: var(--primary-color, #dc2626);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-header-avatar {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-header-info p::before {
+  background-color: #4ade80;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-header-close {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-header-close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-message.user .garda-chat-widget-message-avatar {
+  background-color: var(--primary-color, #dc2626);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-message.bot .garda-chat-widget-message-avatar {
+  background-color: #374151;
+  color: #d1d5db;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-message.user .garda-chat-widget-message-content {
+  background-color: var(--primary-color, #dc2626);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-message.bot .garda-chat-widget-message-content {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-message.user .garda-chat-widget-message-time {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-message.bot .garda-chat-widget-message-time {
+  color: #9ca3af;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-suggestions-title {
+  color: #9ca3af;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-suggestion {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-suggestion:hover {
+  background-color: #4b5563;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-input {
+  border-top-color: #374151;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-input-field {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-input-field:focus {
+  border-color: var(--primary-color, #dc2626);
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-input-field::placeholder {
+  color: #9ca3af;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-input-submit {
+  background-color: var(--primary-color, #dc2626);
+  color: #ffffff;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-input-submit:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-typing {
+  background-color: #374151;
+}
+
+.garda-chat-widget-theme-dark .garda-chat-widget-typing-dot {
+  background-color: #9ca3af;
+}
+
+/* Animations */
+.garda-chat-widget-panel-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.garda-chat-widget-panel-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.garda-chat-widget-panel-exit {
+  opacity: 1;
+}
+
+.garda-chat-widget-panel-exit-active {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .garda-chat-widget-panel {
+    width: calc(100vw - 40px);
+    height: 60vh;
+    bottom: 70px;
+  }
+  
+  .garda-chat-widget-container.bottom-right .garda-chat-widget-panel {
+    right: 0;
+  }
+  
+  .garda-chat-widget-container.bottom-left .garda-chat-widget-panel {
+    left: 0;
+  }
+}
