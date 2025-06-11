@@ -1,0 +1,392 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "save": "Salva",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "back": "Indietro",
+    "next": "Avanti",
+    "previous": "Precedente",
+    "close": "Chiudi",
+    "search": "Cerca",
+    "filter": "Filtra",
+    "sort": "Ordina",
+    "clear": "Cancella",
+    "submit": "Invia",
+    "reset": "Reimposta"
+  },
+  "navigation": {
+    "home": "Home",
+    "experience": "Esperienza",
+    "booking": "Prenotazione",
+    "about": "Chi Siamo",
+    "contact": "Contatti",
+    "privacy": "Privacy Policy",
+    "terms": "Termini di Servizio",
+    "cancellation": "Politica di Cancellazione"
+  },
+  "hero": {
+    "title": "Vivi l'Emozione delle",
+    "titleHighlight": "Regate in Barca a Vela",
+    "subtitle": "Esperienze quotidiane di regata sul famoso Lago di Garda con skipper professionali, medaglie e ricordi indimenticabili",
+    "price": "€199",
+    "priceSubtext": "a persona, tutto incluso",
+    "bookNow": "Prenota la Tua Avventura",
+    "checkAvailability": "Verifica disponibilità per la data preferita"
+  },
+  "features": {
+    "title": "Cosa Ci Rende Speciali",
+    "subtitle": "Vivi autentiche regate con istruzione professionale, attrezzature premium e attenzione personalizzata sul bellissimo Lago di Garda",
+    "professionalSkipper": {
+      "title": "Skipper Professionale",
+      "description": "Impara da professionisti della vela certificati con anni di esperienza nelle regate sul Lago di Garda"
+    },
+    "realRacing": {
+      "title": "Esperienza di Regata Autentica",
+      "description": "Partecipa a vere regate con cronometraggio ufficiale, punteggi e cerimonie di premiazione"
+    },
+    "photosIncluded": {
+      "title": "Foto e Video Inclusi",
+      "description": "Fotografia e videografia professionale della tua esperienza, consegnate entro 24 ore"
+    },
+    "fullyInsured": {
+      "title": "Completamente Assicurato e Certificato",
+      "description": "Copertura assicurativa completa e certificazione RYA per la tua tranquillità e sicurezza"
+    }
+  },
+  "experience": {
+    "title": "Il Tuo Viaggio di Regata",
+    "step1": {
+      "title": "Impara le Basi",
+      "description": "Istruzione professionale sui fondamenti della vela e tecniche di regata"
+    },
+    "step2": {
+      "title": "Gareggia e Competi",
+      "description": "Partecipa a vere regate con cronometraggio e punteggio ufficiali"
+    },
+    "step3": {
+      "title": "Celebra il Successo",
+      "description": "Cerimonia di premiazione, presentazione del certificato e foto professionali"
+    },
+    "learnMore": "Scopri di Più sulla Nostra Esperienza"
+  },
+  "testimonials": {
+    "title": "Cosa Dicono i Nostri Velisti",
+    "subtitle": "Esperienze reali dai nostri clienti soddisfatti"
+  },
+  "location": {
+    "title": "Paradiso del Lago di Garda",
+    "perfectLocation": {
+      "title": "Posizione Perfetta",
+      "description": "Situato nella bellissima Riva del Garda, facilmente accessibile dalle principali città europee"
+    },
+    "idealConditions": {
+      "title": "Condizioni Ideali",
+      "description": "Venti termici costanti e acque protette rendono il Lago di Garda perfetto per la vela"
+    },
+    "dailyDepartures": {
+      "title": "Partenze Quotidiane",
+      "description": "Più fasce orarie disponibili quotidianamente da marzo a ottobre"
+    }
+  },
+  "cta": {
+    "title": "Pronto a Iniziare a Gareggiare?",
+    "subtitle": "Unisciti a centinaia di velisti soddisfatti che hanno vissuto l'emozione delle regate sul Lago di Garda",
+    "bookExperience": "Prenota la Tua Esperienza - €199",
+    "callNow": "Chiama +39 345 678 9012"
+  },
+  "footer": {
+    "description": "Vivi l'emozione delle regate sul famoso Lago di Garda. Istruzione professionale, attrezzature premium e ricordi indimenticabili.",
+    "quickLinks": "Link Rapidi",
+    "contact": "Contatti",
+    "certifications": "Certificazioni",
+    "operatingHours": "Orari di Apertura:",
+    "dailyHours": "Tutti i giorni: 8:00 - 19:00",
+    "season": "Marzo - Ottobre",
+    "copyright": "© 2024 Garda Racing Yacht Club. Tutti i diritti riservati."
+  },
+  "booking": {
+    "title": "Prenota la Tua Esperienza di Regata",
+    "subtitle": "Assicurati il tuo posto per un'indimenticabile avventura di regata sul Lago di Garda",
+    "steps": {
+      "dateTime": "Seleziona Data e Ora",
+      "details": "I Tuoi Dati",
+      "payment": "Pagamento"
+    },
+    "selectExperience": "Seleziona la Tua Esperienza",
+    "chooseDate": "Scegli la Data",
+    "chooseTime": "Scegli l'Orario",
+    "participants": "Numero di Partecipanti",
+    "maxParticipants": "Massimo 8 persone per barca",
+    "yourDetails": "I Tuoi Dati",
+    "firstName": "Nome",
+    "lastName": "Cognome",
+    "email": "Indirizzo Email",
+    "phone": "Numero di Telefono",
+    "specialRequests": "Richieste Speciali",
+    "specialRequestsPlaceholder": "Eventuali requisiti dietetici, esigenze di accessibilità o occasioni speciali...",
+    "agreeTerms": "Accetto i termini e le condizioni",
+    "agreeMarketing": "Vorrei ricevere comunicazioni di marketing su offerte speciali ed eventi",
+    "securePayment": "Pagamento Sicuro",
+    "cardNumber": "Numero Carta",
+    "expiryDate": "Data di Scadenza",
+    "cvc": "CVC",
+    "cardholderName": "Nome del Titolare",
+    "completeBooking": "Completa Prenotazione",
+    "processing": "Elaborazione...",
+    "bookingSummary": "Riepilogo Prenotazione",
+    "date": "Data:",
+    "time": "Ora:",
+    "pricePerPerson": "Prezzo a persona:",
+    "total": "Totale:",
+    "deposit": "Paga €{{deposit}} di acconto ora, €{{remaining}} il giorno stesso",
+    "needHelp": "Hai Bisogno di Aiuto?",
+    "cancellationPolicy": "Politica di Cancellazione",
+    "whatToBring": "Cosa Portare"
+  },
+  "about": {
+    "title": "Chi Siamo",
+    "subtitle": "Appassionati di vela dal 2009, creiamo esperienze indimenticabili di regata sul Lago di Garda per velisti di tutti i livelli.",
+    "ourStory": "La Nostra Storia",
+    "theBeginning": "L'Inizio",
+    "ourJourney": "Il Nostro Viaggio",
+    "journeySubtitle": "Tappe fondamentali nella nostra storia di 15 anni di eccellenza velica",
+    "ourValues": "I Nostri Valori",
+    "valuesSubtitle": "I principi che guidano tutto ciò che facciamo",
+    "meetTeam": "Incontra il Nostro Team",
+    "teamSubtitle": "I professionisti appassionati dietro la tua esperienza velica",
+    "certifications": "Certificazioni e Riconoscimenti",
+    "certificationsSubtitle": "Il nostro impegno per l'eccellenza è riconosciuto dalle organizzazioni leader",
+    "readyToJoin": "Pronto a Unirti alla Nostra Storia?",
+    "joinCommunity": "Diventa parte della nostra comunità velica e crea i tuoi ricordi indimenticabili sul Lago di Garda.",
+    "storyDescription": "Quello che è iniziato come un progetto di passione di un gruppo di appassionati di vela è cresciuto fino a diventare il principale fornitore di esperienze di regata del Lago di Garda. Il nostro viaggio è iniziato nel 2009 quando il fondatore Marco Benedetti ha deciso di condividere il suo amore per la vela competitiva con visitatori da tutto il mondo.",
+    "beginningDescription": "Il Lago di Garda è sempre stato un paradiso per i velisti, con i suoi venti costanti e lo splendido sfondo alpino. Marco, velista per tutta la vita ed ex corridore competitivo, ha riconosciuto che molti visitatori del lago volevano sperimentare autentiche regate di yacht ma non ne avevano l'opportunità.",
+    "journeyDescription1": "Iniziando con un singolo yacht e un sogno, Marco ha iniziato a offrire esperienze veliche personalizzate che combinavano istruzione professionale con il brivido delle corse competitive. La voce si è diffusa rapidamente su queste avventure uniche che permettevano ai principianti assoluti di sperimentare l'emozione delle regate di yacht.",
+    "journeyDescription2": "Oggi, gestiamo una flotta di yacht da regata moderni e abbiamo accolto oltre 2.000 ospiti da più di 30 paesi, ognuno dei quali se ne va con ricordi indimenticabili e una nuova apprezzamento per lo sport della vela.",
+    "missionVision": "La Nostra Missione e Visione",
+    "mission": "Missione",
+    "missionDescription": "Fornire esperienze autentiche, sicure e indimenticabili di regata che ispirano un amore per tutta la vita per la vela mostrando la bellezza naturale del Lago di Garda.",
+    "vision": "Visione",
+    "visionDescription": "Essere riconosciuti come la destinazione premier d'Europa per le esperienze di regata, dove ogni ospite se ne va come un velista sicuro con ricordi che durano una vita.",
+    "milestone2009": "Fondato dal velista appassionato Marco Benedetti con un singolo yacht e il sogno di condividere esperienze di regata autentiche",
+    "milestone2012Title": "Primi 1000 Ospiti",
+    "milestone2012": "Raggiunto il nostro primo importante traguardo di clienti soddisfatti da tutta Europa",
+    "milestone2015Title": "Certificazione RYA",
+    "milestone2015": "Ottenuta la certificazione della Royal Yachting Association per l'istruzione velica professionale",
+    "milestone2018Title": "Espansione della Flotta",
+    "milestone2018": "Aggiunti moderni yacht da regata Bavaria per fornire l'esperienza velica definitiva",
+    "milestone2020Title": "Innovazione Digitale",
+    "milestone2020": "Lanciata la piattaforma di prenotazione online e i servizi digitali per gli ospiti",
+    "milestone2024Title": "2000+ Velisti Felici",
+    "milestone2024": "Celebrando oltre 2000 clienti soddisfatti da 30+ paesi in tutto il mondo",
+    "values": {
+      "safety": {
+        "title": "Sicurezza Prima di Tutto",
+        "description": "La vostra sicurezza è la nostra priorità assoluta. Manteniamo i più alti standard di sicurezza, utilizziamo solo attrezzature certificate e conduciamo briefing approfonditi prima di ogni esperienza."
+      },
+      "passion": {
+        "title": "Passione per la Vela",
+        "description": "Viviamo e respiriamo vela. La nostra genuina passione per lo sport guida tutto ciò che facciamo, dalla qualità dell'istruzione alla creazione di ricordi indimenticabili."
+      },
+      "inclusive": {
+        "title": "Eccellenza Inclusiva",
+        "description": "Che tu sia un principiante assoluto o un velista esperto, tutti sono benvenuti. Adattiamo ogni esperienza per assicurarci che tutti si sentano sicuri e coinvolti."
+      },
+      "authentic": {
+        "title": "Regate Autentiche",
+        "description": "Forniamo genuine esperienze di regata con vera competizione, cronometraggio ufficiale e riconoscimento significativo dei risultati."
+      },
+      "innovation": {
+        "title": "Innovazione Continua",
+        "description": "Evolviamo costantemente i nostri servizi, incorporando le ultime tecniche veliche, protocolli di sicurezza e innovazioni nell'esperienza degli ospiti."
+      }
+    },
+    "team": {
+      "marco": {
+        "role": "Fondatore e Skipper Capo",
+        "description": "RYA Yachtmaster con oltre 20 anni di esperienza velica sul Lago di Garda. Ex corridore competitivo diventato istruttore appassionato.",
+        "specialties": {
+          "strategy": "Strategia di Regata",
+          "safety": "Gestione della Sicurezza",
+          "experience": "Esperienza degli Ospiti"
+        }
+      },
+      "sofia": {
+        "role": "Direttore Operazioni",
+        "description": "Assicura che ogni ospite abbia un'esperienza indimenticabile. Esperta di ospitalità multilingue con passione per la vela.",
+        "specialties": {
+          "relations": "Relazioni con gli Ospiti",
+          "quality": "Garanzia di Qualità",
+          "coordination": "Coordinamento del Team"
+        }
+      },
+      "andreas": {
+        "role": "Skipper Senior",
+        "description": "Ex velista olimpico e istruttore di vela certificato. Porta competenza di regata di livello mondiale a ogni esperienza.",
+        "specialties": {
+          "techniques": "Tecniche Avanzate",
+          "training": "Allenamento Competitivo",
+          "weather": "Analisi Meteorologica"
+        }
+      },
+      "elena": {
+        "role": "Ufficiale di Sicurezza e Istruttore",
+        "description": "Esperta di sicurezza marina certificata e istruttore di vela. Assicura che tutte le esperienze soddisfino i più alti standard di sicurezza.",
+        "specialties": {
+          "protocols": "Protocolli di Sicurezza",
+          "response": "Risposta di Emergenza",
+          "equipment": "Gestione Attrezzature"
+        }
+      }
+    },
+    "achievements": {
+      "ryaCertified": {
+        "title": "Eccellenza Certificata RYA",
+        "description": "Certificazione della Royal Yachting Association per l'istruzione velica professionale"
+      },
+      "guestRating": {
+        "title": "Valutazione Ospiti 4.9★",
+        "description": "Valutazioni costantemente elevate su tutte le piattaforme di recensioni"
+      },
+      "safetyRecord": {
+        "title": "Zero Incidenti di Sicurezza",
+        "description": "15 anni di operazioni con record di sicurezza perfetto"
+      },
+      "satisfiedGuests": {
+        "title": "2000+ Ospiti Soddisfatti",
+        "description": "Accolti velisti da oltre 30 paesi in tutto il mondo"
+      },
+      "industryRecognition": {
+        "title": "Riconoscimento del Settore",
+        "description": "Presenti nelle principali pubblicazioni veliche e di viaggio"
+      },
+      "mediaExcellence": {
+        "title": "Eccellenza Mediatica",
+        "description": "Servizi di fotografia e videografia professionale inclusi"
+      },
+      "ongoing": "In corso"
+    },
+    "whatSetsUsApart": "Cosa Ci Distingue",
+    "whyChooseUs": "Perché migliaia di velisti scelgono Garda Racing per la loro esperienza sul Lago di Garda",
+    "differentiators": {
+      "authentic": {
+        "title": "Esperienza di Regata Autentica",
+        "description": "A differenza dei viaggi turistici in barca a vela, offriamo vere regate con cronometraggio ufficiale, punteggio ed elementi competitivi che creano vera eccitazione."
+      },
+      "professional": {
+        "title": "Istruzione Professionale",
+        "description": "I nostri skipper certificati RYA forniscono istruzione di livello mondiale, assicurando che impari tecniche corrette divertendoti."
+      },
+      "complete": {
+        "title": "Pacchetto Esperienza Completo",
+        "description": "Tutto incluso: foto professionali, medaglie di regata, certificati, attrezzature di sicurezza e guida esperta."
+      },
+      "location": {
+        "title": "Posizione Perfetta",
+        "description": "Il Lago di Garda offre condizioni ideali per la vela con venti termici costanti e paesaggi alpini mozzafiato."
+      },
+      "multilingual": {
+        "title": "Team Multilingue",
+        "description": "Il nostro team parla inglese, italiano, tedesco e russo, garantendo comunicazione chiara e comfort per tutti gli ospiti."
+      },
+      "flexible": {
+        "title": "Flessibile e Affidabile",
+        "description": "Partenze giornaliere, garanzie meteorologiche e politiche di prenotazione flessibili rendono la pianificazione della tua esperienza senza stress."
+      }
+    }
+  },
+  "contact": {
+    "title": "Contattaci",
+    "subtitle": "Mettiti in contatto con il nostro team per prenotazioni, domande o maggiori informazioni sulle nostre esperienze di regata",
+    "sendMessage": "Inviaci un Messaggio",
+    "fullName": "Nome Completo",
+    "emailAddress": "Indirizzo Email",
+    "subject": "Oggetto",
+    "message": "Messaggio",
+    "messagePlaceholder": "Dicci come possiamo aiutarti...",
+    "sendingMessage": "Invio...",
+    "sendMessageButton": "Invia Messaggio",
+    "getInTouch": "Mettiti in Contatto",
+    "visitUs": "Visitaci",
+    "callUs": "Chiamaci",
+    "emailUs": "Scrivici",
+    "operatingHours": "Orari di Apertura",
+    "quickActions": "Azioni Rapide",
+    "callForBooking": "Chiama per Prenotazione Immediata",
+    "speakDirectly": "Parla direttamente con il nostro team",
+    "whatsappChat": "Chat WhatsApp",
+    "quickQuestions": "Domande rapide e supporto",
+    "findUs": "Trovaci",
+    "locatedIn": "Situato nel cuore di Riva del Garda",
+    "faq": "Domande Frequenti",
+    "faqSubtitle": "Risposte rapide alle domande comuni"
+  },
+  "chat": {
+    "welcome": "Benvenuto al Garda Racing Yacht Club! 🛥️ Come posso aiutarti oggi? Chiedimi delle nostre esperienze di regata, prezzi o informazioni per le prenotazioni.",
+    "online": "Online",
+    "quickQuestions": "Domande rapide:",
+    "needHelp": "Hai bisogno di aiuto immediato?",
+    "call": "Chiama",
+    "email": "Email",
+    "typePlaceholder": "Scrivi il tuo messaggio...",
+    "support": "Supporto Garda Racing"
+  },
+  "errors": {
+    "pageNotFound": "Pagina Non Trovata",
+    "pageNotFoundMessage": "Sembra che tu abbia perso la rotta! Lascia che ti aiutiamo a navigare verso acque sicure.",
+    "needAssistance": "Hai Bisogno di Assistenza?",
+    "lookingForSpecific": "Se stavi cercando qualcosa di specifico o credi che questo sia un errore, il nostro team è qui per aiutarti a trovare quello che ti serve.",
+    "callUs": "Chiamaci",
+    "speakDirectly": "Parla direttamente con il nostro team",
+    "emailUs": "Scrivici",
+    "respondWithin24": "Rispondiamo entro 24 ore"
+  },
+  "meta": {
+    "defaultTitle": "Garda Racing Yacht Club - Esperienze Premium di Vela Lago di Garda",
+    "defaultDescription": "Esperienze quotidiane di regata sul Lago di Garda con skipper professionali. Medaglie, certificati e foto inclusi. Prenota la tua avventura velica a €199 a Riva del Garda oggi!",
+    "keywords": "regata yacht Lago di Garda, esperienza vela Italia, vela Riva del Garda, charter yacht Lago di Garda, lezioni vela Italia, corso regata yacht"
+  },
+  "forms": {
+    "required": "Obbligatorio",
+    "invalidEmail": "Inserisci un indirizzo email valido",
+    "invalidPhone": "Inserisci un numero di telefono valido",
+    "selectSubject": "Seleziona un oggetto",
+    "subjects": {
+      "bookingInquiry": "Richiesta Prenotazione",
+      "groupBooking": "Prenotazione Gruppo",
+      "corporateEvent": "Evento Aziendale",
+      "generalQuestion": "Domanda Generale",
+      "feedback": "Feedback",
+      "technicalSupport": "Supporto Tecnico",
+      "other": "Altro"
+    }
+  },
+  "weather": {
+    "windSpeed": "Velocità Vento",
+    "temperature": "Temperatura",
+    "visibility": "Visibilità",
+    "waterTemp": "Temp. Acqua",
+    "excellent": "Eccellente"
+  },
+  "schedule": {
+    "welcomeRegistration": "Accoglienza e Registrazione",
+    "safetyBriefing": "Briefing di Sicurezza",
+    "sailingBasics": "Basi della Vela",
+    "firstRace": "Prima Regata",
+    "lunchBreak": "Pausa Pranzo",
+    "championshipRace": "Regata Campionato",
+    "finalRace": "Regata Finale",
+    "medalCeremony": "Cerimonia di Premiazione",
+    "photoSession": "Sessione Fotografica"
+  },
+  "stats": {
+    "happySailors": "Velisti Felici",
+    "racesCompleted": "Regate Completate",
+    "yearsExperience": "Anni di Esperienza",
+    "averageRating": "Valutazione Media"
+  }
+}

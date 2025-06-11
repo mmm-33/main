@@ -1,0 +1,365 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Vorherige",
+    "close": "Schließen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "clear": "Löschen",
+    "submit": "Senden",
+    "reset": "Zurücksetzen"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "experience": "Erlebnis",
+    "booking": "Buchung",
+    "about": "Über Uns",
+    "contact": "Kontakt",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "cancellation": "Stornierungsbedingungen"
+  },
+  "hero": {
+    "title": "Erleben Sie den Nervenkitzel des",
+    "titleHighlight": "Yacht-Rennsports",
+    "subtitle": "Tägliche Yacht-Rennerlebnisse auf dem weltberühmten Gardasee mit professionellen Skippern, Rennmedaillen und unvergesslichen Erinnerungen",
+    "price": "€199",
+    "priceSubtext": "pro Person, alles inklusive",
+    "bookNow": "Buchen Sie Ihr Abenteuer",
+    "checkAvailability": "Verfügbarkeit für Ihr Wunschdatum prüfen"
+  },
+  "features": {
+    "title": "Was Uns Besonders Macht",
+    "subtitle": "Erleben Sie authentisches Yacht-Racing mit professioneller Anleitung, Premium-Ausrüstung und persönlicher Betreuung auf dem wunderschönen Gardasee",
+    "professionalSkipper": {
+      "title": "Professioneller Skipper",
+      "description": "Lernen Sie von zertifizierten Segelprofis mit jahrelanger Rennerfahrung auf dem Gardasee"
+    },
+    "realRacing": {
+      "title": "Echtes Rennerlebnis",
+      "description": "Nehmen Sie an authentischen Yacht-Rennen mit offizieller Zeitmessung, Wertung und Siegerehrungen teil"
+    },
+    "photosIncluded": {
+      "title": "Fotos & Videos Inklusive",
+      "description": "Professionelle Fotografie und Videografie Ihres Erlebnisses, geliefert innerhalb von 24 Stunden"
+    },
+    "fullyInsured": {
+      "title": "Vollversichert & Zertifiziert",
+      "description": "Vollständige Versicherungsdeckung und RYA-Zertifizierung für Ihre Sicherheit und Ihren Seelenfrieden"
+    }
+  },
+  "experience": {
+    "title": "Ihre Rennreise",
+    "step1": {
+      "title": "Grundlagen Lernen",
+      "description": "Professionelle Anleitung zu Segel-Grundlagen und Renntechniken"
+    },
+    "step2": {
+      "title": "Rennen & Konkurrieren",
+      "description": "Teilnahme an echten Yacht-Rennen mit offizieller Zeitmessung und Wertung"
+    },
+    "step3": {
+      "title": "Erfolg Feiern",
+      "description": "Siegerehrung, Zertifikatsübergabe und professionelle Fotos"
+    },
+    "learnMore": "Mehr über Unser Erlebnis Erfahren"
+  },
+  "testimonials": {
+    "title": "Was Unsere Segler Sagen",
+    "subtitle": "Echte Erfahrungen unserer zufriedenen Kunden"
+  },
+  "location": {
+    "title": "Gardasee-Paradies",
+    "perfectLocation": {
+      "title": "Perfekte Lage",
+      "description": "Gelegen im wunderschönen Riva del Garda, leicht erreichbar von europäischen Großstädten"
+    },
+    "idealConditions": {
+      "title": "Ideale Bedingungen",
+      "description": "Konstante Thermikwinde und geschützte Gewässer machen den Gardasee perfekt zum Segeln"
+    },
+    "dailyDepartures": {
+      "title": "Tägliche Abfahrten",
+      "description": "Mehrere Zeitfenster täglich verfügbar von März bis Oktober"
+    }
+  },
+  "cta": {
+    "title": "Bereit zum Rennen?",
+    "subtitle": "Schließen Sie sich Hunderten zufriedener Segler an, die den Nervenkitzel des Yacht-Rennsports auf dem Gardasee erlebt haben",
+    "bookExperience": "Buchen Sie Ihr Erlebnis - €199",
+    "callNow": "Anrufen +39 345 678 9012"
+  },
+  "footer": {
+    "description": "Erleben Sie den Nervenkitzel des Yacht-Rennsports auf dem weltberühmten Gardasee. Professionelle Anleitung, Premium-Ausrüstung und unvergessliche Erinnerungen.",
+    "quickLinks": "Schnelllinks",
+    "contact": "Kontakt",
+    "certifications": "Zertifizierungen",
+    "operatingHours": "Öffnungszeiten:",
+    "dailyHours": "Täglich: 8:00 - 19:00",
+    "season": "März - Oktober",
+    "copyright": "© 2024 Garda Racing Yacht Club. Alle Rechte vorbehalten."
+  },
+  "booking": {
+    "title": "Buchen Sie Ihr Rennerlebnis",
+    "subtitle": "Sichern Sie sich Ihren Platz für ein unvergessliches Yacht-Rennabenteuer auf dem Gardasee",
+    "steps": {
+      "dateTime": "Datum & Zeit Wählen",
+      "details": "Ihre Daten",
+      "payment": "Zahlung"
+    },
+    "selectExperience": "Wählen Sie Ihr Erlebnis",
+    "chooseDate": "Datum Wählen",
+    "chooseTime": "Zeitfenster Wählen",
+    "participants": "Anzahl Teilnehmer",
+    "maxParticipants": "Maximal 8 Personen pro Boot",
+    "yourDetails": "Ihre Daten",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "specialRequests": "Besondere Wünsche",
+    "specialRequestsPlaceholder": "Diätanforderungen, Barrierefreiheit oder besondere Anlässe...",
+    "agreeTerms": "Ich stimme den Nutzungsbedingungen zu",
+    "agreeMarketing": "Ich möchte Marketing-Mitteilungen über Sonderangebote und Veranstaltungen erhalten",
+    "securePayment": "Sichere Zahlung",
+    "cardNumber": "Kartennummer",
+    "expiryDate": "Ablaufdatum",
+    "cvc": "CVC",
+    "cardholderName": "Name des Karteninhabers",
+    "completeBooking": "Buchung Abschließen",
+    "processing": "Verarbeitung...",
+    "bookingSummary": "Buchungsübersicht",
+    "date": "Datum:",
+    "time": "Zeit:",
+    "pricePerPerson": "Preis pro Person:",
+    "total": "Gesamt:",
+    "deposit": "Zahlen Sie €{{deposit}} Anzahlung jetzt, €{{remaining}} am Tag",
+    "needHelp": "Brauchen Sie Hilfe?",
+    "cancellationPolicy": "Stornierungsbedingungen",
+    "whatToBring": "Was Mitbringen"
+  },
+  "about": {
+    "title": "Über Uns",
+    "subtitle": "Leidenschaftlich für das Segeln seit 2009, schaffen wir unvergessliche Yacht-Rennerlebnisse auf dem Gardasee für Segler aller Erfahrungsstufen.",
+    "ourStory": "Unsere Geschichte",
+    "theBeginning": "Der Anfang",
+    "ourJourney": "Unsere Reise",
+    "journeySubtitle": "Wichtige Meilensteine in unserer 15-jährigen Geschichte der Segelexzellenz",
+    "ourValues": "Unsere Werte",
+    "valuesSubtitle": "Die Prinzipien, die alles leiten, was wir tun",
+    "meetTeam": "Lernen Sie Unser Team Kennen",
+    "teamSubtitle": "Die leidenschaftlichen Profis hinter Ihrem Segelerlebnis",
+    "certifications": "Zertifizierungen & Auszeichnungen",
+    "certificationsSubtitle": "Unser Engagement für Exzellenz wird von führenden Organisationen anerkannt",
+    "readyToJoin": "Bereit, Teil Unserer Geschichte zu Werden?",
+    "joinCommunity": "Werden Sie Teil unserer Segelgemeinschaft und schaffen Sie Ihre eigenen unvergesslichen Erinnerungen auf dem Gardasee.",
+    "missionVision": "Unsere Mission & Vision",
+    "mission": "Mission",
+    "vision": "Vision",
+    "milestone2012Title": "Erste 1000 Gäste",
+    "milestone2015Title": "RYA-Zertifizierung",
+    "milestone2018Title": "Flottenerweiterung",
+    "milestone2020Title": "Digitale Innovation",
+    "milestone2024Title": "2000+ Glückliche Segler",
+    "values": {
+      "safety": {
+        "title": "Sicherheit Zuerst"
+      },
+      "passion": {
+        "title": "Leidenschaft für das Segeln"
+      },
+      "inclusive": {
+        "title": "Inklusive Exzellenz"
+      },
+      "authentic": {
+        "title": "Authentische Rennen"
+      },
+      "innovation": {
+        "title": "Kontinuierliche Innovation"
+      }
+    },
+    "team": {
+      "marco": {
+        "role": "Gründer & Hauptskipper",
+        "specialties": {
+          "strategy": "Rennstrategie",
+          "safety": "Sicherheitsmanagement",
+          "experience": "Gästeerlebnis"
+        }
+      },
+      "sofia": {
+        "role": "Betriebsleiterin",
+        "specialties": {
+          "relations": "Gästebeziehungen",
+          "quality": "Qualitätssicherung",
+          "coordination": "Teamkoordination"
+        }
+      },
+      "andreas": {
+        "role": "Senior Skipper",
+        "specialties": {
+          "techniques": "Fortgeschrittene Techniken",
+          "training": "Wettkampftraining",
+          "weather": "Wetteranalyse"
+        }
+      },
+      "elena": {
+        "role": "Sicherheitsbeauftragte & Ausbilderin",
+        "specialties": {
+          "protocols": "Sicherheitsprotokolle",
+          "response": "Notfallreaktion",
+          "equipment": "Ausrüstungsmanagement"
+        }
+      }
+    },
+    "achievements": {
+      "ryaCertified": {
+        "title": "RYA-Zertifizierte Exzellenz",
+        "description": "Royal Yachting Association Zertifizierung für professionelle Segelausbildung"
+      },
+      "guestRating": {
+        "title": "4.9★ Gästebewertung",
+        "description": "Konstant hohe Bewertungen auf allen Bewertungsplattformen"
+      },
+      "safetyRecord": {
+        "title": "Null Sicherheitsvorfälle",
+        "description": "15 Jahre Betrieb mit perfekter Sicherheitsbilanz"
+      },
+      "satisfiedGuests": {
+        "title": "2000+ Zufriedene Gäste",
+        "description": "Segler aus über 30 Ländern weltweit begrüßt"
+      },
+      "industryRecognition": {
+        "title": "Branchenanerkennung",
+        "description": "Vorgestellt in führenden Segel- und Reisepublikationen"
+      },
+      "mediaExcellence": {
+        "title": "Medienexzellenz",
+        "description": "Professionelle Fotografie- und Videografie-Services inklusive"
+      },
+      "ongoing": "Laufend"
+    },
+    "whatSetsUsApart": "Was Uns Auszeichnet",
+    "whyChooseUs": "Warum Tausende von Seglern Garda Racing für ihr Gardasee-Erlebnis wählen",
+    "differentiators": {
+      "authentic": {
+        "title": "Authentisches Rennerlebnis"
+      },
+      "professional": {
+        "title": "Professionelle Ausbildung"
+      },
+      "complete": {
+        "title": "Komplettes Erlebnispaket"
+      },
+      "location": {
+        "title": "Perfekte Lage"
+      },
+      "multilingual": {
+        "title": "Mehrsprachiges Team"
+      },
+      "flexible": {
+        "title": "Flexibel & Zuverlässig"
+      }
+    }
+  },
+  "contact": {
+    "title": "Kontaktieren Sie Uns",
+    "subtitle": "Nehmen Sie Kontakt mit unserem Team auf für Buchungen, Fragen oder weitere Informationen über unsere Yacht-Rennerlebnisse",
+    "sendMessage": "Senden Sie uns eine Nachricht",
+    "fullName": "Vollständiger Name",
+    "emailAddress": "E-Mail-Adresse",
+    "subject": "Betreff",
+    "message": "Nachricht",
+    "messagePlaceholder": "Sagen Sie uns, wie wir Ihnen helfen können...",
+    "sendingMessage": "Senden...",
+    "sendMessageButton": "Nachricht Senden",
+    "getInTouch": "Kontakt Aufnehmen",
+    "visitUs": "Besuchen Sie Uns",
+    "callUs": "Rufen Sie Uns An",
+    "emailUs": "Schreiben Sie Uns",
+    "operatingHours": "Öffnungszeiten",
+    "quickActions": "Schnellaktionen",
+    "callForBooking": "Anrufen für Sofortbuchung",
+    "speakDirectly": "Sprechen Sie direkt mit unserem Team",
+    "whatsappChat": "WhatsApp Chat",
+    "quickQuestions": "Schnelle Fragen und Support",
+    "findUs": "Finden Sie Uns",
+    "locatedIn": "Gelegen im Herzen von Riva del Garda",
+    "faq": "Häufig Gestellte Fragen",
+    "faqSubtitle": "Schnelle Antworten auf häufige Fragen"
+  },
+  "chat": {
+    "welcome": "Willkommen beim Garda Racing Yacht Club! 🛥️ Wie kann ich Ihnen heute helfen? Fragen Sie mich nach unseren Yacht-Rennerlebnissen, Preisen oder Buchungsinformationen.",
+    "online": "Online",
+    "quickQuestions": "Schnelle Fragen:",
+    "needHelp": "Brauchen Sie sofortige Hilfe?",
+    "call": "Anrufen",
+    "email": "E-Mail",
+    "typePlaceholder": "Geben Sie Ihre Nachricht ein...",
+    "support": "Garda Racing Support"
+  },
+  "errors": {
+    "pageNotFound": "Seite Nicht Gefunden",
+    "pageNotFoundMessage": "Es scheint, als wären Sie vom Kurs abgekommen! Lassen Sie uns Ihnen helfen, zurück in sichere Gewässer zu navigieren.",
+    "needAssistance": "Brauchen Sie Hilfe?",
+    "lookingForSpecific": "Wenn Sie nach etwas Bestimmtem gesucht haben oder glauben, dass dies ein Fehler ist, ist unser Team hier, um Ihnen zu helfen, was Sie brauchen.",
+    "callUs": "Rufen Sie Uns An",
+    "speakDirectly": "Sprechen Sie direkt mit unserem Team",
+    "emailUs": "Schreiben Sie Uns",
+    "respondWithin24": "Wir antworten innerhalb von 24 Stunden"
+  },
+  "meta": {
+    "defaultTitle": "Garda Racing Yacht Club - Premium Segelerlebnisse Gardasee",
+    "defaultDescription": "Tägliche Yacht-Rennerlebnisse auf dem Gardasee mit professionellen Skippern. Rennmedaillen, Zertifikate & Fotos inklusive. Buchen Sie Ihr €199 Segelabenteuer in Riva del Garda heute!",
+    "keywords": "Yacht-Rennen Gardasee, Segelerlebnis Italien, Riva del Garda Segeln, Yacht-Charter Gardasee, Segelunterricht Italien, Yacht-Rennkurs"
+  },
+  "forms": {
+    "required": "Erforderlich",
+    "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
+    "selectSubject": "Betreff auswählen",
+    "subjects": {
+      "bookingInquiry": "Buchungsanfrage",
+      "groupBooking": "Gruppenbuchung",
+      "corporateEvent": "Firmenevent",
+      "generalQuestion": "Allgemeine Frage",
+      "feedback": "Feedback",
+      "technicalSupport": "Technischer Support",
+      "other": "Andere"
+    }
+  },
+  "weather": {
+    "windSpeed": "Windgeschwindigkeit",
+    "temperature": "Temperatur",
+    "visibility": "Sichtweite",
+    "waterTemp": "Wassertemp.",
+    "excellent": "Ausgezeichnet"
+  },
+  "schedule": {
+    "welcomeRegistration": "Begrüßung & Registrierung",
+    "safetyBriefing": "Sicherheitsbriefing",
+    "sailingBasics": "Segel-Grundlagen",
+    "firstRace": "Erstes Rennen",
+    "lunchBreak": "Mittagspause",
+    "championshipRace": "Meisterschaftsrennen",
+    "finalRace": "Finalrennen",
+    "medalCeremony": "Siegerehrung",
+    "photoSession": "Fotosession"
+  },
+  "stats": {
+    "happySailors": "Glückliche Segler",
+    "racesCompleted": "Abgeschlossene Rennen",
+    "yearsExperience": "Jahre Erfahrung",
+    "averageRating": "Durchschnittsbewertung"
+  }
+}

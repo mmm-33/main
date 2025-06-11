@@ -1,0 +1,560 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear",
+    "submit": "Submit",
+    "reset": "Reset",
+    "step": "Step"
+  },
+  "navigation": {
+    "home": "Home",
+    "experience": "Experience",
+    "booking": "Booking",
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cancellation": "Cancellation Policy"
+  },
+  "hero": {
+    "title": "Experience the Thrill of",
+    "titleHighlight": "Yacht Racing",
+    "subtitle": "Daily yacht racing experiences on world-famous Lake Garda with professional skippers, racing medals, and unforgettable memories",
+    "price": "€199",
+    "priceSubtext": "per person, all inclusive",
+    "bookNow": "Book Your Adventure Now",
+    "checkAvailability": "Check availability for your preferred date"
+  },
+  "features": {
+    "title": "What Makes Us Special",
+    "subtitle": "Experience authentic yacht racing with professional instruction, premium equipment, and personalized attention on beautiful Lake Garda",
+    "professionalSkipper": {
+      "title": "Professional Skipper",
+      "description": "Learn from certified sailing professionals with years of racing experience on Lake Garda"
+    },
+    "realRacing": {
+      "title": "Real Racing Experience",
+      "description": "Participate in authentic yacht races with official timing, scoring, and medal ceremonies"
+    },
+    "photosIncluded": {
+      "title": "Photos & Videos Included",
+      "description": "Professional photography and videography of your experience, delivered within 24 hours"
+    },
+    "fullyInsured": {
+      "title": "Fully Insured & Certified",
+      "description": "Complete insurance coverage and RYA certification for your peace of mind and safety"
+    }
+  },
+  "experience": {
+    "title": "Your Racing Journey",
+    "subtitle": "Experience authentic yacht racing with professional instruction",
+    "hero": {
+      "title": "The Complete Racing Experience",
+      "subtitle": "From beginner to champion in one day. Experience authentic yacht racing on Lake Garda with professional instruction, competitive races, and official recognition of your achievement.",
+      "duration": "8.5 hours",
+      "people": "6-8 people",
+      "medal": "Medal included"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "schedule": "Schedule",
+      "gallery": "Gallery",
+      "weather": "Weather",
+      "equipment": "Equipment",
+      "faq": "FAQ"
+    },
+    "overview": {
+      "title": "What Makes Our Experience Special",
+      "racingFormat": "Racing Format",
+      "championship": "Three-Race Championship",
+      "practice": "Practice race for skill building",
+      "final": "Final race to determine overall winner",
+      "ceremony": "Medal ceremony with certificates"
+    },
+    "schedule": {
+      "title": "Daily Schedule",
+      "welcome": {
+        "description": "Meet your skipper and fellow sailors"
+      },
+      "safety": {
+        "description": "Essential safety procedures and equipment overview"
+      },
+      "basics": {
+        "description": "Learn fundamental sailing techniques"
+      },
+      "practice": {
+        "description": "Practice race to get comfortable"
+      },
+      "lunch": {
+        "description": "Enjoy local cuisine at the marina"
+      },
+      "championship": {
+        "description": "The main racing event"
+      },
+      "final": {
+        "description": "Last chance to improve your position"
+      },
+      "medal": {
+        "description": "Awards and certificate presentation"
+      },
+      "photo": {
+        "description": "Professional photos with your medals"
+      }
+    },
+    "gallery": {
+      "title": "Experience Gallery",
+      "racing": "Racing on Lake Garda",
+      "harbor": "Riva del Garda Harbor",
+      "instruction": "Professional Instruction",
+      "ceremony": "Medal Ceremony",
+      "followUs": "Want to see more? Follow us on social media for daily updates!"
+    },
+    "weather": {
+      "title": "Weather Conditions",
+      "whyPerfect": "Why Lake Garda is Perfect for Sailing",
+      "consistentWinds": "Consistent Winds",
+      "windsDescription": "Lake Garda enjoys reliable thermal winds that develop daily, creating perfect sailing conditions. The morning \"Peler\" wind from the north and afternoon \"Ora\" wind from the south provide consistent sailing throughout the day.",
+      "protectedWaters": "Protected Waters",
+      "watersDescription": "Surrounded by mountains, Lake Garda offers protected waters that are ideal for learning and racing. The lake's size provides enough space for proper racing while maintaining safe conditions for all skill levels."
+    },
+    "equipment": {
+      "title": "Equipment Provided",
+      "included": "What's Included",
+      "yacht": "Professional racing yacht (Bavaria 34 or similar)",
+      "safety": "All safety equipment (life jackets, harnesses)",
+      "gear": "Professional sailing gear",
+      "racing": "Racing flags and timing equipment",
+      "firstAid": "First aid kit and emergency equipment",
+      "waterproof": "Waterproof bags for personal items",
+      "premiumYachts": "Premium Yachts",
+      "yachtsDescription": "We use modern Bavaria 34 cruiser-racers and similar high-performance yachts. These boats are specifically chosen for their racing capabilities while maintaining comfort and safety for our participants.",
+      "professionalEquipment": "Professional sailing equipment",
+      "safetyFirst": "Safety First",
+      "safetyDescription": "All safety equipment meets international standards. Our boats are regularly inspected and maintained to the highest standards. Every participant receives a comprehensive safety briefing before departure."
+    },
+    "faq": {
+      "experience": {
+        "question": "Do I need sailing experience?",
+        "answer": "No sailing experience is required! Our professional skippers will teach you everything you need to know. We welcome complete beginners and experienced sailors alike."
+      },
+      "bring": {
+        "question": "What should I bring?",
+        "answer": "Bring comfortable clothes, sunscreen, a hat, and a change of clothes. We provide all sailing equipment, safety gear, and waterproof bags for your belongings."
+      },
+      "weather": {
+        "question": "What if the weather is bad?",
+        "answer": "Safety is our priority. If conditions are unsafe, we'll reschedule your experience at no extra cost. Light rain doesn't stop us - it's part of the adventure!"
+      },
+      "people": {
+        "question": "How many people per boat?",
+        "answer": "Each yacht accommodates 6-8 participants plus the professional skipper. This ensures personalized attention and an intimate experience."
+      },
+      "meals": {
+        "question": "Are meals included?",
+        "answer": "Lunch is not included in the base price, but we can arrange catering at the marina restaurant. Many participants enjoy the local Italian cuisine as part of their experience."
+      },
+      "camera": {
+        "question": "Can I bring my camera?",
+        "answer": "Absolutely! We also provide professional photography services. You'll receive high-quality photos and videos of your racing experience within 24 hours."
+      },
+      "stillQuestions": "Still have questions? We're here to help!"
+    },
+    "cta": {
+      "description": "Book your yacht racing experience today and create memories that will last a lifetime."
+    },
+    "step1": {
+      "title": "Learn the Basics",
+      "description": "Professional instruction on sailing fundamentals and racing techniques"
+    },
+    "step2": {
+      "title": "Race & Compete",
+      "description": "Participate in real yacht races with official timing and scoring"
+    },
+    "step3": {
+      "title": "Celebrate Success",
+      "description": "Medal ceremony, certificate presentation, and professional photos"
+    },
+    "learnMore": "Learn More About Our Experience"
+  },
+  "testimonials": {
+    "title": "What Our Sailors Say",
+    "subtitle": "Real experiences from our satisfied customers",
+    "marco": {
+      "text": "Absolutely incredible experience! The professional skipper made us feel safe while we learned to race. Got my medal and amazing photos. Worth every euro!"
+    },
+    "sarah": {
+      "text": "Perfect day on Lake Garda! No sailing experience needed - they teach you everything. The racing was thrilling and the scenery breathtaking. Highly recommend!"
+    },
+    "andreas": {
+      "text": "Best activity on Lake Garda! Professional equipment, expert instruction, and real racing competition. The certificate and photos are a nice touch. Will definitely return!"
+    }
+  },
+  "location": {
+    "title": "Lake Garda Paradise",
+    "perfectLocation": {
+      "title": "Perfect Location",
+      "description": "Located in beautiful Riva del Garda, easily accessible from major European cities"
+    },
+    "idealConditions": {
+      "title": "Ideal Conditions",
+      "description": "Consistent thermal winds and protected waters make Lake Garda perfect for sailing"
+    },
+    "dailyDepartures": {
+      "title": "Daily Departures",
+      "description": "Multiple time slots available daily from March to October"
+    }
+  },
+  "cta": {
+    "title": "Ready to Start Racing?",
+    "subtitle": "Join hundreds of satisfied sailors who have experienced the thrill of yacht racing on Lake Garda",
+    "bookExperience": "Book Your Experience - €199",
+    "callNow": "Call +39 345 678 9012"
+  },
+  "footer": {
+    "description": "Experience the thrill of yacht racing on the world-famous Lake Garda. Professional instruction, premium equipment, and unforgettable memories.",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "certifications": "Certifications",
+    "operatingHours": "Operating Hours:",
+    "dailyHours": "Daily: 8:00 AM - 7:00 PM",
+    "season": "March - October",
+    "copyright": "© 2024 Garda Racing Yacht Club. All rights reserved."
+  },
+  "booking": {
+    "title": "Book Your Racing Experience",
+    "subtitle": "Secure your spot for an unforgettable yacht racing adventure on Lake Garda",
+    "steps": {
+      "dateTime": "Select Date & Time",
+      "details": "Your Details",
+      "payment": "Payment"
+    },
+    "selectExperience": "Select Your Experience",
+    "chooseDate": "Choose Date",
+    "chooseTime": "Choose Time Slot",
+    "participants": "Number of Participants",
+    "maxParticipants": "Maximum 8 people per boat",
+    "yourDetails": "Your Details",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "specialRequests": "Special Requests",
+    "specialRequestsPlaceholder": "Any dietary requirements, accessibility needs, or special occasions...",
+    "agreeTerms": "I agree to the terms and conditions",
+    "agreeTermsRequired": "You must agree to the terms and conditions",
+    "agreeMarketing": "I would like to receive marketing communications about special offers and events",
+    "securePayment": "Secure Payment",
+    "secureProcessing": "Secure Payment Processing",
+    "secureProcessingDescription": "Your payment is processed securely through Stripe. We never store your card details.",
+    "cardNumber": "Card Number",
+    "expiryDate": "Expiry Date",
+    "cvc": "CVC",
+    "cardholderName": "Cardholder Name",
+    "completeBooking": "Complete Booking",
+    "processing": "Processing...",
+    "bookingSummary": "Booking Summary",
+    "date": "Date",
+    "time": "Time",
+    "pricePerPerson": "per person",
+    "total": "Total",
+    "deposit": "Pay €{{deposit}} deposit now, €{{remaining}} on the day",
+    "needHelp": "Need Help?",
+    "cancellationPolicy": "Cancellation Policy",
+    "whatToBring": "What to Bring",
+    "fullyBooked": "Fully booked",
+    "safetyEquipment": "All safety equipment provided",
+    "medalCertificate": "Racing medal & certificate",
+    "freeCancellation": "Free cancellation up to 48 hours before",
+    "whatHappensAfter": "What happens after booking?",
+    "instantConfirmation": "Instant confirmation email with all details",
+    "meetingPoint": "Meeting point and contact information",
+    "weatherUpdates": "Weather updates 24 hours before",
+    "photosDelivered": "Professional photos delivered within 24 hours",
+    "freeCancellation48h": "Free cancellation up to 48 hours before departure",
+    "refund50percent": "50% refund for cancellations 24-48 hours before",
+    "noRefund24h": "No refund for cancellations less than 24 hours",
+    "weatherCancellation": "Weather cancellations: full refund or reschedule",
+    "comfortableClothes": "Comfortable clothes and change of clothes",
+    "sunscreenHat": "Sunscreen and hat",
+    "nonSlipShoes": "Non-slip shoes (we provide sailing boots)",
+    "cameraWaterproof": "Camera (waterproof case recommended)",
+    "success": "Booking created successfully! Check your email for confirmation.",
+    "error": "An error occurred while processing your booking. Please try again."
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Passionate about sailing since 2009, we've been creating unforgettable yacht racing experiences on Lake Garda for sailors of all skill levels.",
+    "ourStory": "Our Story",
+    "theBeginning": "The Beginning",
+    "ourJourney": "Our Journey",
+    "journeySubtitle": "Key milestones in our 15-year history of sailing excellence",
+    "ourValues": "Our Values",
+    "valuesSubtitle": "The principles that guide everything we do",
+    "meetTeam": "Meet Our Team",
+    "teamSubtitle": "The passionate professionals behind your sailing experience",
+    "certifications": "Certifications & Recognition",
+    "certificationsSubtitle": "Our commitment to excellence is recognized by leading organizations",
+    "readyToJoin": "Ready to Join Our Story?",
+    "joinCommunity": "Become part of our sailing community and create your own unforgettable memories on Lake Garda.",
+    "storyDescription": "What started as a passion project by a group of sailing enthusiasts has grown into Lake Garda's premier yacht racing experience provider. Our journey began in 2009 when founder Marco Benedetti decided to share his love for competitive sailing with visitors from around the world.",
+    "beginningDescription": "Lake Garda has always been a sailor's paradise, with its consistent winds and stunning Alpine backdrop. Marco, a lifelong sailor and former competitive racer, recognized that many visitors to the lake wanted to experience authentic yacht racing but lacked the opportunity.",
+    "journeyDescription1": "Starting with a single yacht and a dream, Marco began offering personalized sailing experiences that combined professional instruction with the thrill of competitive racing. Word spread quickly about these unique adventures that allowed complete beginners to experience the excitement of yacht racing.",
+    "journeyDescription2": "Today, we operate a fleet of modern racing yachts and have welcomed over 2,000 guests from more than 30 countries, each leaving with unforgettable memories and a newfound appreciation for the sport of sailing.",
+    "missionVision": "Our Mission & Vision",
+    "mission": "Mission",
+    "missionDescription": "To provide authentic, safe, and unforgettable yacht racing experiences that inspire a lifelong love of sailing while showcasing the natural beauty of Lake Garda.",
+    "vision": "Vision",
+    "visionDescription": "To be recognized as Europe's premier destination for yacht racing experiences, where every guest leaves as a confident sailor with memories that last a lifetime.",
+    "milestone2009": "Founded by passionate sailor Marco Benedetti with a single yacht and a dream to share authentic racing experiences",
+    "milestone2012Title": "First 1000 Guests",
+    "milestone2012": "Reached our first major milestone of satisfied customers from across Europe",
+    "milestone2015Title": "RYA Certification",
+    "milestone2015": "Achieved Royal Yachting Association certification for professional sailing instruction",
+    "milestone2018Title": "Fleet Expansion",
+    "milestone2018": "Added modern Bavaria racing yachts to provide the ultimate sailing experience",
+    "milestone2020Title": "Digital Innovation",
+    "milestone2020": "Launched online booking platform and digital guest services",
+    "milestone2024Title": "2000+ Happy Sailors",
+    "milestone2024": "Celebrating over 2000 satisfied customers from 30+ countries worldwide",
+    "values": {
+      "safety": {
+        "title": "Safety First",
+        "description": "Your safety is our absolute priority. We maintain the highest safety standards, use only certified equipment, and conduct thorough briefings before every experience."
+      },
+      "passion": {
+        "title": "Passion for Sailing",
+        "description": "We live and breathe sailing. Our genuine passion for the sport drives everything we do, from instruction quality to creating unforgettable memories."
+      },
+      "inclusive": {
+        "title": "Inclusive Excellence",
+        "description": "Whether you're a complete beginner or experienced sailor, everyone is welcome. We tailor each experience to ensure everyone feels confident and engaged."
+      },
+      "authentic": {
+        "title": "Authentic Racing",
+        "description": "We provide genuine yacht racing experiences with real competition, official timing, and meaningful recognition of achievement."
+      },
+      "innovation": {
+        "title": "Continuous Innovation",
+        "description": "We constantly evolve our services, incorporating the latest sailing techniques, safety protocols, and guest experience innovations."
+      }
+    },
+    "team": {
+      "marco": {
+        "role": "Founder & Head Skipper",
+        "description": "RYA Yachtmaster with 20+ years of sailing experience on Lake Garda. Former competitive racer turned passionate instructor.",
+        "specialties": {
+          "strategy": "Racing Strategy",
+          "safety": "Safety Management",
+          "experience": "Guest Experience"
+        }
+      },
+      "sofia": {
+        "role": "Operations Manager",
+        "description": "Ensures every guest has an unforgettable experience. Multilingual hospitality expert with a passion for sailing.",
+        "specialties": {
+          "relations": "Guest Relations",
+          "quality": "Quality Assurance",
+          "coordination": "Team Coordination"
+        }
+      },
+      "andreas": {
+        "role": "Senior Skipper",
+        "description": "Former Olympic sailor and certified sailing instructor. Brings world-class racing expertise to every experience.",
+        "specialties": {
+          "techniques": "Advanced Techniques",
+          "training": "Competition Training",
+          "weather": "Weather Analysis"
+        }
+      },
+      "elena": {
+        "role": "Safety Officer & Instructor",
+        "description": "Certified marine safety expert and sailing instructor. Ensures all experiences meet the highest safety standards.",
+        "specialties": {
+          "protocols": "Safety Protocols",
+          "response": "Emergency Response",
+          "equipment": "Equipment Management"
+        }
+      }
+    },
+    "achievements": {
+      "ryaCertified": {
+        "title": "RYA Certified Excellence",
+        "description": "Royal Yachting Association certification for professional sailing instruction"
+      },
+      "guestRating": {
+        "title": "4.9★ Guest Rating",
+        "description": "Consistently high ratings across all review platforms"
+      },
+      "safetyRecord": {
+        "title": "Zero Safety Incidents",
+        "description": "15 years of operations with perfect safety record"
+      },
+      "satisfiedGuests": {
+        "title": "2000+ Satisfied Guests",
+        "description": "Welcomed sailors from over 30 countries worldwide"
+      },
+      "industryRecognition": {
+        "title": "Industry Recognition",
+        "description": "Featured in leading sailing and travel publications"
+      },
+      "mediaExcellence": {
+        "title": "Media Excellence",
+        "description": "Professional photography and videography services included"
+      },
+      "ongoing": "Ongoing"
+    },
+    "whatSetsUsApart": "What Sets Us Apart",
+    "whyChooseUs": "Why thousands of sailors choose Garda Racing for their Lake Garda experience",
+    "differentiators": {
+      "authentic": {
+        "title": "Authentic Racing Experience",
+        "description": "Unlike tourist sailing trips, we offer real yacht racing with official timing, scoring, and competitive elements that create genuine excitement."
+      },
+      "professional": {
+        "title": "Professional Instruction",
+        "description": "Our RYA-certified skippers provide world-class instruction, ensuring you learn proper techniques while having fun."
+      },
+      "complete": {
+        "title": "Complete Experience Package",
+        "description": "Everything included: professional photos, racing medals, certificates, safety equipment, and expert guidance."
+      },
+      "location": {
+        "title": "Perfect Location",
+        "description": "Lake Garda offers ideal sailing conditions with consistent thermal winds and stunning Alpine scenery."
+      },
+      "multilingual": {
+        "title": "Multilingual Team",
+        "description": "Our team speaks English, Italian, German, and Russian, ensuring clear communication and comfort for all guests."
+      },
+      "flexible": {
+        "title": "Flexible & Reliable",
+        "description": "Daily departures, weather guarantees, and flexible booking policies make planning your experience stress-free."
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with our team for bookings, questions, or more information about our yacht racing experiences",
+    "sendMessage": "Send us a Message",
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
+    "subject": "Subject",
+    "message": "Message",
+    "messagePlaceholder": "Tell us how we can help you...",
+    "sendingMessage": "Sending...",
+    "sendMessageButton": "Send Message",
+    "getInTouch": "Get in Touch",
+    "visitUs": "Visit Us",
+    "callUs": "Call Us",
+    "speakDirectly": "Speak directly with our team",
+    "emailUs": "Email Us",
+    "operatingHours": "Operating Hours",
+    "quickActions": "Quick Actions",
+    "callForBooking": "Call for Immediate Booking",
+    "whatsappChat": "WhatsApp Chat",
+    "quickQuestions": "Quick questions and support",
+    "findUs": "Find Us",
+    "locatedIn": "Located in the heart of Riva del Garda",
+    "faq": "Frequently Asked Questions",
+    "faqSubtitle": "Quick answers to common questions",
+    "faqItems": {
+      "bookingAdvance": {
+        "question": "How far in advance should I book?",
+        "answer": "We recommend booking at least 2-3 days in advance, especially during peak season (June-September). Same-day bookings may be available depending on weather and capacity."
+      },
+      "cancellation": {
+        "question": "What if I need to cancel?",
+        "answer": "Free cancellation up to 48 hours before your experience. See our cancellation policy for full details."
+      },
+      "groupDiscounts": {
+        "question": "Do you offer group discounts?",
+        "answer": "Yes! We offer special rates for groups of 6 or more people. Contact us directly for custom pricing and corporate event packages."
+      },
+      "languages": {
+        "question": "What languages do you speak?",
+        "answer": "Our team speaks English, German, Italian, and Russian. All safety briefings and instructions are provided in your preferred language."
+      }
+    }
+  },
+  "chat": {
+    "welcome": "Welcome to Garda Racing Yacht Club! 🛥️ How can I help you today? Ask me about our yacht racing experiences, pricing, or booking information.",
+    "online": "Online",
+    "quickQuestions": "Quick questions:",
+    "needHelp": "Need immediate help?",
+    "call": "Call",
+    "email": "Email",
+    "typePlaceholder": "Type your message...",
+    "support": "Garda Racing Support",
+    "openChat": "Open chat support",
+    "sendMessage": "Send message",
+    "errorMessage": "Sorry, I'm having trouble responding right now. Please call us at +39 345 678 9012 for immediate assistance."
+  },
+  "errors": {
+    "pageNotFound": "Page Not Found",
+    "pageNotFoundMessage": "It seems you've sailed off course! Let us help you navigate back to safe waters.",
+    "needAssistance": "Need Assistance?",
+    "lookingForSpecific": "If you were looking for something specific or believe this is an error, our team is here to help you find what you need.",
+    "callUs": "Call Us",
+    "speakDirectly": "Speak directly with our team",
+    "emailUs": "Email Us",
+    "respondWithin24": "We respond within 24 hours"
+  },
+  "meta": {
+    "defaultTitle": "Garda Racing Yacht Club - Premium Sailing Experiences Lake Garda",
+    "defaultDescription": "Daily yacht racing experiences on Lake Garda with professional skippers. Racing medals, certificates & photos included. Book your €199 sailing adventure in Riva del Garda today!",
+    "keywords": "yacht racing Lake Garda, sailing experience Italy, Riva del Garda sailing, yacht charter Lake Garda, sailing lessons Italy, yacht racing course"
+  },
+  "forms": {
+    "required": "Required",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPhone": "Please enter a valid phone number",
+    "selectSubject": "Select a subject",
+    "subjects": {
+      "bookingInquiry": "Booking Inquiry",
+      "groupBooking": "Group Booking",
+      "corporateEvent": "Corporate Event",
+      "generalQuestion": "General Question",
+      "feedback": "Feedback",
+      "technicalSupport": "Technical Support",
+      "other": "Other"
+    }
+  },
+  "weather": {
+    "windSpeed": "Wind Speed",
+    "temperature": "Temperature",
+    "visibility": "Visibility",
+    "waterTemp": "Water Temp",
+    "excellent": "Excellent"
+  },
+  "schedule": {
+    "welcomeRegistration": "Welcome & Registration",
+    "safetyBriefing": "Safety Briefing",
+    "sailingBasics": "Sailing Basics",
+    "firstRace": "First Race",
+    "lunchBreak": "Lunch Break",
+    "championshipRace": "Championship Race",
+    "finalRace": "Final Race",
+    "medalCeremony": "Medal Ceremony",
+    "photoSession": "Photo Session"
+  },
+  "stats": {
+    "happySailors": "Happy Sailors",
+    "racesCompleted": "Races Completed",
+    "yearsExperience": "Years Experience",
+    "averageRating": "Average Rating"
+  }
+}

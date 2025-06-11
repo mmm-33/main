@@ -1,0 +1,365 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "close": "Cerrar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "clear": "Limpiar",
+    "submit": "Enviar",
+    "reset": "Restablecer"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "experience": "Experiencia",
+    "booking": "Reserva",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "cancellation": "Política de Cancelación"
+  },
+  "hero": {
+    "title": "Experimenta la Emoción de las",
+    "titleHighlight": "Regatas de Yate",
+    "subtitle": "Experiencias diarias de regatas de yate en el mundialmente famoso Lago de Garda con patrones profesionales, medallas de regata y recuerdos inolvidables",
+    "price": "€199",
+    "priceSubtext": "por persona, todo incluido",
+    "bookNow": "Reserva Tu Aventura",
+    "checkAvailability": "Verificar disponibilidad para tu fecha preferida"
+  },
+  "features": {
+    "title": "Lo Que Nos Hace Especiales",
+    "subtitle": "Experimenta regatas auténticas de yate con instrucción profesional, equipo premium y atención personalizada en el hermoso Lago de Garda",
+    "professionalSkipper": {
+      "title": "Patrón Profesional",
+      "description": "Aprende de profesionales de vela certificados con años de experiencia en regatas en el Lago de Garda"
+    },
+    "realRacing": {
+      "title": "Experiencia de Regata Real",
+      "description": "Participa en regatas auténticas de yate con cronometraje oficial, puntuación y ceremonias de premiación"
+    },
+    "photosIncluded": {
+      "title": "Fotos y Videos Incluidos",
+      "description": "Fotografía y videografía profesional de tu experiencia, entregadas en 24 horas"
+    },
+    "fullyInsured": {
+      "title": "Completamente Asegurado y Certificado",
+      "description": "Cobertura de seguro completa y certificación RYA para tu tranquilidad y seguridad"
+    }
+  },
+  "experience": {
+    "title": "Tu Viaje de Regata",
+    "step1": {
+      "title": "Aprende lo Básico",
+      "description": "Instrucción profesional sobre fundamentos de vela y técnicas de regata"
+    },
+    "step2": {
+      "title": "Compite y Corre",
+      "description": "Participa en regatas reales de yate con cronometraje y puntuación oficiales"
+    },
+    "step3": {
+      "title": "Celebra el Éxito",
+      "description": "Ceremonia de medallas, presentación de certificado y fotos profesionales"
+    },
+    "learnMore": "Aprende Más Sobre Nuestra Experiencia"
+  },
+  "testimonials": {
+    "title": "Lo Que Dicen Nuestros Navegantes",
+    "subtitle": "Experiencias reales de nuestros clientes satisfechos"
+  },
+  "location": {
+    "title": "Paraíso del Lago de Garda",
+    "perfectLocation": {
+      "title": "Ubicación Perfecta",
+      "description": "Ubicado en la hermosa Riva del Garda, fácilmente accesible desde las principales ciudades europeas"
+    },
+    "idealConditions": {
+      "title": "Condiciones Ideales",
+      "description": "Vientos térmicos constantes y aguas protegidas hacen del Lago de Garda perfecto para navegar"
+    },
+    "dailyDepartures": {
+      "title": "Salidas Diarias",
+      "description": "Múltiples horarios disponibles diariamente de marzo a octubre"
+    }
+  },
+  "cta": {
+    "title": "¿Listo para Empezar a Competir?",
+    "subtitle": "Únete a cientos de navegantes satisfechos que han experimentado la emoción de las regatas de yate en el Lago de Garda",
+    "bookExperience": "Reserva Tu Experiencia - €199",
+    "callNow": "Llama +39 345 678 9012"
+  },
+  "footer": {
+    "description": "Experimenta la emoción de las regatas de yate en el mundialmente famoso Lago de Garda. Instrucción profesional, equipo premium y recuerdos inolvidables.",
+    "quickLinks": "Enlaces Rápidos",
+    "contact": "Contacto",
+    "certifications": "Certificaciones",
+    "operatingHours": "Horarios de Operación:",
+    "dailyHours": "Diario: 8:00 AM - 7:00 PM",
+    "season": "Marzo - Octubre",
+    "copyright": "© 2024 Garda Racing Yacht Club. Todos los derechos reservados."
+  },
+  "booking": {
+    "title": "Reserva Tu Experiencia de Regata",
+    "subtitle": "Asegura tu lugar para una aventura inolvidable de regata de yate en el Lago de Garda",
+    "steps": {
+      "dateTime": "Seleccionar Fecha y Hora",
+      "details": "Tus Datos",
+      "payment": "Pago"
+    },
+    "selectExperience": "Selecciona Tu Experiencia",
+    "chooseDate": "Elegir Fecha",
+    "chooseTime": "Elegir Horario",
+    "participants": "Número de Participantes",
+    "maxParticipants": "Máximo 8 personas por barco",
+    "yourDetails": "Tus Datos",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Dirección de Email",
+    "phone": "Número de Teléfono",
+    "specialRequests": "Solicitudes Especiales",
+    "specialRequestsPlaceholder": "Requisitos dietéticos, necesidades de accesibilidad u ocasiones especiales...",
+    "agreeTerms": "Acepto los términos y condiciones",
+    "agreeMarketing": "Me gustaría recibir comunicaciones de marketing sobre ofertas especiales y eventos",
+    "securePayment": "Pago Seguro",
+    "cardNumber": "Número de Tarjeta",
+    "expiryDate": "Fecha de Vencimiento",
+    "cvc": "CVC",
+    "cardholderName": "Nombre del Titular",
+    "completeBooking": "Completar Reserva",
+    "processing": "Procesando...",
+    "bookingSummary": "Resumen de Reserva",
+    "date": "Fecha:",
+    "time": "Hora:",
+    "pricePerPerson": "Precio por persona:",
+    "total": "Total:",
+    "deposit": "Paga €{{deposit}} de depósito ahora, €{{remaining}} el día",
+    "needHelp": "¿Necesitas Ayuda?",
+    "cancellationPolicy": "Política de Cancelación",
+    "whatToBring": "Qué Traer"
+  },
+  "about": {
+    "title": "Acerca de Nosotros",
+    "subtitle": "Apasionados por la vela desde 2009, hemos estado creando experiencias inolvidables de regatas de yate en el Lago de Garda para navegantes de todos los niveles.",
+    "ourStory": "Nuestra Historia",
+    "theBeginning": "El Comienzo",
+    "ourJourney": "Nuestro Viaje",
+    "journeySubtitle": "Hitos clave en nuestra historia de 15 años de excelencia en navegación",
+    "ourValues": "Nuestros Valores",
+    "valuesSubtitle": "Los principios que guían todo lo que hacemos",
+    "meetTeam": "Conoce a Nuestro Equipo",
+    "teamSubtitle": "Los profesionales apasionados detrás de tu experiencia de navegación",
+    "certifications": "Certificaciones y Reconocimientos",
+    "certificationsSubtitle": "Nuestro compromiso con la excelencia es reconocido por organizaciones líderes",
+    "readyToJoin": "¿Listo para Unirte a Nuestra Historia?",
+    "joinCommunity": "Conviértete en parte de nuestra comunidad de vela y crea tus propios recuerdos inolvidables en el Lago de Garda.",
+    "missionVision": "Nuestra Misión y Visión",
+    "mission": "Misión",
+    "vision": "Visión",
+    "milestone2012Title": "Primeros 1000 Invitados",
+    "milestone2015Title": "Certificación RYA",
+    "milestone2018Title": "Expansión de la Flota",
+    "milestone2020Title": "Innovación Digital",
+    "milestone2024Title": "2000+ Navegantes Felices",
+    "values": {
+      "safety": {
+        "title": "Seguridad Primero"
+      },
+      "passion": {
+        "title": "Pasión por la Vela"
+      },
+      "inclusive": {
+        "title": "Excelencia Inclusiva"
+      },
+      "authentic": {
+        "title": "Regatas Auténticas"
+      },
+      "innovation": {
+        "title": "Innovación Continua"
+      }
+    },
+    "team": {
+      "marco": {
+        "role": "Fundador y Patrón Principal",
+        "specialties": {
+          "strategy": "Estrategia de Regata",
+          "safety": "Gestión de Seguridad",
+          "experience": "Experiencia del Invitado"
+        }
+      },
+      "sofia": {
+        "role": "Gerente de Operaciones",
+        "specialties": {
+          "relations": "Relaciones con Invitados",
+          "quality": "Garantía de Calidad",
+          "coordination": "Coordinación de Equipo"
+        }
+      },
+      "andreas": {
+        "role": "Patrón Senior",
+        "specialties": {
+          "techniques": "Técnicas Avanzadas",
+          "training": "Entrenamiento Competitivo",
+          "weather": "Análisis Meteorológico"
+        }
+      },
+      "elena": {
+        "role": "Oficial de Seguridad e Instructora",
+        "specialties": {
+          "protocols": "Protocolos de Seguridad",
+          "response": "Respuesta de Emergencia",
+          "equipment": "Gestión de Equipamiento"
+        }
+      }
+    },
+    "achievements": {
+      "ryaCertified": {
+        "title": "Excelencia Certificada RYA",
+        "description": "Certificación de la Royal Yachting Association para instrucción profesional de vela"
+      },
+      "guestRating": {
+        "title": "Calificación de Invitados 4.9★",
+        "description": "Calificaciones consistentemente altas en todas las plataformas de reseñas"
+      },
+      "safetyRecord": {
+        "title": "Cero Incidentes de Seguridad",
+        "description": "15 años de operaciones con un historial de seguridad perfecto"
+      },
+      "satisfiedGuests": {
+        "title": "2000+ Invitados Satisfechos",
+        "description": "Recibimos navegantes de más de 30 países en todo el mundo"
+      },
+      "industryRecognition": {
+        "title": "Reconocimiento de la Industria",
+        "description": "Destacados en publicaciones líderes de vela y viajes"
+      },
+      "mediaExcellence": {
+        "title": "Excelencia en Medios",
+        "description": "Servicios profesionales de fotografía y videografía incluidos"
+      },
+      "ongoing": "En curso"
+    },
+    "whatSetsUsApart": "Lo Que Nos Distingue",
+    "whyChooseUs": "Por qué miles de navegantes eligen Garda Racing para su experiencia en el Lago de Garda",
+    "differentiators": {
+      "authentic": {
+        "title": "Experiencia de Regata Auténtica"
+      },
+      "professional": {
+        "title": "Instrucción Profesional"
+      },
+      "complete": {
+        "title": "Paquete de Experiencia Completo"
+      },
+      "location": {
+        "title": "Ubicación Perfecta"
+      },
+      "multilingual": {
+        "title": "Equipo Multilingüe"
+      },
+      "flexible": {
+        "title": "Flexible y Confiable"
+      }
+    }
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "Ponte en contacto con nuestro equipo para reservas, preguntas o más información sobre nuestras experiencias de regatas de yate",
+    "sendMessage": "Envíanos un Mensaje",
+    "fullName": "Nombre Completo",
+    "emailAddress": "Dirección de Email",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "messagePlaceholder": "Dinos cómo podemos ayudarte...",
+    "sendingMessage": "Enviando...",
+    "sendMessageButton": "Enviar Mensaje",
+    "getInTouch": "Ponte en Contacto",
+    "visitUs": "Visítanos",
+    "callUs": "Llámanos",
+    "emailUs": "Escríbenos",
+    "operatingHours": "Horarios de Operación",
+    "quickActions": "Acciones Rápidas",
+    "callForBooking": "Llama para Reserva Inmediata",
+    "speakDirectly": "Habla directamente con nuestro equipo",
+    "whatsappChat": "Chat de WhatsApp",
+    "quickQuestions": "Preguntas rápidas y soporte",
+    "findUs": "Encuéntranos",
+    "locatedIn": "Ubicado en el corazón de Riva del Garda",
+    "faq": "Preguntas Frecuentes",
+    "faqSubtitle": "Respuestas rápidas a preguntas comunes"
+  },
+  "chat": {
+    "welcome": "¡Bienvenido al Garda Racing Yacht Club! 🛥️ ¿Cómo puedo ayudarte hoy? Pregúntame sobre nuestras experiencias de regatas de yate, precios o información de reservas.",
+    "online": "En línea",
+    "quickQuestions": "Preguntas rápidas:",
+    "needHelp": "¿Necesitas ayuda inmediata?",
+    "call": "Llamar",
+    "email": "Email",
+    "typePlaceholder": "Escribe tu mensaje...",
+    "support": "Soporte Garda Racing"
+  },
+  "errors": {
+    "pageNotFound": "Página No Encontrada",
+    "pageNotFoundMessage": "¡Parece que te has desviado del rumbo! Déjanos ayudarte a navegar de vuelta a aguas seguras.",
+    "needAssistance": "¿Necesitas Asistencia?",
+    "lookingForSpecific": "Si estabas buscando algo específico o crees que esto es un error, nuestro equipo está aquí para ayudarte a encontrar lo que necesitas.",
+    "callUs": "Llámanos",
+    "speakDirectly": "Habla directamente con nuestro equipo",
+    "emailUs": "Escríbenos",
+    "respondWithin24": "Respondemos en 24 horas"
+  },
+  "meta": {
+    "defaultTitle": "Garda Racing Yacht Club - Experiencias Premium de Vela Lago de Garda",
+    "defaultDescription": "Experiencias diarias de regatas de yate en el Lago de Garda con patrones profesionales. Medallas de regata, certificados y fotos incluidos. ¡Reserva tu aventura de vela de €199 en Riva del Garda hoy!",
+    "keywords": "regatas yate Lago de Garda, experiencia vela Italia, vela Riva del Garda, charter yate Lago de Garda, lecciones vela Italia, curso regatas yate"
+  },
+  "forms": {
+    "required": "Requerido",
+    "invalidEmail": "Por favor ingresa una dirección de email válida",
+    "invalidPhone": "Por favor ingresa un número de teléfono válido",
+    "selectSubject": "Seleccionar un asunto",
+    "subjects": {
+      "bookingInquiry": "Consulta de Reserva",
+      "groupBooking": "Reserva de Grupo",
+      "corporateEvent": "Evento Corporativo",
+      "generalQuestion": "Pregunta General",
+      "feedback": "Comentarios",
+      "technicalSupport": "Soporte Técnico",
+      "other": "Otro"
+    }
+  },
+  "weather": {
+    "windSpeed": "Velocidad del Viento",
+    "temperature": "Temperatura",
+    "visibility": "Visibilidad",
+    "waterTemp": "Temp. Agua",
+    "excellent": "Excelente"
+  },
+  "schedule": {
+    "welcomeRegistration": "Bienvenida y Registro",
+    "safetyBriefing": "Briefing de Seguridad",
+    "sailingBasics": "Fundamentos de Vela",
+    "firstRace": "Primera Regata",
+    "lunchBreak": "Pausa para Almorzar",
+    "championshipRace": "Regata de Campeonato",
+    "finalRace": "Regata Final",
+    "medalCeremony": "Ceremonia de Medallas",
+    "photoSession": "Sesión de Fotos"
+  },
+  "stats": {
+    "happySailors": "Navegantes Felices",
+    "racesCompleted": "Regatas Completadas",
+    "yearsExperience": "Años de Experiencia",
+    "averageRating": "Calificación Promedio"
+  }
+}
